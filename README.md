@@ -2,7 +2,7 @@
 
 Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem. Postavené stejně jako [readLOTR](https://github.com/brychtaj/readLOTR) — fanouškovský projekt, žádná oficiální appka.
 
-➡️ Po doplnění obrázků (viz níže) otevři **`kamen-mudrcu.html`** v prohlížeči — funguje offline, je to jeden soubor.
+➡️ Živě na **https://vitekmaca.github.io/readHP/** (GitHub Pages, zatím bez obrázků — viz níže). Po doplnění obrázků (viz níže) jde appku spustit i lokálně: otevři **`index.html`** v prohlížeči, funguje offline, je to jeden soubor.
 
 ## Co appka umí
 
@@ -17,7 +17,7 @@ Appka je jen česky (žádný jazykový přepínač). Jména míst a postav drž
 
 ## Struktura projektu
 
-- `kamen-mudrcu.html` — **sestavená appka** (jeden soubor, obrázky vložené). Vznikne buildem, není v gitu, dokud ho nevytvoříš.
+- `index.html` — **sestavená appka** (jeden soubor). Slouží GitHub Pages i pro lokální otevření. Dokud nejsou obrázky v `assets/`, je to jen kopie šablony bez vložených obrázků (postavy mají místo portrétu ikonku, mapa je prázdná) — po buildu s doplněnými obrázky se přepíše finální verzí.
 - `kamen-mudrcu.template.html` — **zdrojová šablona** (HTML/CSS/JS + veškerý text). Tady se edituje obsah.
 - `assets/` — obrázky vkládané při buildu (zatím prázdné složky, viz seznam níže):
   - `map.jpg` — mapa Bradavic a okolí,
@@ -33,7 +33,7 @@ Po doplnění obrázků do `assets/` spusť:
 node build.mjs
 ```
 
-Skript vezme `kamen-mudrcu.template.html`, nahradí tokeny obrázků z `assets/` (jako base64 data URI) a zapíše `kamen-mudrcu.html`. Pokud něco chybí, build to nahlásí a skončí chybou — takže se nedá omylem odeslat appka s rozbitým obrázkem.
+Skript vezme `kamen-mudrcu.template.html`, nahradí tokeny obrázků z `assets/` (jako base64 data URI) a zapíše `index.html`. Pokud něco chybí, build to nahlásí a skončí chybou — takže se nedá omylem odeslat appka s rozbitým obrázkem. Po buildu stačí `index.html` commitnout a pushnout — GitHub Pages se sama aktualizuje.
 
 ---
 

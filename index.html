@@ -1,0 +1,1349 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Interaktivní průvodce Kamenem mudrců pro předčítání dětem — mapa prvního školního roku v Bradavicích, postavy, kapitoly a kvízy.">
+<title>Kámen mudrců — průvodce pro předčítání</title>
+<style>
+  /* ===== Tokens: light "pergamen" and dark "svíčky v hradu" ===== */
+  :root{
+    --paper:#f3ead2; --paper-2:#faf3e0; --panel:#f7f0dc; --panel-2:#eee3c7;
+    --ink:#241a12; --ink-2:#5a4630; --ink-3:#8a7355;
+    --line:rgba(36,26,18,.16); --line-2:rgba(36,26,18,.30);
+    --gold:#a9791c; --gold-2:#d1a53e; --ember:#7a1f1f; --ember-2:#9c2b2b;
+    --elven:#1f5c3e; --shadow:rgba(36,26,18,.20);
+    --radius:16px;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Cambria,Georgia,serif;
+    --display:"Trajan Pro","Cinzel","Palatino Linotype","Book Antiqua",Cambria,Georgia,serif;
+    --ui:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#161009; --paper-2:#1d1610; --panel:#221a12; --panel-2:#2a2116;
+      --ink:#ecdfc4; --ink-2:#c2ac86; --ink-3:#8f7a5c;
+      --line:rgba(236,223,196,.14); --line-2:rgba(236,223,196,.26);
+      --gold:#e0b95c; --gold-2:#f0d488; --ember:#c24b4b; --ember-2:#d66a5a;
+      --elven:#4fae82; --shadow:rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f3ead2; --paper-2:#faf3e0; --panel:#f7f0dc; --panel-2:#eee3c7;
+    --ink:#241a12; --ink-2:#5a4630; --ink-3:#8a7355;
+    --line:rgba(36,26,18,.16); --line-2:rgba(36,26,18,.30);
+    --gold:#a9791c; --gold-2:#d1a53e; --ember:#7a1f1f; --ember-2:#9c2b2b;
+    --elven:#1f5c3e; --shadow:rgba(36,26,18,.20);
+  }
+  :root[data-theme="dark"]{
+    --paper:#161009; --paper-2:#1d1610; --panel:#221a12; --panel-2:#2a2116;
+    --ink:#ecdfc4; --ink-2:#c2ac86; --ink-3:#8f7a5c;
+    --line:rgba(236,223,196,.14); --line-2:rgba(236,223,196,.26);
+    --gold:#e0b95c; --gold-2:#f0d488; --ember:#c24b4b; --ember-2:#d66a5a;
+    --elven:#4fae82; --shadow:rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0}
+  .app{
+    font-family:var(--serif); color:var(--ink); background:var(--paper);
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, rgba(209,165,62,.10), transparent 60%),
+      radial-gradient(60% 50% at 100% 100%, rgba(122,31,31,.06), transparent 60%);
+    min-height:100vh; line-height:1.55; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:18px clamp(12px,3vw,26px) 60px}
+
+  /* ===== Header ===== */
+  header.top{
+    position:sticky; top:0; z-index:40; backdrop-filter:blur(6px);
+    background:color-mix(in srgb, var(--paper) 86%, transparent);
+    border-bottom:1px solid var(--line);
+  }
+  .top-in{max-width:1080px; margin:0 auto; padding:10px clamp(12px,3vw,26px);
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .brand{display:flex; align-items:center; gap:12px; margin-right:auto; min-width:0}
+  .crest{width:42px; height:42px; flex:none; color:var(--gold)}
+  .brand h1{font-family:var(--display); font-weight:700; letter-spacing:.06em;
+    font-size:clamp(1.05rem,2.4vw,1.5rem); margin:0; text-transform:uppercase; text-wrap:balance}
+  .brand p{margin:0; font-size:.78rem; color:var(--ink-2); font-family:var(--ui); letter-spacing:.02em}
+
+  /* mode toggle */
+  .modeswitch{display:inline-flex; background:var(--panel-2); border:1px solid var(--line-2);
+    border-radius:999px; padding:3px; font-family:var(--ui); font-size:.8rem; box-shadow:inset 0 1px 2px var(--shadow)}
+  .modeswitch button{border:0; background:transparent; color:var(--ink-2); cursor:pointer;
+    padding:7px 14px; border-radius:999px; font-weight:600; letter-spacing:.02em; display:flex; align-items:center; gap:7px}
+  .modeswitch button.on{color:#fff; background:linear-gradient(180deg,var(--ember-2),var(--ember))}
+  .modeswitch button.on.kids{background:linear-gradient(180deg,var(--gold-2),var(--gold))}
+  .modeswitch svg{width:16px;height:16px}
+  .iconbtn{width:38px; height:38px; flex:none; border-radius:999px; border:1px solid var(--line-2);
+    background:var(--panel-2); color:var(--ink-2); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:inset 0 1px 2px var(--shadow)}
+  .iconbtn:hover{border-color:var(--gold); color:var(--ink)}
+  .iconbtn svg{width:18px; height:18px}
+
+  /* progress "školní rok" */
+  .road{max-width:1080px; margin:0 auto; padding:0 clamp(12px,3vw,26px) 10px}
+  .road-in{display:flex; align-items:center; gap:12px; font-family:var(--ui); font-size:.78rem; color:var(--ink-2)}
+  .road-track{flex:1; height:9px; border-radius:99px; background:var(--panel-2);
+    border:1px solid var(--line); overflow:hidden; position:relative}
+  .road-fill{height:100%; width:0%; border-radius:99px;
+    background:repeating-linear-gradient(90deg,var(--ember),var(--ember) 7px,var(--ember-2) 7px,var(--ember-2) 14px);
+    transition:width .5s ease}
+  .road b{color:var(--ink); font-variant-numeric:tabular-nums}
+
+  /* ===== Tabs ===== */
+  nav.tabs{display:flex; gap:6px; margin:16px 0 18px; flex-wrap:wrap; font-family:var(--ui)}
+  nav.tabs button{border:1px solid var(--line-2); background:var(--panel); color:var(--ink-2);
+    padding:9px 16px; border-radius:11px; cursor:pointer; font-weight:600; font-size:.9rem;
+    display:flex; align-items:center; gap:8px; transition:.15s}
+  nav.tabs button svg{width:17px;height:17px}
+  nav.tabs button:hover{border-color:var(--gold); color:var(--ink)}
+  nav.tabs button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:var(--paper-2); border-color:var(--ink)}
+
+  .view{display:none; animation:fade .3s ease}
+  .view.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+  /* ===== Map ===== */
+  .map-viewport{position:relative; height:min(64vh,560px); border:1px solid var(--line-2);
+    border-radius:var(--radius); overflow:hidden; background:var(--paper-2); box-shadow:0 8px 30px -14px var(--shadow);
+    touch-action:none; cursor:grab; user-select:none}
+  .map-viewport.grabbing{cursor:grabbing}
+  .map-stage{position:absolute; top:0; left:0; transform-origin:0 0; will-change:transform}
+  .map-img{display:block; width:100%; height:auto; pointer-events:none;
+    filter:saturate(1.02) contrast(1.02)}
+  :root[data-theme="dark"] .map-img{filter:saturate(.9) brightness(.82) contrast(1.02)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .map-img{filter:saturate(.9) brightness(.82) contrast(1.02)}}
+  .route{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible}
+
+  .map-stage.smooth{transition:transform .45s ease}
+  .hereM{position:absolute; z-index:3}
+  .hm-in{position:absolute; left:0; top:0; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%;
+    background:radial-gradient(circle at 34% 30%, var(--ember-2), var(--ember)); border:2px solid var(--gold-2);
+    box-shadow:0 1px 4px var(--shadow); transform-origin:center center; cursor:pointer}
+  .hm-in::after{content:""; position:absolute; inset:-3px; border-radius:50%;
+    box-shadow:0 0 0 0 rgba(122,31,31,.5); animation:pulseH 1.9s ease-in-out infinite}
+  @keyframes pulseH{0%,100%{box-shadow:0 0 0 0 rgba(122,31,31,.5)}50%{box-shadow:0 0 0 7px rgba(122,31,31,0)}}
+  .mapstrip{display:flex; gap:6px; overflow-x:auto; padding:12px 2px 4px; margin-top:10px; scrollbar-width:thin}
+  .mapstrip::-webkit-scrollbar{height:7px}
+  .mapstrip::-webkit-scrollbar-thumb{background:var(--line-2); border-radius:99px}
+  .strip-empty{font-family:var(--ui); font-size:.85rem; color:var(--ink-3); padding:10px 4px}
+  .mchip{flex:none; width:82px; display:flex; flex-direction:column; align-items:center; gap:3px; padding:8px 4px;
+    border:1px solid var(--line-2); border-radius:11px; background:var(--panel-2); color:var(--ink); cursor:pointer;
+    font-family:var(--ui); text-align:center; transition:.12s; position:relative}
+  .mchip:hover{border-color:var(--gold)}
+  .mchip .mchip-n{width:22px; height:22px; border-radius:50%; background:var(--ember); color:#fff; font-weight:800; font-size:.72rem; display:flex; align-items:center; justify-content:center}
+  .mchip .mchip-ic{width:16px; height:16px; color:var(--gold)}
+  .mchip small{font-size:.68rem; line-height:1.12; color:var(--ink)}
+  .mchip.future{opacity:.6}
+  .mchip.future .mchip-n{background:var(--ink-3)}
+  .mchip.on{border-color:var(--gold); background:color-mix(in srgb,var(--gold) 16%,var(--panel)); box-shadow:0 2px 8px -4px var(--gold)}
+  .mchip.on .mchip-n{background:var(--gold)}
+  .mchip.sel{outline:2px solid var(--gold-2); outline-offset:1px}
+  .mchip-here{font-size:.58rem; color:var(--elven); font-weight:700}
+
+  .map-ctrls{position:absolute; right:10px; bottom:10px; display:flex; flex-direction:column; gap:6px; z-index:5}
+  .map-ctrls button{width:34px; height:34px; border-radius:9px; border:1px solid var(--line-2);
+    background:color-mix(in srgb,var(--panel) 92%,transparent); color:var(--ink); font-size:1.1rem; cursor:pointer;
+    font-family:var(--ui); display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px var(--shadow)}
+  .map-ctrls button:hover{border-color:var(--gold)}
+  .map-hint{font-family:var(--ui); font-size:.82rem; color:var(--ink-2); margin:0 2px 10px;
+    display:flex; align-items:center; gap:8px}
+  .map-hint svg{width:16px;height:16px;color:var(--gold);flex:none}
+  .map-hint b{color:var(--ink)}
+
+  .place-panel{margin-top:14px; border:1px solid var(--line-2); border-radius:var(--radius);
+    background:var(--panel); padding:16px 18px; box-shadow:0 6px 20px -14px var(--shadow)}
+  .place-panel.empty{color:var(--ink-2); font-style:italic}
+  .place-head{display:flex; align-items:center; gap:12px; margin-bottom:6px}
+  .place-ic{width:40px;height:40px; color:var(--gold); flex:none}
+  .place-head h3{margin:0; font-family:var(--display); font-size:1.2rem; letter-spacing:.02em}
+  .place-head .en{font-family:var(--ui); font-size:.76rem; color:var(--ink-3); letter-spacing:.03em}
+
+  /* ===== Chapters ===== */
+  .ch{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); margin-bottom:12px;
+    overflow:hidden; box-shadow:0 4px 16px -14px var(--shadow)}
+  .ch-head{display:flex; align-items:center; gap:14px; padding:14px 16px; cursor:pointer}
+  .ch-num{font-family:var(--display); font-weight:700; font-size:.95rem; color:var(--paper);
+    background:linear-gradient(180deg,#3a2418,#241a12); min-width:44px; height:44px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:.02em}
+  :root[data-theme="dark"] .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
+  .ch-t{flex:1; min-width:0}
+  .ch-t h3{margin:0; font-size:1.06rem; font-family:var(--serif); font-weight:700; text-wrap:balance}
+  .ch-t .en{font-family:var(--ui); font-size:.74rem; color:var(--ink-3); letter-spacing:.02em}
+  .fear{display:flex; align-items:center; gap:3px; margin-top:4px}
+  .fear .lab{font-family:var(--ui); font-size:.68rem; color:var(--ink-3); margin-right:4px; letter-spacing:.02em}
+  .flame{width:13px; height:13px; color:var(--ember)}
+  .flame.off{color:var(--line-2)}
+  .ch-read{flex:none; font-family:var(--ui); font-size:.76rem; font-weight:700; cursor:pointer;
+    border:1px solid var(--line-2); background:var(--panel-2); color:var(--ink-2); border-radius:9px; padding:8px 11px;
+    display:flex; align-items:center; gap:6px; white-space:nowrap}
+  .ch-read.done{background:linear-gradient(180deg,var(--elven),color-mix(in srgb,var(--elven) 70%, #000));
+    color:#fff; border-color:transparent}
+  .ch-read svg{width:15px;height:15px}
+  .ch-body{display:none; padding:2px 16px 18px; border-top:1px solid var(--line)}
+  .ch.open .ch-body{display:block; animation:fade .25s ease}
+  .ch.locked .ch-head{opacity:.62}
+  .caret{width:18px;height:18px;color:var(--ink-3); transition:transform .2s; flex:none}
+  .ch.open .caret{transform:rotate(90deg)}
+
+  .block{margin-top:14px}
+  .block h4{font-family:var(--ui); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem;
+    color:var(--gold); margin:0 0 6px; display:flex; align-items:center; gap:7px}
+  .app h4 svg{width:15px; height:15px; flex:none}
+  .place-ic svg{width:100%; height:100%}
+  .caret svg{width:100%; height:100%}
+  .block p{margin:0}
+  .bullets{margin:0; padding-left:2px; list-style:none}
+  .bullets li{position:relative; padding-left:22px; margin:5px 0}
+  .bullets li::before{content:""; position:absolute; left:4px; top:.55em; width:7px; height:7px; border-radius:2px;
+    background:var(--gold); transform:rotate(45deg)}
+  .q-list li::before{background:var(--elven)}
+  .words{display:flex; flex-wrap:wrap; gap:8px}
+  .word{font-family:var(--ui); font-size:.82rem; background:var(--panel-2); border:1px solid var(--line);
+    border-radius:9px; padding:6px 10px}
+  .word b{color:var(--ink)}
+  .word span{color:var(--ink-2)}
+  .fearnote{background:color-mix(in srgb,var(--ember) 12%, var(--panel)); border:1px solid color-mix(in srgb,var(--ember) 30%, transparent);
+    border-radius:10px; padding:10px 12px; font-size:.92rem}
+
+  .kidbox{background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 10%,var(--panel)),var(--panel));
+    border:1px dashed var(--gold-2); border-radius:12px; padding:14px 16px; margin-top:10px}
+  .kidbox .teaser{font-size:1.05rem}
+  .kidbox .block:first-child{margin-top:2px}
+  .kidrecap{font-size:1.02rem; line-height:1.62; margin:0 0 .7em}
+  .kidrecap:last-child{margin-bottom:0}
+  .locknote{font-family:var(--ui); font-size:.86rem; color:var(--ink-2); display:flex; align-items:center; gap:8px; padding:6px 0}
+  .locknote svg{width:16px;height:16px;color:var(--gold)}
+
+  /* quiz */
+  .quiz{margin-top:12px}
+  .quiz .qq{margin:12px 0}
+  .quiz .qtext{font-weight:700; margin-bottom:7px}
+  .opts{display:flex; flex-wrap:wrap; gap:8px}
+  .opt{font-family:var(--ui); font-size:.9rem; cursor:pointer; border:1px solid var(--line-2);
+    background:var(--panel-2); color:var(--ink); border-radius:10px; padding:9px 13px; transition:.12s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{background:linear-gradient(180deg,var(--elven),color-mix(in srgb,var(--elven) 70%,#000)); color:#fff; border-color:transparent}
+  .opt.wrong{background:color-mix(in srgb,var(--ember) 22%,var(--panel)); border-color:var(--ember); text-decoration:line-through}
+  .opt:disabled{cursor:default}
+
+  /* ===== Characters ===== */
+  .charhint{font-family:var(--ui); font-size:.85rem; color:var(--ink-2); margin:0 2px 16px}
+  .char-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(146px,1fr)); gap:16px}
+  .char{border:1px solid var(--line-2); border-radius:16px; background:var(--panel); padding:9px 9px 10px;
+    text-align:center; cursor:pointer; transition:transform .18s,box-shadow .18s,border-color .18s;
+    box-shadow:0 18px 28px -24px var(--shadow)}
+  .char:hover{border-color:var(--gold); transform:translateY(-4px); box-shadow:0 26px 36px -22px var(--shadow)}
+  .char:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+  .pframe{aspect-ratio:3/4; border-radius:12px; overflow:hidden; background:var(--panel-2); position:relative;
+    box-shadow:inset 0 0 0 1px var(--line)}
+  .pframe img{width:100%; height:100%; object-fit:cover; object-position:top center; display:block}
+  .pframe.fallback{display:flex; align-items:center; justify-content:center; color:var(--ink-3)}
+  .pframe.fallback svg.portrait{width:100%; height:100%}
+  .pframe.fallback>svg:not(.portrait){width:38px; height:38px}
+  .char h4{margin:11px 4px 0; font-family:var(--serif); font-size:1.02rem; font-weight:600; line-height:1.16; text-wrap:balance}
+  .char .race{font-family:var(--ui); font-size:.67rem; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); margin-top:3px; font-weight:600}
+  .char.locked{cursor:default; box-shadow:0 10px 20px -20px var(--shadow)}
+  .char.locked h4{color:var(--ink-3)}
+  .char.locked .race{visibility:hidden}
+
+  .medallion{width:66px; height:66px; margin:0 auto 9px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 35% 30%, var(--panel-2), color-mix(in srgb,var(--gold) 22%,var(--panel)));
+    border:2px solid var(--gold-2); color:var(--gold); box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--gold) 12%,transparent)}
+  .medallion svg{width:34px; height:34px}
+  .medallion.pm{overflow:hidden; padding:0}
+  .medallion.pm svg.portrait{width:100%; height:100%; display:block}
+  .medallion.pm img{width:100%; height:100%; object-fit:cover; object-position:top center; display:block}
+  .char-detail{grid-column:1/-1}
+  .cd{border:1px solid var(--gold-2); border-radius:18px; background:var(--panel);
+    padding:18px; display:flex; gap:20px; align-items:flex-start; box-shadow:0 26px 44px -28px var(--shadow)}
+  .cd-pimg{flex:none; width:min(280px,42vw); aspect-ratio:3/4; border-radius:14px; overflow:hidden;
+    border:1px solid var(--gold-2); box-shadow:0 22px 36px -24px var(--shadow)}
+  .cd-pimg img{width:100%; height:100%; object-fit:cover; object-position:top center; display:block}
+  .cd .medallion{width:110px; height:110px; margin:0; flex:none}
+  .cd .cdbody{flex:1; min-width:0}
+  .cd h3{margin:0 0 2px; font-family:var(--display); font-size:1.35rem; letter-spacing:.01em}
+  .cd .en{font-family:var(--ui); font-size:.78rem; color:var(--ink-3)}
+  .cd .say{font-family:var(--ui); font-size:.82rem; color:var(--elven); margin:5px 0 9px}
+  .cd .say b{color:var(--ink-2); font-weight:600}
+  .cd .close{cursor:pointer; border:1px solid var(--line-2); background:var(--panel-2);
+    color:var(--ink-2); border-radius:9px; width:32px; height:32px; font-size:1rem; flex:none; align-self:flex-start}
+
+  /* race accents */
+  .r-kouzelnik .medallion{border-color:var(--gold-2); color:var(--gold)}
+  .r-mudla .medallion{border-color:#9c7b4e; color:#9c7b4e}
+  .r-obr .medallion{border-color:#8a6b3c; color:#8a6b3c}
+  .r-kentaur .medallion{border-color:#5f86ad; color:#5f86ad}
+  .r-duch .medallion{border-color:#7fa8c9; color:#7fa8c9}
+  .r-zvire .medallion{border-color:var(--elven); color:var(--elven)}
+  .r-zlo .medallion{border-color:var(--ember-2); color:var(--ember)}
+  .r-skret .medallion{border-color:#7a6a4a; color:#7a6a4a}
+
+  /* ===== Sub-segment ===== */
+  .subseg{display:inline-flex; background:var(--panel-2); border:1px solid var(--line-2); border-radius:999px;
+    padding:3px; margin-bottom:16px; font-family:var(--ui); font-size:.84rem}
+  .subseg button{border:0; background:transparent; color:var(--ink-2); cursor:pointer; padding:7px 16px; border-radius:999px; font-weight:600}
+  .subseg button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:var(--paper-2)}
+
+  /* ===== World (lore) ===== */
+  .lore-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px}
+  .lore{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); padding:16px 18px;
+    box-shadow:0 4px 16px -14px var(--shadow)}
+  .lore.wide{grid-column:1/-1}
+  .lore-head{display:flex; align-items:center; gap:12px; margin-bottom:8px}
+  .lore-ic{width:44px;height:44px;border-radius:12px; display:flex;align-items:center;justify-content:center; flex:none;
+    background:radial-gradient(circle at 35% 30%, var(--panel-2), color-mix(in srgb,var(--gold) 20%,var(--panel)));
+    border:1px solid var(--gold-2); color:var(--gold)}
+  .lore-ic svg{width:26px;height:26px}
+  .lore h3{margin:0; font-family:var(--display); font-size:1.1rem; letter-spacing:.01em}
+  .lore p{margin:0; font-size:.95rem}
+  .race-list{display:flex; flex-direction:column; gap:10px; margin-top:4px}
+  .race-row{display:flex; align-items:center; gap:12px}
+  .race-row .medallion{width:46px;height:46px;margin:0;flex:none}
+  .race-row .medallion svg{width:24px;height:24px}
+  .race-row b{font-family:var(--serif)}
+  .race-row span{color:var(--ink-2); font-size:.9rem}
+  .timeline{margin:6px 0 0; padding:0; list-style:none; position:relative}
+  .timeline::before{content:"";position:absolute; left:7px; top:6px; bottom:10px; width:2px; background:linear-gradient(var(--gold-2),transparent)}
+  .timeline li{position:relative; padding:0 0 14px 30px}
+  .timeline li::before{content:"";position:absolute; left:2px; top:4px; width:12px;height:12px;border-radius:50%; background:var(--ember); border:2px solid var(--gold-2)}
+  .timeline .tage{font-family:var(--ui); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--gold); display:block}
+  .timeline .tt{font-weight:700}
+
+  /* ===== Relations ===== */
+  .rel-block{margin-bottom:24px}
+  .rel-block h3{font-family:var(--display); font-size:1.05rem; letter-spacing:.02em; margin:0 0 4px; color:var(--ink)}
+  .rel-block .rsub{font-family:var(--ui); font-size:.82rem; color:var(--ink-2); margin:0 0 12px}
+  .chain{display:flex; flex-wrap:wrap; align-items:flex-start; gap:4px}
+  .node{display:flex; flex-direction:column; align-items:center; width:86px; text-align:center; flex:none}
+  .node .medallion{width:54px;height:54px;margin:0 0 5px}
+  .node .medallion svg{width:27px;height:27px}
+  .node small{font-family:var(--ui); font-size:.72rem; line-height:1.15; color:var(--ink)}
+  .node.locked .medallion{background:var(--panel-2);border-color:var(--line-2);color:var(--ink-3)}
+  .node.locked small{color:var(--ink-3)}
+  .arrow{display:flex; flex-direction:column; align-items:center; justify-content:flex-start; color:var(--gold); flex:none; min-width:52px; padding-top:16px}
+  .arrow svg{width:28px;height:12px}
+  .arrow em{font-style:normal; font-family:var(--ui); font-size:.62rem; color:var(--ink-2); text-align:center; line-height:1.1; margin-top:3px}
+  .nine{display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:12px;
+    border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); padding:16px}
+  .nine .node{width:auto}
+  .ninecap{font-family:var(--ui); font-size:.78rem; color:var(--ink-3); margin-top:10px; text-align:center}
+
+  /* ===== Character diary ===== */
+  .cd .arc{margin-top:14px}
+  .cd .arc h4{font-family:var(--ui); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem;
+    color:var(--gold); margin:0 0 8px; display:flex; align-items:center; gap:7px}
+  .arc-tl{margin-top:0}
+  .arc-tl li{padding-bottom:11px}
+  .arc-tl .tage{font-size:.67rem}
+  .ahead{margin-top:12px; display:flex; gap:9px; align-items:flex-start; font-size:.92rem;
+    background:color-mix(in srgb,var(--elven) 12%, var(--panel));
+    border:1px solid color-mix(in srgb,var(--elven) 32%, transparent); border-radius:10px; padding:10px 12px}
+  .ahead svg{width:16px; height:16px; color:var(--elven); flex:none; margin-top:2px}
+  .ahead b{color:var(--ink)}
+
+  /* ===== Chapter illustration ===== */
+  .illus{margin:6px 0 16px; border:1px solid var(--line-2); border-radius:14px; overflow:hidden;
+    background:var(--panel-2); box-shadow:0 10px 24px -16px var(--shadow)}
+  .illus svg, .illus img{display:block; width:100%; height:auto}
+  .illus figcaption{padding:11px 15px; font-size:.92rem; color:var(--ink); line-height:1.5; background:var(--panel)}
+  .illus figcaption b{color:var(--ember); font-family:var(--ui); font-size:.7rem; text-transform:uppercase;
+    letter-spacing:.06em; margin-right:4px}
+
+  /* ===== Info ===== */
+  .info{margin-top:26px; border:1px solid var(--line); border-radius:12px; background:var(--panel-2); padding:12px 16px;
+    font-family:var(--ui); font-size:.82rem; color:var(--ink-2)}
+  .info summary{cursor:pointer; font-weight:700; color:var(--ink)}
+  .info a{color:var(--ember)}
+  .foot{text-align:center; font-family:var(--ui); font-size:.72rem; color:var(--ink-3); margin-top:26px}
+
+  @media (max-width:560px){
+    .brand p{display:none}
+    .cd{flex-direction:column; align-items:stretch}
+    .cd-pimg{width:min(260px,62vw); align-self:center}
+    .char-grid{grid-template-columns:repeat(auto-fill,minmax(45%,1fr))}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="top-in">
+      <div class="brand">
+        <svg class="crest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M15 9l1.6-1.6M15 9l-1.6-1.6M15 9l1.6 1.6M15 9l-1.6 1.6"/><path d="M19.2 3.4l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z" fill="currentColor" stroke="none"/></svg>
+        <div>
+          <h1 data-i18n="brand_title">Kámen mudrců</h1>
+          <p data-i18n="brand_sub">Průvodce prvním rokem v Bradavicích — pro předčítání</p>
+        </div>
+      </div>
+      <div class="modeswitch" id="modeswitch">
+        <button data-mode="rodic" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5 8l7-4 7 4M6 20h12" stroke-linecap="round"/></svg><span data-i18n="mode_parent">Rodiče</span></button>
+        <button data-mode="deti" class="kids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.4"/><path d="M3.5 20c.4-3 2.8-5 5.5-5s5.1 2 5.5 5M14 20c.3-2.2 1.8-3.7 3.6-3.9" stroke-linecap="round"/></svg><span data-i18n="mode_kids">Děti</span></button>
+      </div>
+      <button class="iconbtn" id="themeToggle" type="button" title="Světlý / tmavý motiv" aria-label="Přepnout motiv"></button>
+    </div>
+    <div class="road">
+      <div class="road-in">
+        <span data-i18n="journey">Školní rok</span>
+        <div class="road-track"><div class="road-fill" id="roadFill"></div></div>
+        <span><b id="chDone">0</b>/17 <span data-i18n="chapters_of">kapitol</span> · <b id="miles">0</b> <span data-i18n="miles_unit">bodů pro Nebelvír</span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Sekce">
+      <button data-view="mapa" class="on" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span data-i18n="tab_map">Mapa</span></button>
+      <button data-view="kapitoly" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5c2-1 5-1 8 1 3-2 6-2 8-1v14c-2-1-5-1-8 1-3-2-6-2-8-1z"/><path d="M12 7v13"/></svg><span data-i18n="tab_chapters">Kapitoly</span></button>
+      <button data-view="postavy" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c.6-3.6 3.2-6 6.5-6s5.9 2.4 6.5 6"/></svg><span data-i18n="tab_characters">Postavy</span></button>
+      <button data-view="svet" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span data-i18n="tab_world">Svět</span></button>
+    </nav>
+
+    <!-- MAPA -->
+    <section class="view on" id="view-mapa">
+      <p class="map-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21c5-4.5 7-8 7-11a7 7 0 10-14 0c0 3 2 6.5 7 11z"/></svg><span data-i18n-html="map_hint">Na mapě je vyznačená <b>cesta</b> školním rokem a značka „Tady jsme". Zastávky najdeš na <b>liště pod mapou</b> — klikni a mapa tě k místu zaveze. Mapu můžeš i tahat a přiblížit.</span></p>
+      <div class="map-viewport" id="mapVp">
+        <div class="map-stage" id="mapStage">
+          <img class="map-img" id="mapImg" src="__MAP_DATA_URI__" alt="Mapa Bradavic a okolí" draggable="false">
+          <svg class="route" id="routeSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div id="hereLayer"></div>
+        </div>
+        <div class="map-ctrls">
+          <button id="zin" title="Přiblížit" aria-label="Přiblížit">+</button>
+          <button id="zout" title="Oddálit" aria-label="Oddálit">−</button>
+          <button id="zreset" title="Zaměřit cestu" aria-label="Zaměřit cestu">⤢</button>
+        </div>
+      </div>
+      <div class="mapstrip" id="mapstrip"></div>
+      <div class="place-panel empty" id="placePanel">Klikni na zastávku pod mapou a mapa tě k ní zaveze.</div>
+    </section>
+
+    <!-- KAPITOLY -->
+    <section class="view" id="view-kapitoly"><div id="chapters"></div></section>
+
+    <!-- POSTAVY -->
+    <section class="view" id="view-postavy">
+      <div class="subseg" id="subseg">
+        <button data-sub="galerie" class="on">Galerie</button>
+        <button data-sub="vztahy">Vztahy</button>
+      </div>
+      <div id="sub-galerie">
+        <p class="charhint" id="charHint"></p>
+        <div class="char-grid" id="charGrid"></div>
+      </div>
+      <div id="sub-vztahy" hidden>
+        <p class="charhint" id="relHint"></p>
+        <div id="relations"></div>
+      </div>
+    </section>
+
+    <!-- SVĚT -->
+    <section class="view" id="view-svet">
+      <p class="charhint" data-i18n="world_intro">Malá encyklopedie kouzelnického světa — hoď děti do obrazu. V režimu Děti se odkrývá postupně: co by prozradilo děj, zůstává skryté, dokud k tomu nedočtete.</p>
+      <div id="world"></div>
+    </section>
+
+    <details class="info">
+      <summary>Jak to funguje · o jménech</summary>
+      <p><b>Dva režimy.</b> <i>Rodiče</i> = příprava na čtení (shrnutí, na co se zaměřit, otázky pro děti, „metr strašidelnosti"). <i>Děti</i> = bez spoilerů, jen to, co jste už četli, plus kvízy a sbírání postav.</p>
+      <p><b>Odemykání.</b> U každé kapitoly klikni na <i>Přečteno</i> — tím se na mapě posune „Tady jsme", přibudou body a odemknou se nové postavy a místa. Postup se ukládá v prohlížeči.</p>
+      <p><b>Jména.</b> Držíme se oficiálního českého překladu <b>Pavla Medka</b> (Bradavice, Nebelvír, Brumbál…). Názvy kapitol jsou vlastní parafráze, ne doslovný text knihy — pro jistotu je porovnej s vaším výtiskem.</p>
+    </details>
+    <p class="foot">Postaveno s láskou k předčítání · fanouškovský projekt, není oficiální · v1</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // ===== icons =====
+  var IC = {
+    town:'<path d="M4 20h16M6 20v-8l6-4 6 4v8M10 20v-4h4v4"/>',
+    forest:'<path d="M12 3l5 8H7zM12 8l6 9H6zM12 17v3"/>',
+    mountain:'<path d="M3 19l6-11 4 6 3-5 5 10z"/>',
+    water:'<path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 13c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0"/>',
+    star:'<path d="M12 3l2.4 5.6 6 .5-4.6 4 1.4 5.9L12 16.9 6.8 19l1.4-5.9L3.6 9.1l6-.5z"/>',
+    zamek:'<path d="M4 21V10l2-2v3h2V8l2-2v3h2V6l2 2v3h2V8l2 2v11z"/><path d="M4 21h16"/>',
+    kamen:'<path d="M12 3l7 5-2.5 11h-9L5 8z"/>',
+    kouzelnik:'<path d="M12 3L7 19h10zM5 19h14"/><circle cx="12" cy="12.5" r=".9" fill="currentColor" stroke="none"/>',
+    mudla:'<path d="M12 3v10M9.5 13h5M12 13v6M12 19l-1.4 1M12 19l1.4 1"/>',
+    obr:'<circle cx="12" cy="6.4" r="3"/><path d="M6.2 21v-6.5a5.8 5.8 0 0111.6 0V21"/>',
+    kentaur:'<circle cx="12" cy="7" r="2.5"/><path d="M12 9.5v3.5M6 20l4.5-7h3L18 20M8 20h8"/>',
+    duch:'<path d="M6 20V11a6 6 0 0112 0v9l-2-2-2 2-2-2-2 2-2-2z"/><circle cx="9.5" cy="10.5" r=".6" fill="currentColor" stroke="none"/><circle cx="14.5" cy="10.5" r=".6" fill="currentColor" stroke="none"/>',
+    zvire:'<circle cx="12" cy="15" r="3.4"/><circle cx="7" cy="9" r="1.6"/><circle cx="11" cy="6.5" r="1.6"/><circle cx="15" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/>',
+    skret:'<path d="M12 4c-3 0-5 2.2-5 5.5 0 2 .8 3.6 2 4.8L8 20h8l-1-5.7c1.2-1.2 2-2.8 2-4.8C17 6.2 15 4 12 4z"/><path d="M7.5 9L5.5 7.5M16.5 9l2-1.5"/>',
+    eye:'<path d="M2 12c3-5 7-7 10-7s7 2 10 7c-3 5-7 7-10 7s-7-2-10-7z"/><ellipse cx="12" cy="12" rx="1.5" ry="3.6" fill="currentColor" stroke="none"/>',
+    flame:'<path d="M12 3c1 4-3 5-3 9a3 3 0 006 0c0-2-1-3-1.2-4.5C16 9 17 11 17 13a5 5 0 01-10 0c0-5 3-6 5-10z"/>',
+    scroll:'<path d="M7 4h9a2 2 0 012 2v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6"/><path d="M6 6a2 2 0 002 2h2"/><path d="M10 11h5M10 14h5"/>',
+    lock:'<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
+    sun:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>',
+    moon:'<path d="M20 14.5A8 8 0 019.5 4 7 7 0 1020 14.5z"/>',
+    globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+    check:'<path d="M4 12l5 5L20 6"/>'
+  };
+  function icon(name,cls){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"'+(cls?' class="'+cls+'"':'')+'>'+(IC[name]||IC.star)+'</svg>';}
+
+  // ===== state + drobní pomocníci (musí být definované dřív, než je kdokoli použije) =====
+  var KEY='kamen_mudrcu_v1';
+  var state={mode:'rodic', theme:null, read:{}};
+  try{var s=JSON.parse(localStorage.getItem(KEY)); if(s){state.mode=s.mode||'rodic'; state.theme=s.theme||null; state.read=s.read||{};}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function reachedGi(){var m=0; for(var k in state.read){if(state.read[k]&&+k>m)m=+k;} return m;}
+  function readCount(){var n=0; for(var k in state.read){if(state.read[k])n++;} return n;}
+  var $=function(s,r){return (r||document).querySelector(s);};
+  function el(tag,cls,html){var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  // ===== painted portraits (dodáš vlastní ilustrace, viz README) =====
+  var PORTRAITS={
+    harry:'__IMG_harry__',ron:'__IMG_ron__',hermiona:'__IMG_hermiona__',hagrid:'__IMG_hagrid__',
+    brumbal:'__IMG_brumbal__',mcgonagallova:'__IMG_mcgonagallova__',snape:'__IMG_snape__',draco:'__IMG_draco__',
+    neville:'__IMG_neville__',nick:'__IMG_nick__',filch:'__IMG_filch__',voldemort:'__IMG_voldemort__',
+    quirrell:'__IMG_quirrell__',chloupek:'__IMG_chloupek__',norbert:'__IMG_norbert__',firenze:'__IMG_firenze__',
+    ollivander:'__IMG_ollivander__',flamel:'__IMG_flamel__',
+    vernon:'__IMG_vernon__',petunie:'__IMG_petunie__',dudley:'__IMG_dudley__',james:'__IMG_james__',lily:'__IMG_lily__',
+    protiva:'__IMG_protiva__',paninorrisova:'__IMG_paninorrisova__',fredgeorge:'__IMG_fredgeorge__',percy:'__IMG_percy__',
+    madamhoochova:'__IMG_madamhoochova__',madampomfreyova:'__IMG_madampomfreyova__',griphook:'__IMG_griphook__',
+    buclatadama:'__IMG_buclatadama__'
+  };
+  function hasPortrait(id){var u=PORTRAITS[id];return !!(u&&u.slice(0,5)==='data:');}
+  function imgPortrait(id,alt){return hasPortrait(id)?'<img src="'+PORTRAITS[id]+'" alt="'+esc(alt||'')+'" loading="lazy">':null;}
+
+  var ILLUS={
+    1:{cap:'Brumbál, profesorka McGonagallová a Hagrid nechávají malého Harryho přede dveřmi domu v Zobí ulici — s jizvou ve tvaru blesku a osudem, o kterém zatím netuší.'},
+    2:{cap:'V zoo Harry potichu mluví s hroznýšem — a chvíli poté záhadně zmizí sklo teraria, had vyklouzne ven a vyděšený Dudley spadne do vody.'},
+    3:{cap:'Stovky dopisů se ženou komínem a okny domu v Zobí ulici — a zoufalý strýc Vernon je marně ničí jeden po druhém.'},
+    4:{cap:'Hagrid vyráží dveře opuštěné chatrče a Harrymu poprvé v životě popřeje k narozeninám — a řekne mu, že je kouzelník.'},
+    5:{cap:'Před obchodem pana Ollivandera si Harryho hůlka z cesmíny sama vybere svého majitele — zajiskří a v ruce mu příjemně zahřeje.'},
+    6:{cap:'Ron a Harry se poprvé setkají v kupé Bradavického expresu obklopeni horou kupovaných sladkostí.'},
+    7:{cap:'Moudrý klobouk sedí na Harryho hlavě uprostřed Velké síně a nahlas oznamuje: „NEBELVÍR!"'},
+    8:{cap:'V podzemní učebně lektvarů se profesor Snape sklání nad Harrym s otázkou, na kterou žádný prvák nemůže znát odpověď.'},
+    9:{cap:'Ve dveřích zapovězené chodby se před vyděšenou čtveřicí tyčí Chloupek, obří pes se třemi hlavami, stojící na tajemném poklopu.'},
+    10:{cap:'V dívčí toaletě čelí Harry, Ron a Hermiona obrovskému trollovi s klackem — chvíle, po které se z nich stanou nerozluční přátelé.'},
+    11:{cap:'Harry se zoufale drží vzpurného koštěte vysoko nad famfrpálovým hřištěm, zatímco dole v hledišti sleduje scénu napjatá Hermiona.'},
+    12:{cap:'V prázdné učebně se Harry dívá do Zrcadla z Erisedu, kde místo svého odrazu vidí své rodiče, jak se na něj usmívají.'},
+    13:{cap:'V knihovně nad hromadou starých knih Hermiona konečně najde jméno Mikuláš Flamel — a s ním i odpověď, co se skrývá pod poklopem.'},
+    14:{cap:'Hagrid pyšně chová malého dráčka Norberta ve své chatrči, zatímco venku se stmívá nad Zakázaným lesem.'},
+    15:{cap:'Na temné mýtině v Zakázaném lese se nad zraněným jednorožcem sklání kápí zahalená postava — a kentaur Firenze přispěchá Harrymu na pomoc.'},
+    16:{cap:'Uprostřed obřích kouzelnických šachů se Ron obětuje jako figurka, aby Harry a Hermiona mohli postoupit dál k Kameni mudrců.'},
+    17:{cap:'Profesor Quirrell si sundá turban a odhalí zesláblou tvář Voldemorta srostlou se zadní stranou vlastní hlavy.'}
+  };
+  // ===== painted chapter scenes (dodáš vlastní ilustrace, viz README) =====
+  var SCENES={1:'__SCENE_1__',2:'__SCENE_2__',3:'__SCENE_3__',4:'__SCENE_4__',5:'__SCENE_5__',6:'__SCENE_6__',7:'__SCENE_7__',8:'__SCENE_8__',9:'__SCENE_9__',10:'__SCENE_10__',11:'__SCENE_11__',12:'__SCENE_12__',13:'__SCENE_13__',14:'__SCENE_14__',15:'__SCENE_15__',16:'__SCENE_16__',17:'__SCENE_17__'};
+  function hasScene(n){var u=SCENES[n];return !!(u&&u.slice(0,5)==='data:');}
+  function illusFigure(gi){
+    if(!hasScene(gi)) return '';
+    var il=ILLUS[gi]; var cap=il?il.cap:'';
+    var capHtml=cap?'<figcaption><b>Klíčový moment:</b> '+esc(cap)+'</figcaption>':'';
+    return '<figure class="illus"><img src="'+SCENES[gi]+'" alt="Malovaná ilustrace ke kapitole" loading="lazy">'+capHtml+'</figure>';
+  }
+
+  // ===== data: places (order = trasa školním rokem) =====
+  var PLACES = [
+    {id:'zobi',name:'Zobí ulice',en:'Privet Drive',x:8,y:80,ic:'town',gi:1,mile:0,
+      dad:'Dům Dursleyových v Zobí ulici, kde Harry vyrůstá jako „obyčejný" kluk, o kterém nikdo nic netuší — dokud mu na jedenácté narozeniny nezačnou chodit záhadné dopisy.',
+      kid:'Docela nudná ulice s naprosto stejnými domy. Bydlí tu Harry se svou příšernou tetou, strýcem a bratrancem — ale jednoho dne mu začnou chodit dopisy, které mu nikdo nechce dát přečíst!'},
+    {id:'chata',name:'Chata na skále',en:'The Hut-on-the-Rock',x:14,y:70,ic:'mountain',gi:4,mile:10,
+      dad:'Poslední útočiště, kam strýc Vernon uteče před záplavou dopisů z Bradavic. Neubrání ho to — jednoho bouřlivého večera se objeví Hagrid a Harrymu poprvé řekne pravdu o tom, kdo doopravdy je.',
+      kid:'Malá chatrč na skále uprostřed moře, kam rodina uteče před dopisy z kouzelnické školy. Jenže o půlnoci se ozve zabušení na dveře a dovnitř vejde obr...'},
+    {id:'pricna',name:'Příčná ulice',en:'Diagon Alley',x:25,y:55,ic:'town',gi:5,mile:30,
+      dad:'Skrytá kouzelnická ulice v srdci Londýna, kam se dá projít jen skrz hospůdku U Děravého kotle. Harry si tu poprvé koupí kouzelnickou hůlku a další věci do školy — a poprvé uslyší jméno Voldemort nahlas vyslovené.',
+      kid:'Nejúžasnější ulice na světě! Obchody s koštětem, žábími čokoládami i vlastní kouzelnickou hůlkou. Harry se tu taky poprvé dozví, že je slavný — a že se ho každý bojí zeptat na jeho jizvu.'},
+    {id:'nadrazi',name:'Nástupiště devět a tři čtvrtě',en:'Platform Nine and Three-Quarters',x:35,y:45,ic:'town',gi:6,mile:40,
+      dad:'Kouzelnické nástupiště schované mezi nástupišti devět a deset na King’s Cross, kam se prochází rovnou zdí. Tady Harry poprvé nastoupí do Bradavického expresu a pozná Rona a Hermionu.',
+      kid:'Tajné nástupiště, na které se dostaneš jenom tak, že proběhneš rovnou skrz zeď! Čeká tu rudý parní vlak, který Harryho odveze do Bradavic — a v kupé potká svého nejlepšího kamaráda.'},
+    {id:'velkasin',name:'Bradavice — Velká síň',en:'Hogwarts — the Great Hall',x:55,y:30,ic:'zamek',gi:7,mile:60,
+      dad:'Obrovský hrad plný pohyblivých schodů a mluvících obrazů. Ve Velké síni Moudrý klobouk rozřadí nové žáky do čtyř fakult — a Harry se stává Nebelvíranem.',
+      kid:'Hrad se stovkami komnat, tajných chodeb a duchů, co prolétávají zdmi! Na hostině tě čeká Moudrý klobouk, který ti nahlas přečte, do jaké fakulty patříš.'},
+    {id:'nebelvirvez',name:'Nebelvírská věž',en:'Gryffindor Tower',x:58,y:22,ic:'zamek',gi:8,mile:90,
+      dad:'Společenská místnost a ložnice Nebelvíru, kam se vchází přes portrét Buclaté dámy. Tady se z Harryho, Rona a Hermiony postupně stávají nerozluční kamarádi — i přes nepříjemné hodiny lektvarů u profesora Snapea.',
+      kid:'Útulná místnost s krbem vysoko ve věži, kam se dostaneš jenom se správným heslem! Tady si Harry s Ronem hrají kouzelnické šachy a společně s Hermionou zjišťují, že si vlastně dobře rozumí.'},
+    {id:'chodba',name:'Zapovězená chodba',en:'The Forbidden Corridor',x:63,y:33,ic:'lock',gi:9,mile:110,
+      dad:'Chodba ve třetím patře, kterou ředitel přísně zakázal navštěvovat — a právě proto tam Harry, Ron a Hermiona jednou v noci nakouknou. Za dveřmi na ně čeká obří třihlavý pes jménem Chloupek, hlídající tajný poklop v podlaze.',
+      kid:'Přísně zakázaná chodba — a víš, jak to s takovými zákazy bývá! Za dveřmi se skrývá obrovský pes se třemi hlavami, který hlídá něco moc důležitého.'},
+    {id:'hriste',name:'Famfrpálové hřiště',en:'The Quidditch Pitch',x:48,y:18,ic:'star',gi:11,mile:150,
+      dad:'Oválné hřiště, kde se hraje famfrpál — kouzelnický sport na koštěti. Harry tu jako nejmladší chytač za sto let předvede famózní zákrok, i když se mu koště při zápase záhadně vzepře.',
+      kid:'Hřiště, kde se lítá! Hráči na koštětech honí míče a Harry jako chytač loví zlatou Zlatonku. Při jednom zápase se ale stane něco divného — koště ho najednou samo chce shodit!'},
+    {id:'zrcadlo',name:'Opuštěná učebna se zrcadlem',en:'The Mirror of Erised',x:60,y:26,ic:'star',gi:12,mile:170,
+      dad:'Prázdná učebna, kde Harry náhodou najde podivné Zrcadlo z Erisedu — ukazuje totiž nejhlubší touhu srdce toho, kdo se do něj dívá. Harry v něm vidí své rodiče, a musí se naučit, že ani kouzelné zrcadlo mu je nemůže vrátit.',
+      kid:'V prázdné třídě stojí staré zrcadlo, ve kterém uvidíš to, po čem nejvíc toužíš. Harry se do něj dívá noc co noc — dokud mu moudrý ředitel nevysvětlí, proč to není dobrý nápad.'},
+    {id:'les',name:'Skleníky a Zakázaný les',en:'The Greenhouses and the Forbidden Forest',x:70,y:15,ic:'forest',gi:15,mile:250,
+      dad:'Skleníky s bylinkářstvím na okraji pozemků a za nimi temný Zakázaný les, kam žáci nesmí sami. Když se Harry, Hermiona, Ron a Neville dostanou za trest právě sem, najdou v lese něco děsivého — zraněného jednorožce a postavu, co pije jeho stříbrnou krev.',
+      kid:'Skleníky voní hlínou a kouzelnými rostlinami, ale hned za nimi začíná temný a strašidelný les, kam se nikdo nesmí pustit sám. Copak se stane, když tam Harry se svými kamarády jednou v noci musí?'},
+    {id:'propadliste',name:'Pod propadlištěm',en:'Through the Trapdoor',x:64,y:34,ic:'lock',gi:16,mile:400,
+      dad:'Řetěz komnat pod poklopem, který hlídal Chloupek — každá skrývá jinou překážku vytvořenou profesory na ochranu Kamene mudrců. Harry se tu musí postavit i tomu, kdo se skrývá pod turbanem profesora Quirrella.',
+      kid:'Za poklopem začíná řada tajných komnat plných hádanek a nebezpečí — obří kouzelnické šachy, létající klíče a nakonec i samotný Kámen mudrců! Kdo se tam dostane jako první?'}
+  ];
+  PLACES.forEach(function(p,i){ p.seq=i+1; });
+
+  // ===== data: postavy =====
+  var CHARS = [
+    {id:'harry',gi:1,name:'Harry Potter',en:'Harry Potter',race:'kouzelnik',rlab:'Kouzelník',ic:'kouzelnik',
+      kid:'Kluk s brýlemi a bleskovou jizvou na čele, který netuší, že je slavný — dokud mu to Hagrid nevysvětlí. Statečný, skromný a nikdy nenechá kamarády v nesnázích.',
+      dad:'Hlavní hrdina, jediný, kdo kdy přežil útok Voldemorta. Vyrůstá v nevědomosti u svých mudlovských příbuzných, dokud ho do Bradavic nepřivede Hagrid.'},
+    {id:'ron',gi:6,name:'Ron Weasley',en:'Ron Weasley',race:'kouzelnik',rlab:'Kouzelník',ic:'kouzelnik',
+      kid:'Zrzavý kluk ze sedmi sourozenců, Harryho první a nejlepší kamarád z vlaku. Umí skvěle kouzelnické šachy a má rád jídlo skoro stejně jako dobrodružství.',
+      dad:'Šestý ze sedmi dětí Weasleyových. Loajální, vtipný a trochu nejistý ve stínu úspěšných starších sourozenců — přesto se ukáže jako klíčový hrdina.'},
+    {id:'hermiona',gi:6,name:'Hermiona Grangerová',en:'Hermione Granger',race:'kouzelnik',rlab:'Kouzelnice',ic:'kouzelnik',say:'her-mi-ona',
+      kid:'Nejchytřejší holka v ročníku, která zná odpověď na skoro každou otázku. Zpočátku trochu otravná šprtka, brzy se ale ukáže jako nejvěrnější kamarádka.',
+      dad:'Dcera mudlovských rodičů (zubařů), skvělá studentka. Její znalosti a rozvaha víckrát zachrání celou trojici.'},
+    {id:'hagrid',gi:4,name:'Hagrid',en:'Rubeus Hagrid',race:'obr',rlab:'Hajný',ic:'obr',
+      kid:'Obrovský, chlupatý a měkkosrdcatý hajný Bradavic, který miluje nebezpečná zvířata víc, než je zdrávo. Je to on, kdo Harrymu poprvé řekne pravdu o jeho rodičích.',
+      dad:'Klíčník a hajný Bradavic, napůl obr. Věrný Brumbálovi a Harrymu, i když má sklon prozradit víc, než by měl.'},
+    {id:'brumbal',gi:1,name:'Albus Brumbál',en:'Albus Dumbledore',race:'kouzelnik',rlab:'Ředitel',ic:'kouzelnik',
+      kid:'Moudrý starý ředitel s dlouhým stříbrným vousem a brýlemi ve tvaru půlměsíce. Vidí toho víc, než si kdo myslí, a má rád citrónové bonbóny.',
+      dad:'Ředitel Bradavic, jeden z nejmocnějších čarodějů vůbec. Jediný, koho se Voldemort kdy bál.'},
+    {id:'mcgonagallova',gi:1,name:'Minerva McGonagallová',en:'Minerva McGonagall',race:'kouzelnik',rlab:'Profesorka',ic:'kouzelnik',
+      kid:'Přísná profesorka přeměňování, která se umí proměnit v kočku. Vedoucí Nebelvíru — přísná, ale spravedlivá a nakonec i hodně statečná.',
+      dad:'Zástupkyně ředitele a vedoucí Nebelvíru. Za přísnou tváří skrývá velkou loajalitu ke svým žákům.'},
+    {id:'snape',gi:7,name:'Severus Snape',en:'Severus Snape',race:'kouzelnik',rlab:'Profesor lektvarů',ic:'kouzelnik',say:'snejp',
+      kid:'Profesor lektvarů s černým pláštěm, mastnými vlasy a nepříjemným pohledem. Harryho zjevně nemá rád — ale je v příběhu všechno tak, jak se zdá?',
+      dad:'Vedoucí Zmijozelu, ke Nebelvíranům nespravedlivě přísný. Jeho pravé pohnutky se ukážou být mnohem složitější, než se zdá.'},
+    {id:'draco',gi:5,name:'Draco Malfoy',en:'Draco Malfoy',race:'kouzelnik',rlab:'Zmijozel',ic:'kouzelnik',
+      kid:'Nafoukaný spolužák ze Zmijozelu, který se s Harrym nepohodne hned na první schůzce. Rád se vytahuje bohatstvím a slavným příjmením své rodiny.',
+      dad:'Syn staré čarodějnické rodiny Malfoyů. Harryho protivník po celý rok — soupeření mezi nimi je jedním z hnacích motorů příběhu.'},
+    {id:'neville',gi:6,name:'Neville Longbottom',en:'Neville Longbottom',race:'kouzelnik',rlab:'Nebelvír',ic:'kouzelnik',
+      kid:'Zapomnětlivý a nemotorný spolubydlící z Nebelvíru, kterému chybí sebevědomí. Ke konci roku ale ukáže odvahu, jakou by nikdo nečekal.',
+      dad:'Nejméně sebejistý z nebelvírského ročníku. Jeho odvaha postavit se kamarádům kvůli pravidlům je klíčovým morálním momentem knihy.'},
+    {id:'nick',gi:7,name:'Skoro bezhlavý Nick',en:'Nearly Headless Nick',race:'duch',rlab:'Duch Nebelvíru',ic:'duch',
+      kid:'Průhledný duch, co prolétává zdmi Bradavic — patří k Nebelvíru a říká si Skoro bezhlavý Nick, protože měl při popravě trochu smůlu.',
+      dad:'Domácí duch nebelvírské věže. Dobrosrdečný a trochu ješitný, rád vypráví historky ze svého (ne)dokonalého stětí.'},
+    {id:'filch',gi:8,name:'Argus Filch',en:'Argus Filch',race:'mudla',rlab:'Školník',ic:'mudla',
+      kid:'Mrzutý školník, který žáky za sebemenší prohřešek honí po chodbách. Jeho kočka paní Norrisová vidí úplně všechno.',
+      dad:'Školník Bradavic bez vlastních kouzelnických schopností. Nesnáší žáky, kteří porušují pravidla — a Harry s kamarády to dělají často.'},
+    {id:'voldemort',gi:4,name:'Voldemort',en:'Lord Voldemort',race:'zlo',rlab:'Temný čaroděj',ic:'eye',
+      kid:'Nejobávanější temný čaroděj, o kterém se bojí i jen vyslovit jméno — říkají mu „Ty víš kdo". Kdysi zabil Harryho rodiče, ale sám tehdy málem zmizel.',
+      dad:'Zlý čaroděj, jehož útok Harry jako jediný přežil. Zesláblý, ale ne mrtvý, se celou knihu snaží získat zpět svou sílu.'},
+    {id:'quirrell',gi:5,name:'Quirinus Quirrell',en:'Quirinus Quirrell',race:'kouzelnik',rlab:'Profesor obrany proti černé magii',ic:'kouzelnik',say:'kvirel',
+      kid:'Nervózní profesor s koktáním a fialovým turbanem na hlavě, prý kvůli nehodě s upírem v Africe. Nejméně oblíbený předmět všech je zrovna ten jeho.',
+      dad:'Profesor obrany proti černé magii. Za jeho nervózním chováním se skrývá jedno z největších tajemství celé knihy.'},
+    {id:'chloupek',gi:9,name:'Chloupek',en:'Fluffy',race:'zvire',rlab:'Třihlavý pes',ic:'zvire',
+      kid:'Obrovský pes se třemi hlavami, kterého Hagrid koupil „od jednoho chlapíka v hospodě". Hlídá tajemství za zapovězenou chodbou — dokud neusne u hudby.',
+      dad:'Trojhlavý pes hlídající poklop k tajemství pod Bradavicemi. Klíčová stopa k tomu, co se v hradě skrývá.'},
+    {id:'norbert',gi:14,name:'Norbert',en:'Norbert',race:'zvire',rlab:'Drak',ic:'zvire',
+      kid:'Malý černý dráček, kterého si Hagrid vysedí z vejce vyhraného v kartách. Roztomilý, dokud nezačne chrlit oheň a růst jako z vody.',
+      dad:'Norský hřbetozubec, kterého Hagrid nezodpovědně chová ve své chatrči. Jeho existence přinese Harrymu a přátelům spoustu potíží.'},
+    {id:'firenze',gi:15,name:'Firenze',en:'Firenze',race:'kentaur',rlab:'Kentaur',ic:'kentaur',
+      kid:'Kentaur ze Zakázaného lesa se stříbrnou hřívou, který se nebojí porušit pravidla svého stáda, aby zachránil člověka v nebezpečí.',
+      dad:'Kentaur, který zachrání Harryho v Zakázaném lese před temnou postavou pijící jednorožčí krev.'},
+    {id:'ollivander',gi:5,name:'Ollivander',en:'Mr Ollivander',race:'kouzelnik',rlab:'Hůlkař',ic:'kouzelnik',
+      kid:'Tajemný stařík z obchodu s kouzelnickými hůlkami, který si pamatuje úplně každou hůlku, co kdy prodal. Harryho hůlka si ho prý sama vybrala.',
+      dad:'Majitel starobylého obchodu s hůlkami v Příčné ulici. Jeho poznámka o Harryho hůlce naznačí důležité spojení s Voldemortem.'},
+    {id:'flamel',gi:13,name:'Mikuláš Flamel',en:'Nicolas Flamel',race:'kouzelnik',rlab:'Alchymista',ic:'kouzelnik',
+      kid:'Slavný alchymista, který podle staré knihy vyrobil jediný Kámen mudrců na světě — a je mu už 665 let!',
+      dad:'Skutečný majitel Kamene mudrců, starý přítel Brumbála. Jeho jméno je klíč k rozluštění celého tajemství.'},
+    {id:'vernon',gi:1,name:'Strýc Vernon Dursley',en:'Vernon Dursley',race:'mudla',rlab:'Mudla',ic:'mudla',
+      kid:'Harryho protivný strýc, kterému vadí všechno neobvyklé. Kouzla nenávidí ze všeho nejvíc a snaží se před nimi rodinu uchránit — marně.',
+      dad:'Manžel Petunie Dursleyové, obchodník bez kapky smyslu pro humor. Jeho boj s dopisy z Bradavic patří k nejvtipnějším scénám knihy.'},
+    {id:'petunie',gi:1,name:'Teta Petunie Dursleyová',en:'Petunia Dursley',race:'mudla',rlab:'Mudla',ic:'mudla',
+      kid:'Harryho teta, sestra jeho zesnulé mámy. Kouzelnický svět odmítá i to, co jí kdysi bylo blízké, a Harryho k němu odmítá pustit.',
+      dad:'Lily Potterové sestra, o kouzelnickém světě ví víc, než přiznává. Její strach z něj má hlubší kořeny, než se na první pohled zdá.'},
+    {id:'dudley',gi:2,name:'Dudley Dursley',en:'Dudley Dursley',race:'mudla',rlab:'Mudla',ic:'mudla',
+      kid:'Harryho rozmazlený bratranec, který dostane vždycky všechno, po čem zatouží. V zoo mu jedno kouzelnické nedopatření pořádně zkazí den.',
+      dad:'Jediné dítě Dursleyových, vychované bez jediného pravidla. Slouží jako kontrast k tomu, jak dobře Harry navzdory všemu dopadl.'},
+    {id:'james',gi:1,name:'James Potter',en:'James Potter',race:'kouzelnik',rlab:'Harryho táta',ic:'kouzelnik',
+      kid:'Harryho táta, kterého nikdy nepoznal. Zemřel, když se ho snažil ochránit — Harry ho poprvé „uvidí" až v Zrcadle z Erisedu.',
+      dad:'Talentovaný kouzelník a Brumbálův bývalý žák. Voldemort ho zabil první, když chránil svou rodinu.'},
+    {id:'lily',gi:1,name:'Lily Potterová',en:'Lily Potter',race:'kouzelnik',rlab:'Harryho máma',ic:'kouzelnik',
+      kid:'Harryho máma. Její láska ho doslova zachránila před Voldemortem a chrání ho — jak se ukáže — dodnes.',
+      dad:'Matka narozená mudlovským rodičům. Její oběť za Harryho je zdrojem staré magické ochrany, která hraje klíčovou roli na konci knihy.'},
+    {id:'protiva',gi:8,name:'Protiva',en:'Peeves',race:'duch',rlab:'Škodolibý duch',ic:'duch',
+      kid:'Rozpustilý přízrak, který žáky straší, shazuje věci ze schodů a dělá naschvály, kdykoli může. Na rozdíl od ostatních duchů nepatří k žádné fakultě.',
+      dad:'Poltergeist Bradavic — na rozdíl od domácích duchů nikomu neslouží a poslouchá jen ředitele.'},
+    {id:'paninorrisova',gi:8,name:'Paní Norrisová',en:'Mrs Norris',race:'zvire',rlab:'Filchova kočka',ic:'zvire',
+      kid:'Hubená šedá kočka školníka Filche, která jako by viděla úplně všechno. Kde je paní Norrisová, tam brzy bude i Filch.',
+      dad:'Filchova věrná společnice a jeho oči na chodbách. Žáci se jí děsí skoro stejně jako samotného školníka.'},
+    {id:'fredgeorge',gi:6,name:'Fred a George Weasleyovi',en:'Fred and George Weasley',race:'kouzelnik',rlab:'Nebelvírští vtipálci',ic:'kouzelnik',
+      kid:'Ronovi starší bratři, nerozluční dvojčata proslulá žertíky a legrací. Ve vlaku Harrymu poprvé pomůžou najít správné kupé.',
+      dad:'Weasleyovic dvojčata, oblíbenci celé školy. V prvním díle jsou jen na okraji děje, ale humor mají už od začátku.'},
+    {id:'percy',gi:6,name:'Percy Weasley',en:'Percy Weasley',race:'kouzelnik',rlab:'Prefekt Nebelvíru',ic:'kouzelnik',
+      kid:'Nejstarší z Weasleyových sourozenců na Bradavicích, pyšný prefekt, co dost dbá na pravidla. Úplný opak svých mladších bratrů.',
+      dad:'Svědomitý a ctižádostivý prefekt Nebelvíru. Dohlíží na nové prváky cestou z nádraží.'},
+    {id:'madamhoochova',gi:8,name:'Madame Hoochová',en:'Madam Hooch',race:'kouzelnik',rlab:'Učitelka létání',ic:'kouzelnik',
+      kid:'Přísná učitelka s jestřábíma očima, která prvňáky učí létat na koštěti. Je to ona, kdo si jako první všimne Harryho talentu.',
+      dad:'Instruktorka létání Bradavic. Její hodina je místem, kde si Harryho famfrpálového talentu poprvé někdo všimne.'},
+    {id:'madampomfreyova',gi:8,name:'Madame Pomfreyová',en:'Madam Pomfrey',race:'kouzelnik',rlab:'Školní ošetřovatelka',ic:'kouzelnik',
+      kid:'Laskavá, ale přísná ošetřovatelka bradavické ošetřovny. Kdokoli se zraní — a v Bradavicích se to stává často — skončí u ní.',
+      dad:'Vede školní ošetřovnu. Stará se o všechny zraněné, od zlomených zápěstí až po vyčerpání po velkém dobrodružství.'},
+    {id:'griphook',gi:5,name:'Griphook',en:'Griphook',race:'skret',rlab:'Bankovní skřet',ic:'skret',
+      kid:'Skřet, který Harryho a Hagrida veze důlním vozíkem hluboko pod banku Gringottovu — až k trezoru s tajemným obsahem.',
+      dad:'Zaměstnanec Gringottovy banky. Skřeti kouzelnickým zlatem opatrují už po staletí a nikomu nedůvěřují bezdůvodně.'},
+    {id:'buclatadama',gi:8,name:'Buclatá dáma',en:'The Fat Lady',race:'kouzelnik',rlab:'Mluvící portrét',ic:'star',
+      kid:'Obraz veselé dámy v růžových šatech, který hlídá vchod do Nebelvírské věže. Dovnitř tě pustí jen se správným heslem!',
+      dad:'Mluvící portrét střežící vstup do nebelvírské společenské místnosti. Heslo se čas od času mění.'}
+  ];
+  var CHARMAP={}; CHARS.forEach(function(c){CHARMAP[c.id]=c;});
+  var SHORT={harry:'Harry',ron:'Ron',hermiona:'Hermiona',hagrid:'Hagrid',brumbal:'Brumbál',mcgonagallova:'McGonagallová',neville:'Neville',nick:'Nick'};
+
+  // ===== deníček postavy: co prožila po kapitolách (gi) + otázka k zamyšlení =====
+  var ARC={
+    harry:{ahead:'Kdybys jednoho dne dostal dopis, že jsi kouzelník — věřil bys mu hned, nebo by ses bál?',beats:[
+      [1,'Jako miminko přežije útok nejobávanějšího čaroděje a zůstane mu jen jizva ve tvaru blesku.'],
+      [3,'Roky žije u Dursleyových, kteří před ním kouzelnický svět tají — dokud nezačnou chodit dopisy.'],
+      [4,'Hagrid mu konečně řekne pravdu: je kouzelník a čeká ho místo v Bradavicích.'],
+      [6,'Ve vlaku do Bradavic pozná Rona a Hermionu — začátek nerozlučného přátelství.'],
+      [7,'Moudrý klobouk ho zařadí do Nebelvíru, i když prý uvažoval i o Zmijozelu.'],
+      [9,'Za zapovězenou chodbou objeví obřího psa Chloupka a začne tušit, že se v hradě něco skrývá.'],
+      [11,'Stane se nejmladším chytačem za sto let a při zápase se mu záhadně vzepře koště.'],
+      [12,'Najde Zrcadlo z Erisedu a v něm poprvé uvidí rodiče, které nikdy nepoznal.'],
+      [16,'Vydá se s přáteli přes propadliště, aby zachránil Kámen mudrců — a postaví se tomu, kdo za tím vším stojí.'],
+      [17,'Zjistí pravdu o Voldemortovi a Quirrellovi a Bradavice vyhrají školní pohár.']
+    ]},
+    ron:{ahead:'Proč myslíš, že se Ron bojí, že nikdy nebude tak dobrý jako jeho starší sourozenci?',beats:[
+      [6,'Potká Harryho ve vlaku a hned mu nabídne přátelství — první opravdový kamarád.'],
+      [7,'Je zařazen do Nebelvíru jako pátý ze svých sourozenců — trochu ve stínu jejich úspěchů.'],
+      [10,'Pohádá se s Hermionou kvůli jejímu chování — hned toho ale lituje, když ji ohrozí troll.'],
+      [16,'V obřích kouzelnických šachách obětuje sám sebe, aby Harry a Hermiona mohli postoupit dál.']
+    ]},
+    hermiona:{ahead:'Myslíš, že je lepší dodržovat pravidla za každou cenu, nebo je někdy v pořádku je porušit?',beats:[
+      [6,'Ve vlaku se s Harrym a Ronem seznámí — nejdřív jim ale spíš leze na nervy svou sečtělostí.'],
+      [10,'O Halloweenu ji před trollem zachrání Harry s Ronem — od té chvíle jsou z nich praví přátelé.'],
+      [13,'Pomůže vypátrat, kdo je Mikuláš Flamel, a rozluští záhadu Kamene mudrců.'],
+      [16,'Svými znalostmi kouzel provede kamarády nebezpečnými komnatami pod propadlištěm.']
+    ]},
+    hagrid:{ahead:'Proč asi Hagrid pořád nese takové tajemství, i když mu bylo přísně zakázáno o něm mluvit?',beats:[
+      [1,'V noci, kdy zemřeli Potterovi, přiveze malého Harryho na motorce k Dursleyovým.'],
+      [4,'Po deseti letech se vrátí, aby Harrymu osobně předal dopis z Bradavic a řekl mu pravdu.'],
+      [5,'Provede Harryho Příčnou ulicí a koupí mu první narozeninový dárek — sovu Hedviku.'],
+      [9,'Prozradí, odkud má svého psa Chloupka — a bezděky i to, co pes hlídá.'],
+      [14,'Vyhraje v kartách dračí vejce a navzdory zákazu si vychová malého draka Norberta.']
+    ]},
+    snape:{ahead:'Proč si myslíš, že se Harrymu Snape od začátku nelíbí? Má na to důvod?',beats:[
+      [8,'Na první hodině lektvarů je na Harryho nečekaně tvrdý a nespravedlivý.'],
+      [9,'Harry si všimne, že Snape kulhá — prý ho pokousal Chloupek, když se pokoušel projít zapovězenou chodbou.'],
+      [11,'Při famfrpálovém zápase Harryho koště zlobí — a Harry si je jistý, že za tím stojí právě Snape.'],
+      [17,'Vyjde najevo, kým Snape doopravdy je a čí stranu celou dobu tajně hájí.']
+    ]},
+    draco:{ahead:'Proč se Draco tolik chlubí svou rodinou a majetkem? Co si tím možná dokazuje?',beats:[
+      [5,'V Příčné ulici se s Harrym seznámí a hned na něj působí nadřazeně.'],
+      [7,'Je zařazen do Zmijozelu, přesně jak si přál, a stává se Harryho stálým soupeřem.'],
+      [9,'Vyzve Harryho na půlnoční souboj — jenže je to past, jak nahlásit je u zapovězené chodby.'],
+      [14,'Nahlásí profesorce, že Hagrid chová v chatrči draka — kvůli tomu Nebelvír přijde o spoustu bodů.']
+    ]},
+    neville:{ahead:'Co myslíš, dalo Nevillovi nejvíc odvahy postavit se vlastním kamarádům kvůli pravidlům?',beats:[
+      [7,'Je zařazen do Nebelvíru, i když sám čekal, že na to nemá.'],
+      [8,'Na hodině létání spadne z koštěte a zlomí si zápěstí — první ukázka jeho smůly.'],
+      [11,'Postaví se za Harryho v hádce s Dracem, i když je z toho vyděšený.'],
+      [16,'Odváží se postavit vlastním kamarádům, když chtějí v noci porušit pravidla — a i za to nakonec získá body.']
+    ]},
+    brumbal:{ahead:'Proč si myslíš, že Brumbál nechává Harryho, aby si o důležitých věcech rozhodoval sám?',beats:[
+      [1,'V noci, kdy zemřou Potterovi, přinese miminko Harryho k Dursleyovým a nechá u nich vzkaz.'],
+      [7,'Na uvítací hostině přivítá nové žáky a přísně zakáže vstup do chodby ve třetím patře.'],
+      [12,'Vysvětlí Harrymu, proč se nesmí dál dívat do Zrcadla z Erisedu, ať po tom touží sebevíc.'],
+      [17,'Dorazí na poslední chvíli, aby Harrymu pomohl — a na závěrečné hostině obrátí bodování ve prospěch Nebelvíru.']
+    ]},
+    vernon:{ahead:'Proč se dospělý člověk může tak moc bát něčeho, čemu nerozumí?',beats:[
+      [1,'Snaží se rodinu ochránit před vším neobvyklým — a netuší, co na ně čeká.'],
+      [3,'Zoufale ničí dopisy z Bradavic, jak jen mu přijdou pod ruku.'],
+      [4,'Před Hagridem se snaží školu zapřít, ale prohraje — a Dudley dostane prasečí ocásek.']
+    ]},
+    petunie:{ahead:'Co si myslíš, že Petunie o kouzelnickém světě doopravdy ví a proč to tají?',beats:[
+      [1,'Před Harrym roky tají pravdu o jeho rodičích i o kouzlech.'],
+      [4,'Když Hagrid dorazí, vyjde najevo, že o kouzelnickém světě ví mnohem víc, než přiznávala.']
+    ]},
+    dudley:{ahead:'Myslíš, že by Dudley byl jiný, kdyby ho rodiče nerozmazlovali?',beats:[
+      [2,'V zoo ho vyděsí mizející sklo teraria a spadne do bazénku s vodou.'],
+      [4,'Kvůli Hagridovu hněvu mu narostl malý prasečí ocásek.']
+    ]},
+    james:{ahead:'Kdybys mohl vidět rodiče, které jsi nikdy nepoznal, jen na chvíli — udělal bys to?',beats:[
+      [1,'Zemře, když se snaží ochránit Harryho před Voldemortem.'],
+      [12,'Harry ho poprvé „uvidí" v odrazu Zrcadla z Erisedu.']
+    ]},
+    lily:{ahead:'Může láska fungovat jako kouzelná ochrana? Co si o tom myslíš?',beats:[
+      [1,'Obětuje se za Harryho a nevědomky ho tím kouzelně ochrání.'],
+      [17,'Její stará oběť je nakonec to, co Harryho zachrání před Quirrellem.']
+    ]},
+    protiva:{ahead:'Proč asi Protiva dělá naschvály úplně všem, i hodným žákům?',beats:[
+      [8,'Straší nové žáky na chodbách a shazuje věci jen tak z legrace.']
+    ]},
+    paninorrisova:{ahead:'Proč si myslíš, že se jí žáci bojí skoro stejně jako Filche?',beats:[
+      [8,'Hlídá chodby po boku školníka Filche a hned tak něco jí neunikne.']
+    ]},
+    fredgeorge:{ahead:'Jak se ti líbí, že si dvojčata z pravidel tolik dělají legraci?',beats:[
+      [6,'Pomůžou Harrymu ve vlaku najít volné kupé.'],
+      [7,'Sledují rozřazování a bujaře fandí novým Nebelvíranům.']
+    ]},
+    percy:{ahead:'Jak se ti líbí, že je Percy tak jiný než jeho mladší bratři?',beats:[
+      [6,'Jako prefekt dohlíží na nové prváky cestou z nádraží.'],
+      [7,'Hrdě vede nebelvírské prváky do společenské místnosti.']
+    ]},
+    madamhoochova:{ahead:'Co myslíš, že madame Hoochovou na Harryho letu tak zaujalo?',beats:[
+      [8,'Učí prváky první hodinu létání a jako první si všimne Harryho nadání.']
+    ]},
+    madampomfreyova:{ahead:'Proč je důležité mít někoho, kdo se postará, i když je dobrodružství u konce?',beats:[
+      [8,'Ošetří Nevillovi zlomené zápěstí po pádu z koštěte.'],
+      [17,'Stará se o Harryho, když se probouzí po střetu s Voldemortem.']
+    ]},
+    griphook:{ahead:'Co myslíš, že bylo v tom prázdném trezoru, který ten den vyklidili?',beats:[
+      [5,'Veze Harryho a Hagrida vozíkem hluboko pod bankou k tajemnému trezoru.']
+    ]},
+    buclatadama:{ahead:'Jaké heslo by sis vymyslel, kdybys hlídal tajný vchod?',beats:[
+      [8,'Hlídá vchod do Nebelvírské věže a pustí dovnitř jen se správným heslem.']
+    ]}
+  };
+
+  var RACES=[
+    ['kouzelnik','Kouzelníci a čarodějky','Lidé nadaní kouzelnou mocí, kteří chodí do škol jako Bradavice a nosí hůlky. Žijí bok po boku s mudly, ale ve vlastním skrytém světě.'],
+    ['mudla','Mudlové','Lidé bez kouzelné moci — třeba Harryho teta, strýc nebo Herminonini rodiče. Většina z nich o kouzelnickém světě vůbec neví.'],
+    ['obr','Obři','Vzácný a mocný národ obrovitých bytostí. Hagrid je napůl obr — odtud jeho ohromná síla i výška.'],
+    ['kentaur','Kentauři','Napůl lidé, napůl koně, kteří žijí hluboko v Zakázaném lese. Umí číst budoucnost z hvězd a řídí se přísnými vlastními pravidly.'],
+    ['duch','Duchové','Bradavice obývá spousta průhledných duchů — každá fakulta má svého. Prolétávají zdmi a straší většinou jen pro legraci.'],
+    ['zvire','Kouzelná zvířata','Bradavice a jejich okolí jsou plné kouzelných tvorů — od tříhlavých psů přes jednorožce až po draky.'],
+    ['skret','Skřeti','Chytří a nedůvěřiví strážci kouzelnického zlata, kteří spravují banku Gringottovu. Nemají rádi, když se jim nedůvěřuje — a stejně tak to mají naopak.']
+  ];
+  var TL=[
+    ['Před lety','Voldemortova moc roste','Temný čaroděj Voldemort terorizuje kouzelnický svět a mnoho rodin před ním žije ve strachu.'],
+    ['Noc, kdy vše začalo','Útok na Potterovy','Voldemort zabije Harryho rodiče a pokusí se zabít i jeho — ale kouzlo se obrátí proti němu a on zmizí.'],
+    ['Deset let ticha','Harry u Dursleyových','Malý Harry vyrůstá u příbuzných, kteří mu o jeho minulosti ani o kouzlech nikdy nic neřeknou.'],
+    ['Jedenácté narozeniny','Dopisy z Bradavic','Přesně v den, kdy je Harrymu jedenáct, mu začnou chodit dopisy — a nikdo mu je nechce dát přečíst.'],
+    ['Teď','Cesta do Bradavic','Hagrid přinese poslední dopis osobně a odhalí Harrymu pravdu — a náš příběh začíná.']
+  ];
+  var LORE=[
+    {ic:'kamen',min:9,title:'Kámen mudrců',text:'Kouzelný kámen, který vyrobil alchymista Mikuláš Flamel. Umí proměnit kov ve zlato a vyrábí elixír života, který prodlužuje život donekonečna. Skrývá se v Bradavicích, hlídaný mnoha kouzly.'},
+    {ic:'eye',min:2,title:'Voldemort',text:'Nejobávanější temný čaroděj, kterého se všichni bojí jmenovat nahlas. Kdysi zabil Harryho rodiče, ale při pokusu zabít i jeho samotného zeslábl a zmizel.'},
+    {ic:'star',min:12,title:'Zrcadlo z Erisedu',text:'Kouzelné zrcadlo, které neukazuje tvůj odraz, ale tvou nejhlubší touhu srdce. Je krásné se do něj podívat — ale nebezpečné se v něm ztratit.'},
+    {ic:'zvire',min:9,title:'Chloupek',text:'Obří třihlavý pes, kterého si Hagrid pořídil, aby hlídal tajný poklop v Bradavicích. Jediné, co ho spolehlivě uspí, je hudba.'}
+  ];
+
+  // ===== data: kapitoly =====
+  var CH = [
+    {gi:1,title:'Chlapec, který přežil',en:'The Boy Who Lived',fear:1,
+      sum:'Rodina Dursleyových si zakládá na tom, že je naprosto obyčejná — dokud jednoho podivného dne nezačnou po ulicích potulovat sovy a lidé v pláštích. V noci Brumbál, McGonagallová a Hagrid přinesou k jejich dveřím malého Harryho Pottera — jediné dítě, které přežilo útok temného čaroděje Voldemorta, a nechají ho vychovat u tety Petunie a strýce Vernona.',
+      focus:['Kdo je Voldemort a co té noci udělal','Proč Dursleyovi kouzelnický svět tak nesnáší','Harryho jizva ve tvaru blesku'],
+      q:['Proč si myslíš, že Brumbál nechal Harryho vyrůstat u mudlů, a ne u kouzelníků?','Jaké to asi je, nevědět nic o vlastní minulosti?'],
+      words:[['kouzelník','člověk s kouzelnou mocí, umí čarovat'],['mudla','člověk bez kouzelné moci']],
+      teaser:'Toho večera se stane něco, co změní život malého kluka, který o tom zatím vůbec neví. Kdo to jen může být?',
+      quiz:[['Kdo přinese malého Harryho k Dursleyovým?',['Hagrid','Pošťák','Nikdo, přišel sám'],0],['Co má Harry na čele?',['Jizvu ve tvaru blesku','Klobouk','Nic'],0]]},
+    {gi:2,title:'Zmizelé sklo',en:'The Vanishing Glass',fear:1,
+      sum:'Uběhne deset let a Harry žije u Dursleyových jako přehlížený sluha, zatímco jeho rozmazlený bratranec Dudley dostává všechno. Na výletě do zoo se před Harrym záhadně vypaří sklo teraria s hroznýšem — první náznak, že s Harrym není něco úplně obyčejné.',
+      focus:['Jak se Dursleyovi k Harrymu chovají','První kouzelnická nehoda — mizející sklo v zoo','Harryho jizva ho někdy bolí, ale nikdo mu nevysvětlí proč'],
+      q:['Proč se ti Harryho rodina zdá nespravedlivá?','Co myslíš, že se doopravdy stalo se sklem teraria?'],
+      words:[['terárium','prosklená klec pro plazy nebo hmyz'],['hroznýš','velký nejedovatý had, co svírá kořist']],
+      teaser:'V zoo se stane něco, co se rozumově vysvětlit nedá. Sklo prostě... zmizí. Kdo za to může?',
+      quiz:[['Co se stane se sklem teraria v zoo?',['Rozbije se kamenem','Zmizí','Nikdy tam nebylo'],1],['Jak se Dursleyovi k Harrymu chovají?',['Rozmazlují ho jako Dudleyho','Zacházejí s ním jako se služebnictvem','Jsou k němu milí'],1]]},
+    {gi:3,title:'Dopisy od nikoho',en:'The Letters from No One',fear:1,
+      sum:'Krátce před Harryho jedenáctými narozeninami začnou do domu chodit dopisy adresované přesně jemu — psané zeleným inkoustem, adresované až na „skříň pod schody". Strýc Vernon se je zoufale snaží zastavit, ale dopisy přicházejí ve stovkách, komínem i oknem.',
+      focus:['Odkud dopisy asi přicházejí a proč je strýc Vernon tak vyděšený','Harry se poprvé přestěhuje ze skříně do pokoje','Rodina uteče před dopisy až na odlehlý ostrov'],
+      q:['Proč asi strýc Vernon dopisy tolik tají a ničí?','Co by sis myslel, kdyby ti najednou začaly chodit záhadné dopisy?'],
+      words:[['pergamen','tlustý staromódní papír, na který se dřív psalo']],
+      fearnote:'Napětí roste, ale nic vyloženě strašidelného se zatím neděje — spíš tajemná honička s dopisy.',
+      teaser:'Dopisy přicházejí a přicházejí — jednu, deset, sto najednou. Kdo je tak zoufale posílá, a proč se je strýc Vernon bojí přečíst?',
+      quiz:[['Jakou barvou inkoustu jsou dopisy psané?',['Zelenou','Červenou','Zlatou'],0],['Kam se rodina nakonec schová před dopisy?',['Na odlehlý ostrov s chatrčí','Do jiného města','Nikam, zůstanou doma'],0]]},
+    {gi:4,title:'Hlídač klíčů',en:'The Keeper of the Keys',fear:1,
+      sum:'Přesně o půlnoci Harryho narozenin někdo obrovský vyrazí dveře chatrče — je to Hagrid, hajný z Bradavic, který přijel Harrymu osobně předat pozvánku do kouzelnické školy. Poprvé se Harry dozví pravdu o svých rodičích i o tom, kdo je Voldemort.',
+      focus:['Hagridovo dramatické vystoupení a dárek k narozeninám','Pravda o smrti Harryho rodičů','Proč se všichni v kouzelnickém světě bojí vyslovit jméno Voldemort'],
+      q:['Jak by ses cítil, kdyby ti najednou řekli, že jsi něco úplně jiného, než sis myslel?','Proč se lidé bojí vyslovit Voldemortovo jméno nahlas?'],
+      words:[['kouzelnická hůlka','nástroj, kterým kouzelníci sesílají kouzla'],['Bradavice','škola čar a kouzel, kam Harry dostane pozvánku']],
+      fearnote:'Poprvé se otevřeně mluví o vraždě Harryho rodičů — citlivější moment, ale vyprávěný laskavě a s nadějí.',
+      teaser:'O půlnoci vyrazí dveře chatrče obrovský stín. Kdo to je — a co Harrymu přinesl?',
+      quiz:[['Kdo přijede Harrymu předat pozvánku do Bradavic?',['Hagrid','Pošťák','Strýc Vernon'],0],['Jaký dárek dostane Harry poprvé v životě?',['Narozeninový dort','Nové kolo','Peníze'],0]]},
+    {gi:5,title:'Příčná ulice',en:'Diagon Alley',fear:1,
+      sum:'Hagrid vezme Harryho do skryté kouzelnické Příčné ulice, kde si koupí učebnice, kotlík, sovu Hedviku a nejdůležitější věc ze všech — vlastní kouzelnickou hůlku, která si podle pana Ollivandera vybírá kouzelníka stejně jako on ji. V bance Gringottových se navíc mihne záhadný trezor, který je téhož dne vyklizen.',
+      focus:['Jak funguje kouzelnická banka Gringottova','Výběr hůlky u pana Ollivandera — hůlka si vybírá kouzelníka','První setkání s Dracem Malfoyem'],
+      q:['Co by sis koupil jako první, kdybys mohl nakupovat v kouzelnickém obchodě?','Proč myslíš, že si hůlka „vybírá" kouzelníka, a ne naopak?'],
+      words:[['Gringottova banka','kouzelnická banka, kterou střeží skřeti'],['hůlkař','řemeslník, co vyrábí a prodává kouzelnické hůlky']],
+      teaser:'Za obyčejnou cihlovou zdí se skrývá ulice plná kouzel, koulí ohně a hůlek, které si vybírají svého majitele samy. Co si Harry koupí jako první?',
+      quiz:[['Kdo prodává Harrymu kouzelnickou hůlku?',['Pan Ollivander','Hagrid','Strýc Vernon'],0],['Jakou sovu Harry dostane od Hagrida k narozeninám?',['Hedviku','Errolku','Bystrozorku'],0]]},
+    {gi:6,title:'Cesta z nástupiště devět a tři čtvrtě',en:'The Journey from Platform Nine and Three-Quarters',fear:1,
+      sum:'Na nádraží King’s Cross Harry najde tajné nástupiště schované ve zdi mezi nástupišti devět a deset, nastoupí do Bradavického expresu a ve vlaku pozná Rona Weasleyho i Hermionu Grangerovou — a poprvé se setká i s Dracem Malfoyem.',
+      focus:['Jak se dostat na nástupiště devět a tři čtvrtě','Nová přátelství — Ron a Hermiona','Sladkosti z vozíku a žabí čokoládové bublinky'],
+      q:['Kdybys mohl projít zdí na tajné nástupiště, kam bys chtěl, aby tě vlak zavezl?','Co si myslíš o tom, jak se Ron a Harry ve vlaku skamarádí?'],
+      words:[['famfrpál','kouzelnický sport, hraje se na koštěti'],['fakulta','jedna ze čtyř skupin, do kterých se žáci Bradavic dělí']],
+      teaser:'Nástupiště devět a tři čtvrtě prý neexistuje — dokud neproběhneš rovnou skrz zeď. Kdo Harryho ve vlaku čeká?',
+      quiz:[['Jak se dostane na nástupiště devět a tři čtvrtě?',['Proběhne rovnou zdí','Přeletí na koštěti','Použije výtah'],0],['S kým se Harry ve vlaku skamarádí?',['S Ronem a Hermionou','S Dracem','S nikým'],0]]},
+    {gi:7,title:'Moudrý klobouk',en:'The Sorting Hat',fear:2,
+      sum:'V Bradavicích čeká nové žáky slavnostní řazení: starý Moudrý klobouk se každému podívá do hlavy a rozhodne, do které ze čtyř fakult patří. Harry se bojí, aby neskončil ve Zmijozelu, a nakonec s úlevou usedne mezi Nebelvíry vedle Rona.',
+      focus:['Jak funguje Moudrý klobouk a čtyři fakulty Bradavic','Harryho strach, že by mohl patřit do Zmijozelu','První pohled na profesora Snapea a jeho podivně nepřátelský pohled'],
+      q:['Do které fakulty by ses chtěl zařadit ty a proč?','Proč se Harry tak bojí, aby ho klobouk nezařadil do Zmijozelu?'],
+      words:[['Nebelvír, Zmijozel, Havraspár, Mrzimor','čtyři fakulty Bradavic, každá s jinými hodnotami']],
+      fearnote:'Napínavý, ale ne děsivý moment — jde spíš o očekávání a mírný strach ze zařazení.',
+      teaser:'Starý klobouk se ti podívá přímo do hlavy a rozhodne o čtyřech dalších letech tvého života. Kam asi Harryho zařadí?',
+      quiz:[['Jak se rozhoduje, do které fakulty žák patří?',['Moudrý klobouk se podívá do jeho hlavy','Losuje se','Rozhodují rodiče'],0],['Do jaké fakulty je Harry nakonec zařazen?',['Nebelvír','Zmijozel','Havraspár'],0]]},
+    {gi:8,title:'Mistr lektvarů',en:'The Potions Master',fear:2,
+      sum:'Školní všední den se rozjíždí naplno — pohyblivé schody, mluvící obrazy, hodiny přeměňování u profesorky McGonagallové a hlavně první nepříjemná hodina lektvarů u profesora Snapea, který si na Harryho hned od začátku zasedne.',
+      focus:['Jak vypadá běžný školní den v Bradavicích','Proč je Snape na Harryho tak nespravedlivě přísný','Nevillovo pořezané zápěstí ukazuje, jak nebezpečné lektvary umí být'],
+      q:['Zažil jsi někdy, že se ti někdo zdál nespravedlivý bez zjevného důvodu? Jak ses cítil?','Co myslíš, že Snape Harrymu vlastně vyčítá?'],
+      words:[['lektvar','kouzelný nápoj uvařený podle přesného postupu'],['přeměňování','kouzelnický obor, jak proměnit jednu věc v jinou']],
+      fearnote:'Nic strašidelného — jen napětí z nespravedlivého profesora a školního tlaku.',
+      teaser:'Bradavice mají schody, co se samy hýbou, a jednoho profesora, který na Harryho pohlíží, jako by ho už dávno nenáviděl. Proč asi?',
+      quiz:[['Který profesor je na Harryho hned od začátku nespravedlivě přísný?',['Snape','Brumbál','Hagrid'],0],['Co se v Bradavicích samo hýbe a mate nové žáky?',['Schody','Postele','Okna'],0]]},
+    {gi:9,title:'Půlnoční souboj',en:'The Midnight Duel',fear:3,
+      sum:'Draco vyzve Harryho na půlnoční kouzelnický souboj, jenže je to past — místo souboje čeká na Harryho, Rona a Hermionu školník Filch. Na útěku před ním narazí přesně na dveře zapovězené chodby a za nimi na obřího třihlavého psa, který hlídá tajemný poklop v podlaze.',
+      focus:['Past, kterou Draco Harrymu nachystá','Objevení Chloupka a poklopu, který hlídá','Proč je najednou i Hermiona ochotná porušit pravidla'],
+      q:['Proč si myslíš, že Draco nachystal Harrymu past místo souboje?','Co asi ten obří pes hlídá, když je to tak přísně tajné?'],
+      words:[['souboj','kouzelnický souboj dvou čarodějů na hůlky'],['poklop','dvířka v podlaze, co vedou dolů']],
+      fearnote:'Napínavá noční honička a nečekané setkání s obřím třihlavým psem — dost strašidelné, ale rychle skončí.',
+      teaser:'Na půlnoční souboj se nakonec žádný souboj nekoná — místo toho čeká za rohem něco mnohem strašidelnějšího.',
+      quiz:[['Kdo vyzve Harryho na půlnoční souboj?',['Draco Malfoy','Ron','Neville'],0],['Co Harry, Ron a Hermiona najdou za zapovězenými dveřmi?',['Obřího třihlavého psa','Prázdnou místnost','Knihovnu'],0]]},
+    {gi:10,title:'Halloween',en:'Hallowe’en',fear:4,
+      sum:'Na Halloweenskou hostinu vtrhne zpráva, že se do hradu dostal horský troll. Zatímco si ho ostatní žáci pletou s programem oslavy, Harry a Ron si vzpomenou, že Hermiona o hostině neví a je sama na dívčí toaletě — a vyrazí ji zachránit.',
+      focus:['Skutečné nebezpečí — troll v hradě','Harry a Ron riskují, aby zachránili Hermionu','Jak se z nepřátel stanou opravdoví přátelé'],
+      q:['Proč myslíš, že se Harry s Ronem rozhodli jít Hermionu zachránit, i když riskovali průšvih?','Změnilo tohle dobrodružství jejich přátelství? Jak?'],
+      words:[['troll','obrovský, hloupý a nebezpečný kouzelný tvor s kyjem'],['znehybňovací kouzlo','kouzlo, které dočasně ochromí nepřítele']],
+      fearnote:'⚠️ Nejnapínavější kapitola dosud — skutečné nebezpečí v podobě trolla, ale s dobrým koncem a bez zranění.',
+      teaser:'Do hradu se dostane něco obrovského a nebezpečného — a Hermiona o tom vůbec neví.',
+      quiz:[['Jaké nebezpečné stvoření se dostane do Bradavic na Halloween?',['Horský troll','Drak','Obří pavouk'],0],['Kde se v tu chvíli schovává Hermiona?',['Na dívčí toaletě','Ve své ložnici','V knihovně'],0]]},
+    {gi:11,title:'Famfrpál',en:'Quidditch',fear:3,
+      sum:'Harry se jako nejmladší hráč za sto let stane chytačem nebelvírského famfrpálového týmu. Při svém prvním velkém zápase se mu koště začne samo od sebe vzpouzet, a Hermiona si všimne, že na tribuně někdo — možná Snape — na Harryho upřeně civí a mumlá si kouzlo.',
+      focus:['Pravidla famfrpálu — kouzelnického sportu na koštěti','Podezření, že Snape Harryho koště začaroval','Hermiona v akci — zapálí Snapeovi plášť, aby přerušila kouzlo'],
+      q:['Jaký sport by sis přál, kdyby se hrál na létajícím koštěti?','Proč si Harry i čtenář myslí, že za tím vzpurným koštětem stojí Snape — a proč se to nakonec ukáže jinak?'],
+      words:[['Zlatonka','malý okřídlený zlatý míček, který loví chytač'],['famfrpálová hůl','koště, na kterém hráči famfrpálu létají']],
+      fearnote:'Napínavý sportovní zápas s momentem skutečného nebezpečí (Harry visí na vzpurném koštěti vysoko nad zemí), ale končí dobře.',
+      teaser:'Vysoko nad hřištěm se Harrymu najednou koště vymkne z kontroly. Kdo za tím stojí — a stihne to Hermiona zarazit včas?',
+      quiz:[['Jakou pozici hraje Harry ve famfrpálovém týmu?',['Chytač','Brankář','Odrážeč'],0],['Co udělá Hermiona, když si myslí, že Snape kouzlí proti Harrymu?',['Podpálí mu plášť','Zavolá učitele','Nic neudělá'],0]]},
+    {gi:12,title:'Zrcadlo z Erisedu',en:'The Mirror of Erised',fear:2,
+      sum:'O Vánocích Harry dostane od neznámého dárce kouzelný plášť neviditelnosti, který kdysi patřil jeho otci, a při nočním toulání hradem objeví Zrcadlo z Erisedu — v němž místo sebe uvidí své zemřelé rodiče. Brumbál mu vysvětlí, proč není dobré dívat se do zrcadla příliš dlouho.',
+      focus:['Kouzelný dárek — plášť neviditelnosti po tatínkovi','Co Zrcadlo z Erisedu doopravdy ukazuje','Brumbálovo moudré varování před tím, ztrácet se ve snech'],
+      q:['Co bys ty sám uviděl, kdyby ses podíval do zrcadla, které ukazuje tvou nejhlubší touhu?','Proč Brumbál Harrymu řekne, že se do zrcadla nesmí dívat pořád?'],
+      words:[['plášť neviditelnosti','kouzelný plášť, pod kterým je člověk neviditelný'],['Zrcadlo z Erisedu','kouzelné zrcadlo, co ukazuje nejhlubší touhu srdce']],
+      teaser:'O Vánocích čeká Harryho dárek, jaký ještě nikdy nedostal — a v prázdné učebně objeví zrcadlo, které mu ukáže něco, po čem touží ze všeho nejvíc.',
+      quiz:[['Co Harry dostane o Vánocích od neznámého dárce?',['Plášť neviditelnosti','Nové koště','Kouzelnou hůlku'],0],['Co Harry uvidí v Zrcadle z Erisedu?',['Své rodiče','Sám sebe jako dospělého','Nic'],0]]},
+    {gi:13,title:'Mikuláš Flamel',en:'Nicolas Flamel',fear:2,
+      sum:'O prázdninách trojice pátrá, kdo je Mikuláš Flamel — jméno, které Harry zahlédl u pana Ollivandera i na Chloupkově kartě. Hermiona ho nakonec najde v knize o alchymii: je to slavný výrobce jediného Kamene mudrců na světě, který dokáže vyrábět zlato a elixír věčného života.',
+      focus:['Detektivní pátrání po záhadném jméně','Co je Kámen mudrců a k čemu slouží','Skládačka: proč by někdo chtěl Kámen ukrást'],
+      q:['Proč by podle tebe někdo toužil po nesmrtelnosti? Je to vždycky dobrý nápad?','Co všechno už teď víme o tom, co Chloupek hlídá?'],
+      words:[['alchymie','stará kouzelnická věda o proměně kovů a hledání nesmrtelnosti'],['elixír života','kouzelný nápoj, co prodlužuje život donekonečna']],
+      teaser:'Jedno jméno se objevuje pořád dokola — na kartičce od žabí čokolády i na Chloupkově obojku. Kdo je vlastně Mikuláš Flamel?',
+      quiz:[['Co Mikuláš Flamel podle staré knihy vyrobil?',['Kámen mudrců','Kouzelnou hůlku','Nový hrad'],0],['K čemu Kámen mudrců slouží?',['Vyrábí zlato a elixír věčného života','Létá','Mluví'],0]]},
+    {gi:14,title:'Norbert, norský hřbetozubec',en:'Norbert the Norwegian Ridgeback',fear:3,
+      sum:'Hagrid v kartách vyhraje dračí vejce a navzdory zákazu si vychová malého dráčka Norberta. Když se z něj stane nezvladatelné a nebezpečné mládě, Harry, Ron a Hermiona pomůžou Hagridovi Norberta v noci propašovat pryč — a při té výpravě je chytí Filch, což jim vynese velký trest.',
+      focus:['Hagridova neochota vzdát se nebezpečného mazlíčka','Noční pašování draka po hradě','Následky — trest v Zakázaném lese'],
+      q:['Proč myslíš, že Hagrid tak riskuje kvůli drakovi, i když ví, že je to nebezpečné a zakázané?','Jaký trest myslíš, že bude čekat na Harryho a spol. za noční toulání?'],
+      words:[['hřbetozubec','druh draka s ostrými hřbetními hroty'],['propašovat','tajně a nepozorovaně někam dostat']],
+      fearnote:'Napětí z nočního pašování a strachu z odhalení, žádné skutečné nebezpečí pro postavy — spíš dobrodružná honička.',
+      teaser:'Hagrid tvrdí, že drak je jen velké kotě. Realita bude trochu jiná — a Harryho čeká pořádná noční honička po hradě.',
+      quiz:[['Jak se jmenuje Hagridův drak?',['Norbert','Chloupek','Tesák'],0],['Kdo Harryho a spol. při nočním pašování draka chytí?',['Filch','Snape','Brumbál'],0]]},
+    {gi:15,title:'Zakázaný les',en:'The Forbidden Forest',fear:5,
+      sum:'Za trest musí Harry, Hermiona, Neville a Draco jít v noci s Hagridem do Zakázaného lesa hledat zraněného jednorožce. Harry tam narazí na kápí zahalenou postavu, která pije stříbrnou jednorožčí krev — a jen díky kentaurovi Firenzovi vyvázne bez úhony.',
+      focus:['Nejtemnější a nejnapínavější místo v knize — Zakázaný les v noci','Kdo pije jednorožčí krev a proč','Kentaur Firenze zachrání Harryho'],
+      q:['Byla to podle tebe spravedlivá výprava jako trest? Proč ano, nebo ne?','Co si myslíš, že ta zahalená postava v lese doopravdy je?'],
+      words:[['jednorožec','vzácné a čisté kouzelné zvíře s rohem, jehož krev má magickou moc'],['kentaur','napůl člověk, napůl kůň, žije v lese']],
+      fearnote:'⚠️⚠️ Nejstrašidelnější kapitola knihy — temný les v noci, zraněný jednorožec a tajemná postava pijící krev. Doporučujeme číst společně a nechat prostor na otázky.',
+      teaser:'Do Zakázaného lesa se nikdo nesmí sám — a dnes v noci tam Harry uvidí něco, co ho pořádně vyděsí.',
+      quiz:[['Co Harry v lese najde zraněné?',['Jednorožce','Draka','Ropuchu'],0],['Kdo Harryho v lese zachrání?',['Kentaur Firenze','Hagrid','Snape'],0]]},
+    {gi:16,title:'Skrz propadliště',en:'Through the Trapdoor',fear:4,
+      sum:'Trojice se dozví, že je Kámen mudrců v hradu vážně ohrožen, a vydá se sama v noci přes poklop, kolem uspaného Chloupka, řadou komnat plných překážek — obřích kouzelnických šachů, létajících klíčů a hádanky s lektvary — až k samotnému srdci tajemství.',
+      focus:['Řetěz nebezpečných komnat, které museli profesoři vymyslet, aby Kámen ochránili','Ronova oběť v obřích šachách','Hermionina chytrost při hádance s lektvary'],
+      q:['Která z komnat se ti zdála nejnebezpečnější a proč?','Co myslíš, že Harryho čeká za poslední dveřmi?'],
+      words:[['kouzelnické šachy','šachy, kde figurky ožívají a bojují'],['hádanka s lektvary','logická hádanka, kde je třeba vybrat správnou lahvičku']],
+      fearnote:'⚠️ Vrcholně napínavá kapitola s reálným nebezpečím (Ron je ve šachách „obětován"), ale bez krvavých scén.',
+      teaser:'Chloupek dnes v noci spí — což znamená, že přišel čas jít až na samý konec zapovězené chodby.',
+      quiz:[['Co Ron obětuje v obřích kouzelnických šachách?',['Sám sebe, aby hru vyhráli','Svou hůlku','Nic'],0],['Kdo vyřeší hádanku s lektvary?',['Hermiona','Ron','Neville'],0]]},
+    {gi:17,title:'Muž se dvěma tvářemi',en:'The Man with Two Faces',fear:4,
+      sum:'Za posledními dveřmi na Harryho nečeká Snape, jak čekal, ale profesor Quirrell — a pod jeho turbanem se skrývá zesláblý Voldemort. Harry Kámen ubrání díky lásce své zemřelé matky a Brumbál dorazí na poslední chvíli. Na závěrečné hostině pak ředitel obrátí bodování ve prospěch Nebelvíru.',
+      focus:['Kdo doopravdy stál za vším nebezpečím celého roku','Proč Harryho nemůže Voldemort ani skrz Quirrella zabít','Závěrečná hostina a proměna bodování'],
+      q:['Co myslíš, že přesně Harryho před Voldemortem ochránilo?','Co bys řekl o tom, jak se rok pro Harryho a jeho kamarády nakonec vyvedl?'],
+      words:[['láska matky','kouzelná ochrana, kterou Harry nosí ve své krvi od chvíle, kdy ho matka zachránila'],['Školní pohár','trofej pro fakultu s nejvíc body na konci roku']],
+      fearnote:'⚠️ Vyvrcholení knihy — přímé setkání se zesláblým Voldemortem. Napínavé a intenzivní, ale s jasně dobrým koncem.',
+      teaser:'Za posledními dveřmi nečeká na Harryho ten, koho čekal — a odpoví se tu na otázku, kdo celou dobu stál za vším nebezpečím.',
+      quiz:[['Kdo se skrývá pod Quirrellovým turbanem?',['Voldemort','Snape','Nikdo'],0],['Co Harryho před Voldemortem nakonec ochrání?',['Láska jeho matky','Kouzelná hůlka','Plášť neviditelnosti'],0]]}
+  ];
+  var GIMETA={}; CH.forEach(function(c){ GIMETA[c.gi]={lab:'Kap. '+c.gi,title:c.title}; });
+
+  // ===== Dětský převyprávěný recap "Co se v kapitole stalo" =====
+  var KIDSUM={
+    1:['Rodina Dursleyových bydlela v Zobí ulici a byla pyšná na to, jak je naprosto obyčejná. Jenže jednoho dne se po ulicích začaly potulovat sovy za bílého dne a lidé v podivných pláštích si šeptali jméno „Potter". Paní Dursleyová měla totiž sestru, o které nikdy nemluvila — a ta měla syna jménem Harry.',
+       'V noci přišli k domu Dursleyových tři tajemní návštěvníci — moudrý stařec Brumbál, přísná profesorka McGonagallová a obrovský chlapík jménem Hagrid, který nesl v náručí zabalené miminko. Byl to malý Harry Potter, jehož rodiče té noci zemřeli rukou zlého čaroděje. Harry přežil jako jediný na světě — a na čele mu zůstala jizva ve tvaru blesku. Brumbál se rozhodl, že bude nejbezpečnější, když Harry vyroste u tety a strýce, aniž by o svém osudu cokoliv věděl.'],
+    2:['Uplynulo deset let. Harry teď žil ve Zobí ulici jako popelka — spal ve skříni pod schody, nosil bratrancovo staré oblečení a nikdo se ho nikdy nezastal. Jeho bratranec Dudley byl přesným opakem: rozmazlený, tlustý a zlomyslný kluk, kterému Dursleyovi splnili každé přání.',
+       'Na Dudleyho narozeninách vzali Harryho s sebou do zoo, protože neměli, kam by ho jinak dali. U klece s hroznýšem si Harry s hadem potichu povídal — a had mu dokonce odpověděl! Pak se ale stalo něco šíleného: sklo teraria naráz zmizelo, had vyklouzl ven a vyděšený Dudley spadl do bazénku s vodou. Nikdo nechápal, jak se to mohlo stát — jenom Harry měl matné podezření, že za tím možná byl on sám.'],
+    3:['Pár dní před Harryho jedenáctými narozeninami přišel dopis adresovaný přesně jemu — na „skříň pod schody"! Strýc Vernon ho zuřivě spálil, ale druhý den přišel další. A pak další. A další — až nakonec dopisy padaly komínem, přilétaly oknem, dokonce byly schované ve vajíčkách, co jim donesl mlékař.',
+       'Strýc Vernon se zbláznil strachy. Nejdřív se s celou rodinou přestěhoval do hotelu, ale i tam je dopisy našly. Nakonec je odvezl na úplně opuštěný skalnatý ostrůvek uprostřed moře, do rozpadlé chatrče, kde podle něj nikdo dopis nikdy nedoručí. Venku zuřila bouřka a blížila se půlnoc — přesně chvíle, kdy Harrymu bylo jedenáct let.'],
+    4:['Přesně o půlnoci se ozvalo hromové zabušení a dveře chatrče vylétly z pantů. Ve dveřích stál obrovský vousatý muž — Hagrid, hajný z Bradavic. Popřál Harrymu k narozeninám, dal mu narozeninový dort (trochu pomačkaný) a řekl mu něco, co Harryho úplně šokovalo: je kouzelník a čeká ho místo ve škole čar a kouzel jménem Bradavice.',
+       'Hagrid Harrymu vysvětlil, co se doopravdy stalo té noci, kdy zemřeli jeho rodiče: nezabila je autonehoda, jak tvrdili Dursleyovi, ale zlý čaroděj Voldemort. Harry jako jediný na světě to kouzlo přežil, a proto je v kouzelnickém světě slavný, aniž by o tom sám věděl. Strýc Vernon se snažil Hagrida zastavit, ale ten na něj jen namířil svůj růžový deštník — a najednou měl Dudley prasečí ocásek.'],
+    5:['Hagrid vzal Harryho do Londýna, do hospůdky U Děravého kotle, a odtamtud na dvorek, kde poklepal hůlkou na pár cihel — a zeď se rozestoupila do ulice plné kouzelnických obchodů! To byla Příčná ulice. Nejdřív zašli do kouzelnické banky Gringottovy, kterou střeží skřeti, kde měl Harry uložené peníze po rodičích — víc, než by kdy čekal.',
+       'Pak spolu nakoupili učebnice, kotlík, teleskop a Hagrid Harrymu k narozeninám koupil sněhobílou sovu jménem Hedvika. Nejdůležitější zastávka ale byla u pana Ollivandera, hůlkaře, který zná osud každé hůlky, co kdy prodal. Vyzkoušeli spoustu hůlek, než se jedna sama rozzářila — hůlka z cesmíny s jádrem z pera fénixe. Pan Ollivander přitom podivně poznamenal, že pero pochází z téhož fénixe jako hůlka jistého jiného, mnohem nebezpečnějšího kouzelníka.'],
+    6:['Na nádraží King’s Cross Harry nemohl najít nástupiště devět a tři čtvrtě — dokud si nevšiml rodiny se sovami a kočičím košíkem, která rovnou proběhla skrz zeď mezi nástupišti devět a deset! Šel za nimi a ocitl se přímo před rudým parním vlakem — Bradavickým expresem. Rodina se jmenovala Weasleyovi a jejich nejmladší syn Ron se s Harrym skamarádil hned v kupé.',
+       'Cestou vlakem si koupili hory sladkostí z vozíku — žabí čokoládu, co dokáže i uskákat, a fazolky Bertíka Vespolka se všemi příchutěmi (i tou zvracecí). Do kupé nakoukla i chytrá holka jménem Hermiona Grangerová, hledající ztracenou ropuchu, a taky nafoukaný kluk Draco Malfoy, který se Harrymu hned od začátku nelíbil. Když se vlak konečně zastavil, čekaly je už jenom tma, jezera a první pohled na hrad Bradavice.'],
+    7:['Loďkami přes jezero dorazili noví žáci až k obrovskému hradu Bradavice. Ve Velké síni je čekal starý, potrhaný Moudrý klobouk, který se každému po nasazení na hlavu podíval přímo do myšlenek a hlasitě oznámil, do které ze čtyř fakult patří — Nebelvír, Zmijozel, Havraspár nebo Mrzimor. Harry se strašně bál, aby ho klobouk nezařadil do Zmijozelu, odkud pocházejí skoro všichni zlí čarodějové.',
+       'Nakonec si klobouk se vší vážností vybral pro Harryho Nebelvír — stejně jako pro Rona chvíli předtím a pro Hermionu hned po nich. Celý nebelvírský stůl bouřlivě jásal. Na hostině pak Harry poprvé zahlédl profesora Snapea, který se na něj díval tak nepřátelsky, že ho z toho zabolela jizva na čele — i když vůbec netušil proč.'],
+    8:['Všední dny v Bradavicích byly plné překvapení — schody se samy přesouvaly, obrazy na chodbách mluvily a jeden vzteklý duch jménem Protiva dělal žákům naschvály. Na hodině přeměňování se přísná profesorka McGonagallová sama proměnila z kočky zpátky v člověka přímo před očima celé třídy.',
+       'Nejhorší byla hodina lektvarů v podzemí u profesora Snapea. Ten si Harryho vybral hned na první hodině, ptal se ho na věci, které ještě žádný prvák nemohl znát, a strhával Nebelvíru body za maličkosti. Bylo jasné, že ho z nějakého důvodu nesnáší — ale Harry netušil, proč zrovna jeho.'],
+    9:['Draco Malfoy vyzval Harryho na půlnoční kouzelnický souboj v trofejní síni. Harry s Ronem se tam v noci vydali, jenže žádný Draco nepřišel — místo toho na chodbě zaslechli školníka Filche a jeho kočku, jak je hledají. Cestou při útěku přibrali ještě Hermionu a Nevilla a všichni čtyři se schovávali po celém hradě, dokud jim nedošlo, že se octli přesně před dveřmi zapovězené chodby ve třetím patře.',
+       'Ze zvědavosti nakoukli dovnitř — a před nimi stál obrovský pes, ale ne obyčejný. Měl tři hlavy! Naštěstí je pes hned nezaútočil a všichni čtyři stihli utéct zpátky do postele. Než usnuli, všimli si, že pes stál na dřevěném poklopu v podlaze — jako by ho hlídal. Co by mohlo být tak důležité, že to potřebuje hlídat obří třihlavý pes?'],
+    10:['Na Halloweenskou hostinu vběhl do Velké síně vyděšený profesor Quirrell a vykřikl, že se do hradu dostal troll — a pak omdlel. Nastal chaos. Žáky poslali zpátky do společenských místností, ale Harry s Ronem si najednou vzpomněli, že Hermiona celý den nevěděla, co se děje, a je sama, uplakaná, na dívčí toaletě.',
+        'Vydali se ji varovat — a přesně ve chvíli, kdy dorazili, se do toalety dobelhal sám troll! Byla to hrozivá podívaná: obrovský, páchnoucí, s klackem v ruce. Harry v panice skočil trollovi na záda a zabodl mu hůlku do nosu, zatímco Ron si konečně vzpomněl na kouzlo, které mu na hodině znehybnilo klacek nad hlavou. Trolla se jim nakonec podařilo srazit k zemi. Od té chvíle se z Harryho, Rona a Hermiony stala nerozlučná trojice.'],
+    11:['Harry dostal nečekanou nabídku: stát se chytačem nebelvírského famfrpálového týmu, jako nejmladší hráč za sto let! Famfrpál se hraje vysoko nad hřištěm na létajících koštětech a chytačovým úkolem je chytit malou zlatou Zlatonku, která zápas rozhodne. Profesorka McGonagallová mu sehnala moderní koště Nimbus 2000.',
+        'Při prvním velkém zápase šlo zpočátku všechno skvěle, ale najednou se Harryho koště začalo samo vzpouzet a snažilo se ho shodit vysoko nad zemí! Hermiona si všimla, že se profesor Snape upřeně dívá na Harryho a bez mrknutí si šeptá kouzlo — a v panice mu podpálila okraj pláště. Koště se hned uklidnilo a Harry stihl Zlatonku chytit přímo ústy. Až později se ukáže, že to celé bylo úplně jinak, než si všichni mysleli.'],
+    12:['O Vánocích zůstal Harry poprvé v Bradavicích a dostal víc dárků, než kdy v životě — nejzvláštnější z nich byl stříbřitý plášť neviditelnosti od neznámého dárce, se vzkazem, že patřil jeho otci. Harry se pod ním v noci proplížil po hradě a objevil prázdnou učebnu se starým zrcadlem s nápisem pozpátku.',
+        'Když se do zrcadla podíval, uviděl v něm svou rodinu — mámu, tátu a spoustu příbuzných, které nikdy nepoznal. Vracel se tam noc co noc, dokud ho nenašel Brumbál a nevysvětlil mu, co zrcadlo doopravdy dělá: neukazuje budoucnost ani skutečnost, ale nejhlubší touhu srdce. A že se člověk ve snění o tom, po čem touží, může snadno ztratit a zapomenout žít.'],
+    13:['Harryho pořád nepustilo z hlavy jméno Mikuláš Flamel, které zahlédl u pana Ollivandera a které bylo napsané i na kartičce od Chloupkova pána. Celé prázdniny i po návratu do školy se ho snažili se svými kamarády vypátrat v knihách — marně, dokud Hermiona nenašla knihu, kterou si vzala jen tak pro zábavu na čtení před spaním.',
+        'V ní stálo: Mikuláš Flamel je slavný alchymista, jediný známý výrobce Kamene mudrců — kouzelného kamene, který umí měnit kov ve zlato a vyrábí elixír života, díky kterému je Flamelovi už 665 let! Najednou všem došlo, co asi Chloupek hlídá pod poklopem — a proč by o to mohl mít někdo v Bradavicích tak velký zájem.'],
+    14:['Hagrid vyhrál v kartách s neznámým cizincem dračí vejce a navzdory tomu, že chov draků je přísně zakázaný, se rozhodl si dráčka vychovat. Když se z vejce vylíhl malý černý dráček jménem Norbert, byl Hagrid nadšený jako malé dítě — jenže Norbert rychle rostl, chrlil oheň a kousal, kam se dalo.',
+        'Harry, Ron a Hermiona věděli, že to dlouho v tajnosti nevydrží, a domluvili s Ronovým bratrem, aby Norberta v noci propašovali pryč na věži k jeho kamarádům z dračí rezervace. Cestou zpátky do postele je ale chytil školník Filch spolu s profesorkou McGonagallovou — a čekal je pořádně tvrdý trest: noční výprava do Zakázaného lesa.'],
+    15:['Za trest šli Harry, Hermiona, Neville a (překvapivě) i Draco s Hagridem v noci do Zakázaného lesa hledat zraněného jednorožce, jehož stříbrná krev se objevovala po celém lese. Les byl temný a plný zvuků, které nikdo nechtěl slyšet moc zblízka. Nakonec se skupina rozdělila a Harry šel s psem Tesákem sám na jednu stranu.',
+        'Na mýtině našel mrtvého jednorožce — a nad ním kápí zahalenou postavu, jak pije jeho stříbrnou krev přímo z rány! Postava se k Harrymu obrátila a on ucítil, jak se mu jizva rozbušila bolestí. V tu chvíli se odnikud vynořil kentaur jménem Firenze, postavu zahnal a Harryho zachránil. Cestou zpátky mu vysvětlil, co pití jednorožčí krve znamená a kdo se asi v lese skrývá — někdo, kdo touží po Kameni mudrců, aby znovu získal sílu.'],
+    16:['Harry se dozvěděl, že se ještě téhož večera někdo pokusí Kámen mudrců ukrást, a s Ronem a Hermionou se rozhodli mu v tom zabránit sami, protože dospělým nikdo nevěřil. Prošli kolem spícího Chloupka (uspala ho hudba) a propadli se do řetězu komnat, které jednotliví profesoři vymysleli jako ochranu: nejdřív rostlina, co je div neuškrtila, pak pokoj s klíči, kde museli chytit ten pravý na koštěti.',
+        'V další komnatě je čekaly obří kouzelnické šachy, kde musel Ron statečně obětovat sám sebe jako figurku, aby hra pokračovala dál — a byl při tom pořádně zraněný. Poslední hádanku, sedm lahviček s lektvary, z nichž jen jedna byla bezpečná k projití, rozluštila Hermiona svou logikou. Ale dál mohl jít už jen Harry sám — přesně tam, kde na něj čekalo to největší tajemství celého roku.'],
+    17:['Za posledními dveřmi Harry čekal Snapea — místo něj ale narazil na profesora Quirrella. Ten mu prozradil, že to on celou dobu pouštěl Chloupka a začaroval Harryho koště — na Snapeův příkaz ho ve skutečnosti chránil, ne ohrožoval! A pak si Quirrell sundal turban a Harry uviděl to nejděsivější: na zadní straně jeho hlavy byla přišroubovaná tvář Voldemorta, který v Quirrellovi celou dobu žil, zesláblý, ale živý.',
+        'Voldemort chtěl Kámen za každou cenu a přikázal Quirrellovi, aby Harryho chytil. Jenže kdykoliv se ho Quirrell dotkl, spálil si ruce do puchýřů — Harryho totiž chránila stará kouzelná ochrana, láska jeho zemřelé matky. Než Harry omdlel, dorazil na poslední chvíli Brumbál a všechno zachránil. O pár dní později se Harry probudil v ošetřovně a dozvěděl se, že Kámen mudrců byl zničen, aby už nikoho nelákal. Na závěrečné hostině pak Brumbál v poslední minutě přidělil tolik bodů Harrymu, Ronovi, Hermioně a Nevillovi za jejich odvahu, že Nebelvír těsně vyhrál Školní pohár.']
+  };
+
+  // ===== KIDINTRO: "Co bylo minule" + "Co nás čeká" =====
+  var KIDINTRO={
+    1:['Náš příběh se odehrává ve světě, který vypadá skoro jako ten náš — jenže se v něm ukrývá i svět kouzelníků, který mudlové (obyčejní lidé) vůbec nevidí.',
+       'Dnes večer se přihodí něco velkého: k jedněm docela obyčejným dveřím přinesou tajemní návštěvníci malé miminko. Kdo to je a proč je to tak důležité?'],
+    2:['Minule jsme viděli, jak malého Harryho v noci přinesli k Dursleyovým — rodině, která kouzelnický svět nesnáší a doufala, že ho z Harryho úplně vymlátí.',
+       'Uplyne deset let. Jaký je Harry teď, když vyrůstá mezi lidmi, kteří ho nemají rádi? A co se mu stane na výletě do zoo?'],
+    3:['Minule se v zoo stalo něco divného — sklo teraria zmizelo úplně samo a nikdo nechápal jak. Harry sám měl podezření, že za tím možná je.',
+       'Teď se blíží Harryho jedenácté narozeniny — a s nimi něco mnohem záhadnějšího: dopisy, které nikdo nesmí přečíst. Kdo je posílá a proč jsou tak důležité?'],
+    4:['Minule rodina utekla před záplavou dopisů až na osamělý ostrov v bouřce — ale přesně o půlnoci Harryho narozenin se něco chystá.',
+       'Kdosi mocný se právě chystá vyrazit dveře. Co Harrymu přinese — a jakou pravdu se konečně dozví o sobě samém?'],
+    5:['Minule se Harry dozvěděl neuvěřitelnou pravdu: je kouzelník a čeká ho místo v Bradavicích. Hagrid ho pozval, aby s ním jel nakoupit věci do školy.',
+       'Teď je čekají Londýn a jedna docela obyčejná cihlová zeď, za kterou se ale skrývá něco úžasného. Co všechno si asi kouzelník musí koupit do školy?'],
+    6:['Minule si Harry v Příčné ulici koupil všechno potřebné do školy — hůlku, sovu i učebnice. Teď je na řadě to nejdůležitější: dostat se vůbec do školy.',
+       'Nástupiště devět a tři čtvrtě prý neexistuje. Jak se na něj Harry vůbec dostane — a koho potká ve vlaku, který ho odveze do Bradavic?'],
+    7:['Minule se Harry ve vlaku skamarádil s Ronem a poznal i Hermionu — a vlak je dovezl až k jezeru pod hradem Bradavice.',
+       'Teď čeká nové žáky slavnostní obřad, který rozhodne, kam každý z nich na příštích sedm let patří. Do jaké fakulty se Harry dostane?'],
+    8:['Minule byl Harry slavnostně zařazen do Nebelvíru — ke svému uleveni, protože se bál Zmijozelu. Na hostině si ale všiml jednoho profesora, který se na něj díval podezřele nepřátelsky.',
+       'Teď začíná pravidelná školní výuka. Jaké to je, chodit do školy, kde se schody samy hýbou a obrazy na tebe mluví? A jak dopadne první hodina u toho nepřátelského profesora?'],
+    9:['Minule si Harry zvykal na školní rutinu a poznal, jak nespravedlivě se k němu chová profesor Snape.',
+       'Teď se Harry nechá vlákat do souboje, který se vůbec nekoná tak, jak čekal. Co se skrývá za zapovězenými dveřmi ve třetím patře?'],
+    10:['Minule Harry s Ronem a Hermionou objevili obřího třihlavého psa za zapovězenými dveřmi — a od té doby se s Hermionou moc nebavili, protože je před tím varovala.',
+        'Dnes je Halloween a v Bradavicích se chystá slavnostní hostina. Jenže do hradu se dostane něco, co tam vůbec nepatří — a jedna z jejich kamarádek o tom vůbec neví.'],
+    11:['Minule se z Harryho, Rona a Hermiony po dobrodružství s trollem stala opravdová parta kamarádů.',
+        'Teď čeká Harryho něco, co v Bradavicích umí jen málokdo z prváků — famfrpál, kouzelnický sport na koštěti. Jak mu půjde jeho úplně první velký zápas?'],
+    12:['Minule Harry přežil zápas s tajemně vzpurným koštětem a Hermiona podezřívala profesora Snapea, že za tím stojí.',
+        'Blíží se Vánoce a Harry poprvé zůstává v Bradavicích, protože se domů k Dursleyovým vracet nechce. Jaký dárek na něj čeká — a co objeví v jedné opuštěné učebně?'],
+    13:['Minule se Harry díval do Zrcadla z Erisedu na své rodiče, dokud ho Brumbál moudře nezastavil.',
+        'Teď se trojice pustí do detektivního pátrání po jednom záhadném jméně. Kdo je Mikuláš Flamel — a co má společného s obřím psem, co hlídá poklop?'],
+    14:['Minule trojice zjistila, kdo je Mikuláš Flamel a co znamená Kámen mudrců — a proč ho Chloupek pod poklopem tak pečlivě hlídá.',
+        'Teď se do potíží namočí Hagrid — vyhraje totiž v kartách dračí vejce. Co se stane, když se z vejce vylíhne skutečný drak přímo v dřevěné chatrči?'],
+    15:['Minule Harryho a kamarády chytili při pašování draka Norberta a čeká je trest — noční výprava do Zakázaného lesa.',
+        'Tahle kapitola je ta nejnapínavější zatím — možná si ji budete chtít přečíst spolu, pomalu a s přestávkami. Co se skrývá hluboko v temném lese?'],
+    16:['Minule Harry v Zakázaném lese uviděl tajemnou postavu pijící jednorožčí krev — a poznal, že po Kameni mudrců touží víc, než čekal.',
+        'Teď se dozví, že je Kámen ve vážném nebezpečí ještě dnes v noci. Trojice se rozhodne jít sama — přes poklop, kolem spícího Chloupka, rovnou vstříc neznámu.'],
+    17:['Minule se trojice sama vydala přes propadliště, prošla nebezpečnými komnatami a Harry zůstal na poslední cestě úplně sám.',
+        'Tohle je poslední kapitola celé knihy — a odpoví na otázku, kdo celou dobu stál za vším nebezpečím v Bradavicích. Připravte se na velké finále!']
+  };
+
+  function blk(ic,title,inner){ return '<div class="block"><h4>'+icon(ic)+esc(title)+'</h4>'+inner+'</div>'; }
+
+  function chapterBody(c, full, peek){
+    if(state.mode==='rodic'){
+      var h=illusFigure(c.gi)+blk('star','Shrnutí','<p>'+esc(c.sum)+'</p>');
+      h+=blk('star','Na co se zaměřit','<ul class="bullets">'+c.focus.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>');
+      if(c.q)h+=blk('star','Otázky pro děti','<ul class="bullets q-list">'+c.q.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>');
+      if(c.words)h+=blk('star','Slovíčka','<div class="words">'+c.words.map(function(w){return '<span class="word"><b>'+esc(w[0])+'</b> — <span>'+esc(w[1])+'</span></span>';}).join('')+'</div>');
+      var fearlab = c.fear<=1?'v pohodě.':(c.fear<=3?'napínavé, nic hrozného.':'silnější scéna, připrav se.');
+      h+='<div class="block"><div class="fearnote">'+(c.fearnote?esc(c.fearnote):'Strašidelnost '+c.fear+'/5 — '+esc(fearlab))+'</div></div>';
+      return h;
+    }
+    // DĚTI
+    if(!peek){ return '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli. Nejdřív si ji přečteme s rodičem!</p>'; }
+    if(!full){
+      var intro=KIDINTRO[c.gi];
+      var kb='<div class="kidbox">';
+      if(intro){
+        kb+=blk('scroll',(c.gi===1?'Než začneme číst':'Co bylo minule'),'<p class="kidrecap">'+esc(intro[0])+'</p>')+
+            blk('star','Co nás čeká','<p class="kidrecap">'+esc(intro[1])+'</p>');
+      } else { kb+='<p class="teaser">'+esc(c.teaser)+'</p>'; }
+      kb+='</div>';
+      return kb+'<p class="locknote">'+icon('lock')+'Až kapitolu přečteme, klikni na <b>Přečteno</b> a odemkne se shrnutí, kvíz i nové postavy.</p>';
+    }
+    var k=illusFigure(c.gi);
+    var ks=KIDSUM[c.gi];
+    if(ks) k+=blk('scroll','Co se v kapitole stalo',ks.map(function(pp){return '<p class="kidrecap">'+esc(pp)+'</p>';}).join(''));
+    if(c.quiz){ k+=quizHtml(c); }
+    else{ k+='<p class="locknote">'+icon('check')+'Přečteno! Skvělá práce, kouzelníku.</p>'; }
+    return k;
+  }
+
+  function quizHtml(c){
+    var h='<div class="quiz"><h4 class="block">'+icon('star')+' Kvíz — pamatuješ si?</h4>';
+    c.quiz.forEach(function(q,qi){
+      h+='<div class="qq" data-q="'+qi+'"><div class="qtext">'+esc(q[0])+'</div><div class="opts">';
+      q[1].forEach(function(opt,oi){ h+='<button class="opt" data-c="'+c.gi+'" data-qi="'+qi+'" data-oi="'+oi+'" data-ok="'+(oi===q[2]?1:0)+'">'+esc(opt)+'</button>'; });
+      h+='</div></div>';
+    });
+    return h+'</div>';
+  }
+
+  document.addEventListener('click',function(ev){
+    var o=ev.target.closest('.opt'); if(!o||o.disabled)return;
+    var wrap=o.closest('.qq'); var btns=wrap.querySelectorAll('.opt');
+    btns.forEach(function(b){b.disabled=true; if(b.getAttribute('data-ok')==='1')b.classList.add('correct');});
+    if(o.getAttribute('data-ok')!=='1')o.classList.add('wrong');
+  });
+
+  // ===== render: postavy =====
+  function renderChars(){
+    var rg=reachedGi();
+    $('#charHint').textContent = state.mode==='deti' ? 'Postavy se odemykají, jakmile je v příběhu potkáte. Klikni a dozvíš se víc!' : 'Přehled postav (v režimu Rodiče vidíš všechny). Klikni pro detail.';
+    var grid=$('#charGrid'); grid.innerHTML='';
+    CHARS.forEach(function(ch){
+      var unlocked = ch.gi<=rg || state.mode==='rodic';
+      var card=el('div','char r-'+ch.race+(unlocked?'':' locked'));
+      var frame;
+      if(!unlocked){ frame='<div class="pframe fallback">'+icon('lock')+'</div>'; }
+      else { var im=imgPortrait(ch.id,ch.name);
+        frame = im ? '<div class="pframe">'+im+'</div>'
+                   : '<div class="pframe fallback">'+icon(ch.ic)+'</div>'; }
+      card.innerHTML=frame+
+        '<h4>'+(unlocked?esc(ch.name):'? ? ?')+'</h4><div class="race">'+esc(ch.rlab)+'</div>';
+      if(unlocked){ card.setAttribute('tabindex','0'); card.setAttribute('role','button');
+        card.addEventListener('click',function(){ toggleChar(ch, card); });
+        card.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleChar(ch, card); } }); }
+      grid.appendChild(card);
+    });
+  }
+  function arcHtml(ch){
+    var a=ARC[ch.id]; if(!a) return '';
+    var maxG = state.mode==='rodic' ? 99 : reachedGi();
+    var beats=a.beats.filter(function(b){return b[0]<=maxG;});
+    var h='';
+    if(beats.length){
+      h+='<div class="arc"><h4>'+icon('scroll')+'Příběh zatím</h4><ul class="timeline arc-tl">'+
+        beats.map(function(b){var m=GIMETA[b[0]]||{lab:'',title:''}; return '<li><span class="tage">'+esc(m.lab+' · '+m.title)+'</span>'+esc(b[1])+'</li>';}).join('')+'</ul></div>';
+    } else {
+      h+='<p class="locknote">'+icon('lock')+'Tuhle postavu ještě moc neznáme — čtěte dál a její příběh se tu bude připisovat.</p>';
+    }
+    if(a.ahead) h+='<div class="ahead">'+icon('star')+'<span><b>K popovídání s dětmi:</b> '+esc(a.ahead)+'</span></div>';
+    return h;
+  }
+  var openCharId=null;
+  function toggleChar(ch, card){
+    var ex=$('#charDetail'); if(ex){ex.remove();}
+    if(openCharId===ch.id){ openCharId=null; return; }
+    openCharId=ch.id;
+    var d=el('div','char-detail'); d.id='charDetail';
+    var txt = state.mode==='deti' ? ch.kid : ch.dad;
+    var im=imgPortrait(ch.id,ch.name);
+    var visual = im ? '<div class="cd-pimg">'+im+'</div>'
+                    : '<div class="medallion">'+icon(ch.ic)+'</div>';
+    d.innerHTML='<div class="cd r-'+ch.race+'">'+visual+
+      '<div class="cdbody"><h3>'+esc(ch.name)+'</h3><div class="en">'+esc(ch.en)+' · '+esc(ch.rlab)+'</div>'+
+      (ch.say?'<div class="say">Vyslov: <b>'+esc(ch.say)+'</b></div>':'')+
+      '<p>'+esc(txt)+'</p>'+arcHtml(ch)+'</div>'+
+      '<button class="close" aria-label="Zavřít">✕</button></div>';
+    card.after(d);
+    $('.close',d).addEventListener('click',function(e){e.stopPropagation(); d.remove(); openCharId=null;});
+    d.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // ===== mapa: pan & zoom =====
+  var scale=1,minS=1,maxS=4,tx=0,ty=0;
+  var stage=$('#mapStage'), vp=$('#mapVp');
+  function clamp(){
+    var vw=vp.clientWidth, vh=vp.clientHeight, stageH=stage.offsetHeight;
+    var minX=Math.min(0, vw - vw*scale), minY=Math.min(0, vh - stageH*scale);
+    if(tx>0) tx=0; else if(tx<minX) tx=minX;
+    if(ty>0) ty=0; else if(ty<minY) ty=minY;
+  }
+  function applyT(){clamp(); stage.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; applyHereScale();}
+  function setStageWidth(){
+    stage.style.width=vp.clientWidth+'px';
+    var h=stage.offsetHeight;
+    if(h){ vp.style.height=Math.min(h, Math.round(window.innerHeight*0.72), 580)+'px'; }
+  }
+  function zoomAt(cx,cy,ns){
+    ns=Math.max(minS,Math.min(maxS,ns));
+    var rx=(cx-tx)/scale, ry=(cy-ty)/scale;
+    tx=cx-rx*ns; ty=cy-ry*ns; scale=ns; applyT();
+  }
+  function frameJourney(){
+    var W0=vp.clientWidth, H0=stage.offsetHeight, vpW=vp.clientWidth, vpH=vp.clientHeight;
+    if(!H0){return;}
+    var fx0=0.05,fx1=0.75,fy0=0.10,fy1=0.85;
+    var regW=(fx1-fx0)*W0, regH=(fy1-fy0)*H0;
+    var s=Math.min(vpW/regW, vpH/regH)*0.96;
+    s=Math.max(minS,Math.min(maxS,s));
+    scale=s;
+    tx=vpW/2 - ((fx0+fx1)/2)*W0*s;
+    ty=vpH/2 - ((fy0+fy1)/2)*H0*s;
+    applyT();
+  }
+  function goToPlace(p){
+    var natW=vp.clientWidth, natH=stage.offsetHeight; if(!natH)return;
+    scale=Math.min(maxS,3.4);
+    tx=vp.clientWidth/2 - (p.x/100)*natW*scale;
+    ty=vp.clientHeight/2 - (p.y/100)*natH*scale;
+    stage.classList.add('smooth'); applyT();
+  }
+  $('#zin').addEventListener('click',function(){zoomAt(vp.clientWidth/2,vp.clientHeight/2,scale*1.4);});
+  $('#zout').addEventListener('click',function(){zoomAt(vp.clientWidth/2,vp.clientHeight/2,scale/1.4);});
+  $('#zreset').addEventListener('click',function(){frameJourney();});
+  vp.addEventListener('wheel',function(e){e.preventDefault(); stage.classList.remove('smooth'); var r=vp.getBoundingClientRect(); zoomAt(e.clientX-r.left,e.clientY-r.top, scale*(e.deltaY<0?1.15:0.87));},{passive:false});
+  var drag=false,lx=0,ly=0,moved=0,pid=null;
+  vp.addEventListener('pointerdown',function(e){drag=true;moved=0;lx=e.clientX;ly=e.clientY;pid=e.pointerId;vp.setPointerCapture(pid);vp.classList.add('grabbing'); stage.classList.remove('smooth');});
+  vp.addEventListener('pointermove',function(e){if(!drag)return; var dx=e.clientX-lx,dy=e.clientY-ly; lx=e.clientX;ly=e.clientY; moved+=Math.abs(dx)+Math.abs(dy); tx+=dx;ty+=dy; applyT();});
+  function endDrag(){drag=false;vp.classList.remove('grabbing'); if(pid!=null){try{vp.releasePointerCapture(pid);}catch(e){}pid=null;}}
+  vp.addEventListener('pointerup',endDrag); vp.addEventListener('pointercancel',endDrag);
+  window.addEventListener('resize',function(){setStageWidth(); frameJourney();});
+
+  // ===== render: progress + mapové značky =====
+  function updateProgress(){
+    var rc=readCount();
+    $('#chDone').textContent=rc;
+    $('#roadFill').style.width=(rc/17*100)+'%';
+    var rg=reachedGi(), mile=0;
+    PLACES.forEach(function(p){ if(p.gi<=rg && p.mile>mile) mile=p.mile; });
+    $('#miles').textContent=mile;
+  }
+  function buildRoute(){
+    var svg=$('#routeSvg');
+    var pts = state.mode==='rodic' ? PLACES : PLACES.filter(function(p){return p.gi<=reachedGi();});
+    if(pts.length<2){ svg.innerHTML=''; return; }
+    var d=pts.map(function(p,i){return (i?'L':'M')+p.x+','+p.y;}).join(' ');
+    svg.innerHTML='<path d="'+d+'" fill="none" style="stroke:var(--ember)" stroke-width="2.4" '+
+      'stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 3.2" '+
+      'vector-effect="non-scaling-stroke" opacity="0.9"/>';
+  }
+  function currentPlace(){ var rg=reachedGi(),cur=null; PLACES.forEach(function(p){ if(p.gi<=rg&&(!cur||p.seq>cur.seq))cur=p; }); return cur; }
+  function renderHere(){
+    var box=$('#hereLayer'); box.innerHTML='';
+    var cur=currentPlace(); if(!cur) return;
+    var m=el('div','hereM'); m.style.left=cur.x+'%'; m.style.top=cur.y+'%';
+    m.innerHTML='<span class="hm-in" title="Tady jsme: '+esc(cur.name)+'"></span>';
+    $('.hm-in',m).addEventListener('click',function(ev){ev.stopPropagation(); showPlace(cur,true);});
+    box.appendChild(m); applyHereScale();
+  }
+  function applyHereScale(){ var inn=$('#hereLayer .hm-in'); if(inn) inn.style.transform='scale('+(1/scale)+')'; }
+  function renderStrip(){
+    var rg=reachedGi(), cur=currentPlace();
+    var strip=$('#mapstrip'); if(!strip) return; strip.innerHTML='';
+    var list = state.mode==='rodic' ? PLACES : PLACES.filter(function(p){return p.gi<=rg;});
+    if(!list.length){ strip.innerHTML='<div class="strip-empty">Zatím jsme nevyrazili — po přečtení kapitoly se tu objeví zastávky.</div>'; return; }
+    list.forEach(function(p){
+      var reached=p.gi<=rg, isCur=!!(cur&&cur.id===p.id);
+      var c=el('button','mchip'+(reached?'':' future')+(isCur?' on':''));
+      c.innerHTML='<span class="mchip-n">'+p.seq+'</span>'+icon(p.ic,'mchip-ic')+'<small>'+esc(p.name)+'</small>'+(isCur?'<span class="mchip-here">Tady jsme</span>':'');
+      c.addEventListener('click',function(){ goToPlace(p); showPlace(p,reached); Array.prototype.forEach.call(strip.children,function(x){x.classList.toggle('sel',x===c);}); });
+      strip.appendChild(c);
+    });
+    var on=strip.querySelector('.mchip.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
+  }
+  function showPlace(p, reached){
+    var pan=$('#placePanel'); pan.className='place-panel';
+    var txt = state.mode==='deti' ? p.kid : p.dad;
+    var sub = esc(p.en)+' · zastávka '+p.seq;
+    pan.innerHTML='<div class="place-head"><span class="place-ic">'+icon(p.ic)+'</span>'+
+      '<div><h3>'+esc(p.name)+'</h3><span class="en">'+sub+'</span></div></div>'+
+      '<p>'+esc(txt)+'</p>'+
+      (state.mode==='deti'&&!reached?'<p class="locknote">'+icon('lock')+'Sem ještě nedošli — přečti kapitolu a odemkne se víc.</p>':'');
+  }
+
+  // ===== render: kapitoly =====
+  function flames(n){var h='<span class="lab">Strašidelnost</span>'; for(var i=0;i<5;i++){h+=icon('flame','flame'+(i<n?'':' off'));} return h;}
+  function renderChapters(){
+    var box=$('#chapters'); box.innerHTML='';
+    var rg=reachedGi();
+    CH.forEach(function(c){
+      var done=!!state.read[c.gi];
+      var peek = state.mode==='rodic' || c.gi<=rg+1;
+      var full = state.mode==='rodic' || done;
+      var card=el('div','ch'+(peek?'':' locked'));
+      card.setAttribute('data-gi',c.gi);
+      var head=el('div','ch-head');
+      head.innerHTML='<span class="ch-num">'+c.gi+'</span>'+
+        '<div class="ch-t"><h3>'+esc(c.title)+'</h3><span class="en">'+esc(c.en)+'</span>'+
+        '<div class="fear">'+flames(c.fear)+'</div></div>';
+      var right=el('div',null,'');
+      var rd=el('button','ch-read'+(done?' done':''), (done?icon('check')+'Přečteno':'Přečteno?'));
+      rd.addEventListener('click',function(ev){ev.stopPropagation(); state.read[c.gi]=!state.read[c.gi]; save(); rerender();});
+      var car=el('span','caret','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>');
+      right.appendChild(rd);
+      head.appendChild(right); head.appendChild(car);
+      card.appendChild(head);
+      var body=el('div','ch-body');
+      body.innerHTML = chapterBody(c, full, peek);
+      card.appendChild(body);
+      if(peek){ head.addEventListener('click',function(){ card.classList.toggle('open'); }); }
+      box.appendChild(card);
+    });
+  }
+
+  // ===== render: Svět =====
+  function renderWorld(){
+    var isDad=state.mode==='rodic', rg=reachedGi();
+    var lore = isDad ? LORE : LORE.filter(function(l){return (l.min||0)<=rg;});
+    var h='<div class="lore-grid">';
+    lore.forEach(function(l){
+      h+='<div class="lore"><div class="lore-head"><span class="lore-ic">'+icon(l.ic)+'</span><h3>'+esc(l.title)+'</h3></div><p>'+esc(l.text)+'</p></div>';
+    });
+    h+='<div class="lore wide"><div class="lore-head"><span class="lore-ic">'+icon('globe')+'</span><h3>Národy kouzelnického světa</h3></div><div class="race-list">'+
+      RACES.map(function(r){return '<div class="race-row r-'+r[0]+'"><div class="medallion">'+icon(r[0])+'</div><div><b>'+esc(r[1])+'</b> — <span>'+esc(r[2])+'</span></div></div>';}).join('')+'</div></div>';
+    if(isDad || rg>=2){
+      h+='<div class="lore wide"><div class="lore-head"><span class="lore-ic">'+icon('scroll')+'</span><h3>Co se stalo předtím</h3></div><ul class="timeline">'+
+        TL.map(function(tl){return '<li><span class="tage">'+esc(tl[0])+'</span><span class="tt">'+esc(tl[1])+'</span> — '+esc(tl[2])+'</li>';}).join('')+'</ul></div>';
+    }
+    h+='</div>';
+    $('#world').innerHTML=h;
+  }
+
+  // ===== render: Vztahy =====
+  function relNode(id, role){
+    var isStone=id==='kamen';
+    var ch=CHARMAP[id];
+    var unlocked = isStone || state.mode==='rodic' || (ch && ch.gi<=reachedGi());
+    var raceCls = isStone?'r-kouzelnik':(ch?'r-'+ch.race:'');
+    if(!unlocked) return '<div class="node locked"><div class="medallion">'+icon('lock')+'</div><small>?</small></div>';
+    var nm = isStone ? 'Kámen mudrců' : (SHORT[id]||ch.name);
+    var im = isStone?null:imgPortrait(id,nm);
+    var inner = im||icon(isStone?'kamen':ch.ic);
+    return '<div class="node '+raceCls+'"><div class="medallion'+(im?' pm':'')+'">'+inner+'</div><small>'+esc(nm)+(role?'<br>'+esc(role):'')+'</small></div>';
+  }
+  function relArrow(label){
+    return '<div class="arrow"><svg viewBox="0 0 28 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 2l5 4-5 4"/></svg><em>'+esc(label)+'</em></div>';
+  }
+  function renderRelations(){
+    $('#relHint').textContent = state.mode==='deti' ? 'Jak spolu postavy souvisejí. Co jste ještě nečetli, zůstává zahalené.' : 'Jak spolu postavy souvisejí (v režimu Rodiče vidíš vše).';
+    var h='';
+    h+='<div class="rel-block"><h3>Cesta Kamene mudrců</h3><p class="rsub">Jak se kámen dostal od svého tvůrce až do Bradavic.</p><div class="chain">'+
+      relNode('flamel')+relArrow('vyrobil ho')+relNode('kamen')+relArrow('ukryl v Bradavicích')+relNode('brumbal')+relArrow('dal hlídat')+relNode('chloupek')+'</div></div>';
+    h+='<div class="rel-block"><h3>Kdo kámen loví</h3><p class="rsub">Voldemort touží po kameni, aby získal zpět svou sílu — a posílá za ním svého služebníka.</p><div class="chain">'+
+      relNode('voldemort')+relArrow('ovládá')+relNode('quirrell')+relArrow('loví ho')+relNode('kamen')+'</div></div>';
+    var spojenci=['harry','ron','hermiona','neville','hagrid','brumbal','mcgonagallova','nick'];
+    h+='<div class="rel-block"><h3>Harryho spojenci</h3><p class="rsub">Kamarádi a ochránci, na které se Harry může spolehnout.</p><div class="nine">'+
+      spojenci.map(function(id){return relNode(id, CHARMAP[id].rlab);}).join('')+'</div><p class="ninecap">4 kamarádi · 3 dospělí ochránci · 1 duch</p></div>';
+    $('#relations').innerHTML=h;
+  }
+
+  function rerender(){ updateProgress(); buildRoute(); renderHere(); renderStrip(); renderChapters(); renderChars(); renderRelations(); renderWorld(); }
+
+  // ===== toggles =====
+  $('#modeswitch').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    state.mode=b.getAttribute('data-mode'); save(); syncMode(); rerender();});
+
+  function effectiveTheme(){ return state.theme || (window.matchMedia && matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'); }
+  function applyTheme(){
+    var root=document.documentElement;
+    if(state.theme) root.setAttribute('data-theme',state.theme); else root.removeAttribute('data-theme');
+    var btn=$('#themeToggle'); if(!btn) return;
+    var eff=effectiveTheme();
+    btn.innerHTML=icon(eff==='dark'?'sun':'moon');
+    var lab = eff==='dark' ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv';
+    btn.setAttribute('aria-label', lab); btn.title = lab;
+  }
+  $('#themeToggle').addEventListener('click',function(){ state.theme=effectiveTheme()==='dark'?'light':'dark'; save(); applyTheme(); });
+
+  function syncMode(){
+    Array.prototype.forEach.call($('#modeswitch').children,function(b){b.classList.toggle('on',b.getAttribute('data-mode')===state.mode);});
+  }
+  $('#tabs').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    var v=b.getAttribute('data-view');
+    Array.prototype.forEach.call($('#tabs').children,function(x){x.classList.toggle('on',x===b); x.setAttribute('aria-selected', x===b?'true':'false');});
+    ['mapa','kapitoly','postavy','svet'].forEach(function(id){$('#view-'+id).classList.toggle('on',id===v);});
+  });
+  $('#subseg').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    var s=b.getAttribute('data-sub');
+    Array.prototype.forEach.call($('#subseg').children,function(x){x.classList.toggle('on',x===b);});
+    $('#sub-galerie').hidden=(s!=='galerie'); $('#sub-vztahy').hidden=(s!=='vztahy');
+  });
+
+  // ===== init =====
+  function init(){
+    syncMode(); applyTheme();
+    var img=$('#mapImg');
+    var done=false;
+    function ready(){ setStageWidth(); frameJourney(); rerender(); done=true; }
+    if(img.complete && img.naturalWidth) ready(); else img.addEventListener('load',ready);
+    setTimeout(function(){ if(!done) ready(); },400);
+  }
+  init();
+})();
+</script>
+</body>
+</html>

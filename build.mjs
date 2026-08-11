@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const TEMPLATE = path.join(ROOT, 'kamen-mudrcu.template.html');
-const OUT = path.join(ROOT, 'kamen-mudrcu.html');
+const OUT = path.join(ROOT, 'index.html');
 const ASSETS = path.join(ROOT, 'assets');
 
 const dataUri = (file) => 'data:image/jpeg;base64,' + fs.readFileSync(file).toString('base64');
