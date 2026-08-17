@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Interaktivní průvodce Kamenem mudrců pro předčítání dětem — mapa prvního školního roku v Bradavicích, postavy, kapitoly a kvízy.">
+<meta name="description" content="Interaktivní průvodce Kamenem mudrců pro předčítání dětem — namluvené kapitoly, postavy, kvízy a svět prvního školního roku v Bradavicích.">
 <title>Kámen mudrců — průvodce pro předčítání</title>
 <style>
   /* ===== Tokens: light "pergamen" and dark "svíčky v hradu" ===== */
@@ -105,61 +105,13 @@
   .view.on{display:block}
   @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
 
-  /* ===== Map ===== */
-  .map-viewport{position:relative; height:min(64vh,560px); border:1px solid var(--line-2);
-    border-radius:var(--radius); overflow:hidden; background:var(--paper-2); box-shadow:0 8px 30px -14px var(--shadow);
-    touch-action:none; cursor:grab; user-select:none}
-  .map-viewport.grabbing{cursor:grabbing}
-  .map-stage{position:absolute; top:0; left:0; transform-origin:0 0; will-change:transform}
-  .map-img{display:block; width:100%; height:auto; pointer-events:none;
-    filter:saturate(1.02) contrast(1.02)}
-  :root[data-theme="dark"] .map-img{filter:saturate(.9) brightness(.82) contrast(1.02)}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .map-img{filter:saturate(.9) brightness(.82) contrast(1.02)}}
-  .route{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible}
-
-  .map-stage.smooth{transition:transform .45s ease}
-  .hereM{position:absolute; z-index:3}
-  .hm-in{position:absolute; left:0; top:0; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%;
-    background:radial-gradient(circle at 34% 30%, var(--ember-2), var(--ember)); border:2px solid var(--gold-2);
-    box-shadow:0 1px 4px var(--shadow); transform-origin:center center; cursor:pointer}
-  .hm-in::after{content:""; position:absolute; inset:-3px; border-radius:50%;
-    box-shadow:0 0 0 0 rgba(122,31,31,.5); animation:pulseH 1.9s ease-in-out infinite}
-  @keyframes pulseH{0%,100%{box-shadow:0 0 0 0 rgba(122,31,31,.5)}50%{box-shadow:0 0 0 7px rgba(122,31,31,0)}}
-  .mapstrip{display:flex; gap:6px; overflow-x:auto; padding:12px 2px 4px; margin-top:10px; scrollbar-width:thin}
-  .mapstrip::-webkit-scrollbar{height:7px}
-  .mapstrip::-webkit-scrollbar-thumb{background:var(--line-2); border-radius:99px}
-  .strip-empty{font-family:var(--ui); font-size:.85rem; color:var(--ink-3); padding:10px 4px}
-  .mchip{flex:none; width:82px; display:flex; flex-direction:column; align-items:center; gap:3px; padding:8px 4px;
-    border:1px solid var(--line-2); border-radius:11px; background:var(--panel-2); color:var(--ink); cursor:pointer;
-    font-family:var(--ui); text-align:center; transition:.12s; position:relative}
-  .mchip:hover{border-color:var(--gold)}
-  .mchip .mchip-n{width:22px; height:22px; border-radius:50%; background:var(--ember); color:#fff; font-weight:800; font-size:.72rem; display:flex; align-items:center; justify-content:center}
-  .mchip .mchip-ic{width:16px; height:16px; color:var(--gold)}
-  .mchip small{font-size:.68rem; line-height:1.12; color:var(--ink)}
-  .mchip.future{opacity:.6}
-  .mchip.future .mchip-n{background:var(--ink-3)}
-  .mchip.on{border-color:var(--gold); background:color-mix(in srgb,var(--gold) 16%,var(--panel)); box-shadow:0 2px 8px -4px var(--gold)}
-  .mchip.on .mchip-n{background:var(--gold)}
-  .mchip.sel{outline:2px solid var(--gold-2); outline-offset:1px}
-  .mchip-here{font-size:.58rem; color:var(--elven); font-weight:700}
-
-  .map-ctrls{position:absolute; right:10px; bottom:10px; display:flex; flex-direction:column; gap:6px; z-index:5}
-  .map-ctrls button{width:34px; height:34px; border-radius:9px; border:1px solid var(--line-2);
-    background:color-mix(in srgb,var(--panel) 92%,transparent); color:var(--ink); font-size:1.1rem; cursor:pointer;
-    font-family:var(--ui); display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px var(--shadow)}
-  .map-ctrls button:hover{border-color:var(--gold)}
-  .map-hint{font-family:var(--ui); font-size:.82rem; color:var(--ink-2); margin:0 2px 10px;
+  /* ===== Audio ===== */
+  .audio-hint{font-family:var(--ui); font-size:.82rem; color:var(--ink-2); margin:0 2px 16px;
     display:flex; align-items:center; gap:8px}
-  .map-hint svg{width:16px;height:16px;color:var(--gold);flex:none}
-  .map-hint b{color:var(--ink)}
-
-  .place-panel{margin-top:14px; border:1px solid var(--line-2); border-radius:var(--radius);
-    background:var(--panel); padding:16px 18px; box-shadow:0 6px 20px -14px var(--shadow)}
-  .place-panel.empty{color:var(--ink-2); font-style:italic}
-  .place-head{display:flex; align-items:center; gap:12px; margin-bottom:6px}
-  .place-ic{width:40px;height:40px; color:var(--gold); flex:none}
-  .place-head h3{margin:0; font-family:var(--display); font-size:1.2rem; letter-spacing:.02em}
-  .place-head .en{font-family:var(--ui); font-size:.76rem; color:var(--ink-3); letter-spacing:.03em}
+  .audio-hint svg{width:16px;height:16px;color:var(--gold);flex:none}
+  .audio-hint b{color:var(--ink)}
+  .ch-body audio{width:100%; margin-top:6px; display:block}
+  .ch-body audio::-webkit-media-controls-panel{background:var(--panel-2)}
 
   /* ===== Chapters ===== */
   .ch{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); margin-bottom:12px;
@@ -396,29 +348,16 @@
 
   <div class="wrap">
     <nav class="tabs" id="tabs" role="tablist" aria-label="Sekce">
-      <button data-view="mapa" class="on" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span data-i18n="tab_map">Mapa</span></button>
+      <button data-view="audio" class="on" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 14v-1a8 8 0 0116 0v1"/><rect x="2" y="14" width="4.5" height="7" rx="2"/><rect x="17.5" y="14" width="4.5" height="7" rx="2"/></svg><span>Audio</span></button>
       <button data-view="kapitoly" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5c2-1 5-1 8 1 3-2 6-2 8-1v14c-2-1-5-1-8 1-3-2-6-2-8-1z"/><path d="M12 7v13"/></svg><span data-i18n="tab_chapters">Kapitoly</span></button>
       <button data-view="postavy" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c.6-3.6 3.2-6 6.5-6s5.9 2.4 6.5 6"/></svg><span data-i18n="tab_characters">Postavy</span></button>
       <button data-view="svet" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span data-i18n="tab_world">Svět</span></button>
     </nav>
 
-    <!-- MAPA -->
-    <section class="view on" id="view-mapa">
-      <p class="map-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21c5-4.5 7-8 7-11a7 7 0 10-14 0c0 3 2 6.5 7 11z"/></svg><span data-i18n-html="map_hint">Na mapě je vyznačená <b>cesta</b> školním rokem a značka „Tady jsme". Zastávky najdeš na <b>liště pod mapou</b> — klikni a mapa tě k místu zaveze. Mapu můžeš i tahat a přiblížit.</span></p>
-      <div class="map-viewport" id="mapVp">
-        <div class="map-stage" id="mapStage">
-          <img class="map-img" id="mapImg" src="__MAP_DATA_URI__" alt="Mapa Bradavic a okolí" draggable="false">
-          <svg class="route" id="routeSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-          <div id="hereLayer"></div>
-        </div>
-        <div class="map-ctrls">
-          <button id="zin" title="Přiblížit" aria-label="Přiblížit">+</button>
-          <button id="zout" title="Oddálit" aria-label="Oddálit">−</button>
-          <button id="zreset" title="Zaměřit cestu" aria-label="Zaměřit cestu">⤢</button>
-        </div>
-      </div>
-      <div class="mapstrip" id="mapstrip"></div>
-      <div class="place-panel empty" id="placePanel">Klikni na zastávku pod mapou a mapa tě k ní zaveze.</div>
+    <!-- AUDIO -->
+    <section class="view on" id="view-audio">
+      <p class="audio-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-1a8 8 0 0116 0v1"/><rect x="2" y="14" width="4.5" height="7" rx="2"/><rect x="17.5" y="14" width="4.5" height="7" rx="2"/></svg><span>Namluvené kapitoly — poslouchej spolu s knihou, nebo místo předčítání. Kapitoly bez nahrávky se doplní postupně.</span></p>
+      <div id="audioList"></div>
     </section>
 
     <!-- KAPITOLY -->
@@ -449,7 +388,7 @@
     <details class="info">
       <summary>Jak to funguje · o jménech</summary>
       <p><b>Dva režimy.</b> <i>Rodiče</i> = příprava na čtení (shrnutí, na co se zaměřit, otázky pro děti, „metr strašidelnosti"). <i>Děti</i> = bez spoilerů, jen to, co jste už četli, plus kvízy a sbírání postav.</p>
-      <p><b>Odemykání.</b> U každé kapitoly klikni na <i>Přečteno</i> — tím se na mapě posune „Tady jsme", přibudou body a odemknou se nové postavy a místa. Postup se ukládá v prohlížeči.</p>
+      <p><b>Odemykání.</b> U každé kapitoly klikni na <i>Přečteno</i> — přibudou body pro Nebelvír a odemknou se nové postavy. Postup se ukládá v prohlížeči.</p>
       <p><b>Jména.</b> Držíme se oficiálního českého překladu <b>Pavla Medka</b> (Bradavice, Nebelvír, Brumbál…). Názvy kapitol jsou vlastní parafráze, ne doslovný text knihy — pro jistotu je porovnej s vaším výtiskem.</p>
     </details>
     <p class="foot">Postaveno s láskou k předčítání · fanouškovský projekt, není oficiální · v1</p>
@@ -541,43 +480,11 @@
     return '<figure class="illus"><img src="'+SCENES[gi]+'" alt="Malovaná ilustrace ke kapitole" loading="lazy">'+capHtml+'</figure>';
   }
 
-  // ===== data: places (order = trasa školním rokem) =====
-  var PLACES = [
-    {id:'zobi',name:'Zobí ulice',en:'Privet Drive',x:8,y:80,ic:'town',gi:1,mile:0,
-      dad:'Dům Dursleyových v Zobí ulici, kde Harry vyrůstá jako „obyčejný" kluk, o kterém nikdo nic netuší — dokud mu na jedenácté narozeniny nezačnou chodit záhadné dopisy.',
-      kid:'Docela nudná ulice s naprosto stejnými domy. Bydlí tu Harry se svou příšernou tetou, strýcem a bratrancem — ale jednoho dne mu začnou chodit dopisy, které mu nikdo nechce dát přečíst!'},
-    {id:'chata',name:'Chata na skále',en:'The Hut-on-the-Rock',x:14,y:70,ic:'mountain',gi:4,mile:10,
-      dad:'Poslední útočiště, kam strýc Vernon uteče před záplavou dopisů z Bradavic. Neubrání ho to — jednoho bouřlivého večera se objeví Hagrid a Harrymu poprvé řekne pravdu o tom, kdo doopravdy je.',
-      kid:'Malá chatrč na skále uprostřed moře, kam rodina uteče před dopisy z kouzelnické školy. Jenže o půlnoci se ozve zabušení na dveře a dovnitř vejde obr...'},
-    {id:'pricna',name:'Příčná ulice',en:'Diagon Alley',x:25,y:55,ic:'town',gi:5,mile:30,
-      dad:'Skrytá kouzelnická ulice v srdci Londýna, kam se dá projít jen skrz hospůdku U Děravého kotle. Harry si tu poprvé koupí kouzelnickou hůlku a další věci do školy — a poprvé uslyší jméno Voldemort nahlas vyslovené.',
-      kid:'Nejúžasnější ulice na světě! Obchody s koštětem, žábími čokoládami i vlastní kouzelnickou hůlkou. Harry se tu taky poprvé dozví, že je slavný — a že se ho každý bojí zeptat na jeho jizvu.'},
-    {id:'nadrazi',name:'Nástupiště devět a tři čtvrtě',en:'Platform Nine and Three-Quarters',x:35,y:45,ic:'town',gi:6,mile:40,
-      dad:'Kouzelnické nástupiště schované mezi nástupišti devět a deset na King’s Cross, kam se prochází rovnou zdí. Tady Harry poprvé nastoupí do Bradavického expresu a pozná Rona a Hermionu.',
-      kid:'Tajné nástupiště, na které se dostaneš jenom tak, že proběhneš rovnou skrz zeď! Čeká tu rudý parní vlak, který Harryho odveze do Bradavic — a v kupé potká svého nejlepšího kamaráda.'},
-    {id:'velkasin',name:'Bradavice — Velká síň',en:'Hogwarts — the Great Hall',x:55,y:30,ic:'zamek',gi:7,mile:60,
-      dad:'Obrovský hrad plný pohyblivých schodů a mluvících obrazů. Ve Velké síni Moudrý klobouk rozřadí nové žáky do čtyř fakult — a Harry se stává Nebelvíranem.',
-      kid:'Hrad se stovkami komnat, tajných chodeb a duchů, co prolétávají zdmi! Na hostině tě čeká Moudrý klobouk, který ti nahlas přečte, do jaké fakulty patříš.'},
-    {id:'nebelvirvez',name:'Nebelvírská věž',en:'Gryffindor Tower',x:58,y:22,ic:'zamek',gi:8,mile:90,
-      dad:'Společenská místnost a ložnice Nebelvíru, kam se vchází přes portrét Buclaté dámy. Tady se z Harryho, Rona a Hermiony postupně stávají nerozluční kamarádi — i přes nepříjemné hodiny lektvarů u profesora Snapea.',
-      kid:'Útulná místnost s krbem vysoko ve věži, kam se dostaneš jenom se správným heslem! Tady si Harry s Ronem hrají kouzelnické šachy a společně s Hermionou zjišťují, že si vlastně dobře rozumí.'},
-    {id:'chodba',name:'Zapovězená chodba',en:'The Forbidden Corridor',x:63,y:33,ic:'lock',gi:9,mile:110,
-      dad:'Chodba ve třetím patře, kterou ředitel přísně zakázal navštěvovat — a právě proto tam Harry, Ron a Hermiona jednou v noci nakouknou. Za dveřmi na ně čeká obří třihlavý pes jménem Chloupek, hlídající tajný poklop v podlaze.',
-      kid:'Přísně zakázaná chodba — a víš, jak to s takovými zákazy bývá! Za dveřmi se skrývá obrovský pes se třemi hlavami, který hlídá něco moc důležitého.'},
-    {id:'hriste',name:'Famfrpálové hřiště',en:'The Quidditch Pitch',x:48,y:18,ic:'star',gi:11,mile:150,
-      dad:'Oválné hřiště, kde se hraje famfrpál — kouzelnický sport na koštěti. Harry tu jako nejmladší chytač za sto let předvede famózní zákrok, i když se mu koště při zápase záhadně vzepře.',
-      kid:'Hřiště, kde se lítá! Hráči na koštětech honí míče a Harry jako chytač loví zlatou Zlatonku. Při jednom zápase se ale stane něco divného — koště ho najednou samo chce shodit!'},
-    {id:'zrcadlo',name:'Opuštěná učebna se zrcadlem',en:'The Mirror of Erised',x:60,y:26,ic:'star',gi:12,mile:170,
-      dad:'Prázdná učebna, kde Harry náhodou najde podivné Zrcadlo z Erisedu — ukazuje totiž nejhlubší touhu srdce toho, kdo se do něj dívá. Harry v něm vidí své rodiče, a musí se naučit, že ani kouzelné zrcadlo mu je nemůže vrátit.',
-      kid:'V prázdné třídě stojí staré zrcadlo, ve kterém uvidíš to, po čem nejvíc toužíš. Harry se do něj dívá noc co noc — dokud mu moudrý ředitel nevysvětlí, proč to není dobrý nápad.'},
-    {id:'les',name:'Skleníky a Zakázaný les',en:'The Greenhouses and the Forbidden Forest',x:70,y:15,ic:'forest',gi:15,mile:250,
-      dad:'Skleníky s bylinkářstvím na okraji pozemků a za nimi temný Zakázaný les, kam žáci nesmí sami. Když se Harry, Hermiona, Ron a Neville dostanou za trest právě sem, najdou v lese něco děsivého — zraněného jednorožce a postavu, co pije jeho stříbrnou krev.',
-      kid:'Skleníky voní hlínou a kouzelnými rostlinami, ale hned za nimi začíná temný a strašidelný les, kam se nikdo nesmí pustit sám. Copak se stane, když tam Harry se svými kamarády jednou v noci musí?'},
-    {id:'propadliste',name:'Pod propadlištěm',en:'Through the Trapdoor',x:64,y:34,ic:'lock',gi:16,mile:400,
-      dad:'Řetěz komnat pod poklopem, který hlídal Chloupek — každá skrývá jinou překážku vytvořenou profesory na ochranu Kamene mudrců. Harry se tu musí postavit i tomu, kdo se skrývá pod turbanem profesora Quirrella.',
-      kid:'Za poklopem začíná řada tajných komnat plných hádanek a nebezpečí — obří kouzelnické šachy, létající klíče a nakonec i samotný Kámen mudrců! Kdo se tam dostane jako první?'}
-  ];
-  PLACES.forEach(function(p,i){ p.seq=i+1; });
+  // ===== body pro Nebelvír — odemykají se podle přečtených kapitol =====
+  var POINTS=[[1,0],[4,10],[5,30],[6,40],[7,60],[8,90],[9,110],[11,150],[12,170],[15,250],[16,400]];
+
+  // ===== data: audio nahrávky (gi -> cesta k souboru) =====
+  var AUDIO={1:'assets/audio/1.m4a'};
 
   // ===== data: postavy =====
   var CHARS = [
@@ -1123,106 +1030,32 @@
     d.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
 
-  // ===== mapa: pan & zoom =====
-  var scale=1,minS=1,maxS=4,tx=0,ty=0;
-  var stage=$('#mapStage'), vp=$('#mapVp');
-  function clamp(){
-    var vw=vp.clientWidth, vh=vp.clientHeight, stageH=stage.offsetHeight;
-    var minX=Math.min(0, vw - vw*scale), minY=Math.min(0, vh - stageH*scale);
-    if(tx>0) tx=0; else if(tx<minX) tx=minX;
-    if(ty>0) ty=0; else if(ty<minY) ty=minY;
-  }
-  function applyT(){clamp(); stage.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; applyHereScale();}
-  function setStageWidth(){
-    stage.style.width=vp.clientWidth+'px';
-    var h=stage.offsetHeight;
-    if(h){ vp.style.height=Math.min(h, Math.round(window.innerHeight*0.72), 580)+'px'; }
-  }
-  function zoomAt(cx,cy,ns){
-    ns=Math.max(minS,Math.min(maxS,ns));
-    var rx=(cx-tx)/scale, ry=(cy-ty)/scale;
-    tx=cx-rx*ns; ty=cy-ry*ns; scale=ns; applyT();
-  }
-  function frameJourney(){
-    var W0=vp.clientWidth, H0=stage.offsetHeight, vpW=vp.clientWidth, vpH=vp.clientHeight;
-    if(!H0){return;}
-    var fx0=0.05,fx1=0.75,fy0=0.10,fy1=0.85;
-    var regW=(fx1-fx0)*W0, regH=(fy1-fy0)*H0;
-    var s=Math.min(vpW/regW, vpH/regH)*0.96;
-    s=Math.max(minS,Math.min(maxS,s));
-    scale=s;
-    tx=vpW/2 - ((fx0+fx1)/2)*W0*s;
-    ty=vpH/2 - ((fy0+fy1)/2)*H0*s;
-    applyT();
-  }
-  function goToPlace(p){
-    var natW=vp.clientWidth, natH=stage.offsetHeight; if(!natH)return;
-    scale=Math.min(maxS,3.4);
-    tx=vp.clientWidth/2 - (p.x/100)*natW*scale;
-    ty=vp.clientHeight/2 - (p.y/100)*natH*scale;
-    stage.classList.add('smooth'); applyT();
-  }
-  $('#zin').addEventListener('click',function(){zoomAt(vp.clientWidth/2,vp.clientHeight/2,scale*1.4);});
-  $('#zout').addEventListener('click',function(){zoomAt(vp.clientWidth/2,vp.clientHeight/2,scale/1.4);});
-  $('#zreset').addEventListener('click',function(){frameJourney();});
-  vp.addEventListener('wheel',function(e){e.preventDefault(); stage.classList.remove('smooth'); var r=vp.getBoundingClientRect(); zoomAt(e.clientX-r.left,e.clientY-r.top, scale*(e.deltaY<0?1.15:0.87));},{passive:false});
-  var drag=false,lx=0,ly=0,moved=0,pid=null;
-  vp.addEventListener('pointerdown',function(e){drag=true;moved=0;lx=e.clientX;ly=e.clientY;pid=e.pointerId;vp.setPointerCapture(pid);vp.classList.add('grabbing'); stage.classList.remove('smooth');});
-  vp.addEventListener('pointermove',function(e){if(!drag)return; var dx=e.clientX-lx,dy=e.clientY-ly; lx=e.clientX;ly=e.clientY; moved+=Math.abs(dx)+Math.abs(dy); tx+=dx;ty+=dy; applyT();});
-  function endDrag(){drag=false;vp.classList.remove('grabbing'); if(pid!=null){try{vp.releasePointerCapture(pid);}catch(e){}pid=null;}}
-  vp.addEventListener('pointerup',endDrag); vp.addEventListener('pointercancel',endDrag);
-  window.addEventListener('resize',function(){setStageWidth(); frameJourney();});
-
-  // ===== render: progress + mapové značky =====
+  // ===== render: progress =====
   function updateProgress(){
     var rc=readCount();
     $('#chDone').textContent=rc;
     $('#roadFill').style.width=(rc/17*100)+'%';
-    var rg=reachedGi(), mile=0;
-    PLACES.forEach(function(p){ if(p.gi<=rg && p.mile>mile) mile=p.mile; });
-    $('#miles').textContent=mile;
+    var rg=reachedGi(), pts=0;
+    POINTS.forEach(function(p){ if(p[0]<=rg && p[1]>pts) pts=p[1]; });
+    $('#miles').textContent=pts;
   }
-  function buildRoute(){
-    var svg=$('#routeSvg');
-    var pts = state.mode==='rodic' ? PLACES : PLACES.filter(function(p){return p.gi<=reachedGi();});
-    if(pts.length<2){ svg.innerHTML=''; return; }
-    var d=pts.map(function(p,i){return (i?'L':'M')+p.x+','+p.y;}).join(' ');
-    svg.innerHTML='<path d="'+d+'" fill="none" style="stroke:var(--ember)" stroke-width="2.4" '+
-      'stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.1 3.2" '+
-      'vector-effect="non-scaling-stroke" opacity="0.9"/>';
-  }
-  function currentPlace(){ var rg=reachedGi(),cur=null; PLACES.forEach(function(p){ if(p.gi<=rg&&(!cur||p.seq>cur.seq))cur=p; }); return cur; }
-  function renderHere(){
-    var box=$('#hereLayer'); box.innerHTML='';
-    var cur=currentPlace(); if(!cur) return;
-    var m=el('div','hereM'); m.style.left=cur.x+'%'; m.style.top=cur.y+'%';
-    m.innerHTML='<span class="hm-in" title="Tady jsme: '+esc(cur.name)+'"></span>';
-    $('.hm-in',m).addEventListener('click',function(ev){ev.stopPropagation(); showPlace(cur,true);});
-    box.appendChild(m); applyHereScale();
-  }
-  function applyHereScale(){ var inn=$('#hereLayer .hm-in'); if(inn) inn.style.transform='scale('+(1/scale)+')'; }
-  function renderStrip(){
-    var rg=reachedGi(), cur=currentPlace();
-    var strip=$('#mapstrip'); if(!strip) return; strip.innerHTML='';
-    var list = state.mode==='rodic' ? PLACES : PLACES.filter(function(p){return p.gi<=rg;});
-    if(!list.length){ strip.innerHTML='<div class="strip-empty">Zatím jsme nevyrazili — po přečtení kapitoly se tu objeví zastávky.</div>'; return; }
-    list.forEach(function(p){
-      var reached=p.gi<=rg, isCur=!!(cur&&cur.id===p.id);
-      var c=el('button','mchip'+(reached?'':' future')+(isCur?' on':''));
-      c.innerHTML='<span class="mchip-n">'+p.seq+'</span>'+icon(p.ic,'mchip-ic')+'<small>'+esc(p.name)+'</small>'+(isCur?'<span class="mchip-here">Tady jsme</span>':'');
-      c.addEventListener('click',function(){ goToPlace(p); showPlace(p,reached); Array.prototype.forEach.call(strip.children,function(x){x.classList.toggle('sel',x===c);}); });
-      strip.appendChild(c);
+
+  // ===== render: audio =====
+  function renderAudio(){
+    var box=$('#audioList'); if(!box) return; box.innerHTML='';
+    var rg=reachedGi();
+    CH.forEach(function(c){
+      var peek = state.mode==='rodic' || c.gi<=rg+1;
+      var card=el('div','ch open');
+      card.innerHTML='<div class="ch-head"><span class="ch-num">'+c.gi+'</span>'+
+        '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
+        '<div class="ch-body">'+
+          (!peek ? '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli.</p>'
+            : AUDIO[c.gi] ? '<audio controls preload="none" src="'+esc(AUDIO[c.gi])+'"></audio>'
+            : '<p class="locknote">'+icon('scroll')+'Nahrávka téhle kapitoly zatím není k dispozici.</p>')+
+        '</div>';
+      box.appendChild(card);
     });
-    var on=strip.querySelector('.mchip.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
-  }
-  function showPlace(p, reached){
-    var pan=$('#placePanel'); pan.className='place-panel';
-    var txt = state.mode==='deti' ? p.kid : p.dad;
-    var sub = esc(p.en)+' · zastávka '+p.seq;
-    pan.innerHTML='<div class="place-head"><span class="place-ic">'+icon(p.ic)+'</span>'+
-      '<div><h3>'+esc(p.name)+'</h3><span class="en">'+sub+'</span></div></div>'+
-      '<p>'+esc(txt)+'</p>'+
-      (state.mode==='deti'&&!reached?'<p class="locknote">'+icon('lock')+'Sem ještě nedošli — přečti kapitolu a odemkne se víc.</p>':'');
   }
 
   // ===== render: kapitoly =====
@@ -1301,7 +1134,7 @@
     $('#relations').innerHTML=h;
   }
 
-  function rerender(){ updateProgress(); buildRoute(); renderHere(); renderStrip(); renderChapters(); renderChars(); renderRelations(); renderWorld(); }
+  function rerender(){ updateProgress(); renderAudio(); renderChapters(); renderChars(); renderRelations(); renderWorld(); }
 
   // ===== toggles =====
   $('#modeswitch').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
@@ -1325,7 +1158,7 @@
   $('#tabs').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
     var v=b.getAttribute('data-view');
     Array.prototype.forEach.call($('#tabs').children,function(x){x.classList.toggle('on',x===b); x.setAttribute('aria-selected', x===b?'true':'false');});
-    ['mapa','kapitoly','postavy','svet'].forEach(function(id){$('#view-'+id).classList.toggle('on',id===v);});
+    ['audio','kapitoly','postavy','svet'].forEach(function(id){$('#view-'+id).classList.toggle('on',id===v);});
   });
   $('#subseg').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
     var s=b.getAttribute('data-sub');
@@ -1335,12 +1168,7 @@
 
   // ===== init =====
   function init(){
-    syncMode(); applyTheme();
-    var img=$('#mapImg');
-    var done=false;
-    function ready(){ setStageWidth(); frameJourney(); rerender(); done=true; }
-    if(img.complete && img.naturalWidth) ready(); else img.addEventListener('load',ready);
-    setTimeout(function(){ if(!done) ready(); },400);
+    syncMode(); applyTheme(); rerender();
   }
   init();
 })();

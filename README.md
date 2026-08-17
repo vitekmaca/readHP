@@ -2,11 +2,11 @@
 
 Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem. Postavené stejně jako [readLOTR](https://github.com/brychtaj/readLOTR) — fanouškovský projekt, žádná oficiální appka.
 
-➡️ Živě na **https://vitekmaca.github.io/readHP/** (GitHub Pages, zatím bez obrázků — viz níže). Po doplnění obrázků (viz níže) jde appku spustit i lokálně: otevři **`index.html`** v prohlížeči, funguje offline, je to jeden soubor.
+➡️ Živě na **https://vitekmaca.github.io/readHP/** (GitHub Pages, zatím bez portrétů/ilustrací — viz níže; audio ke kapitole 1 už tam je). Po doplnění obrázků (viz níže) jde appku spustit i lokálně: otevři **`index.html`** v prohlížeči.
 
 ## Co appka umí
 
-- 🗺️ **Mapa školního roku** — trasa od Zobí ulice přes Příčnou ulici a nástupiště 9¾ až po Bradavice; v režimu Děti bez spoilerů (odemyká se podle přečtených kapitol).
+- 🎧 **Namluvené kapitoly** — audiopřehrávač u každé kapitoly, doplňuje se postupně jak přibývají nahrávky (soubory v `assets/audio/`).
 - 🧙 **31 postav** s portréty a „příběhem zatím", který se dopisuje podle toho, co už bylo přečteno.
 - 🖼️ **Malovaná ilustrace** klíčového momentu ke každé ze 17 kapitol.
 - 📖 **Dva režimy**: *Rodiče* (shrnutí, na co se zaměřit, otázky pro děti, „metr strašidelnosti" ⚠️) a *Děti* (bez spoilerů — jen „co bylo minule" a kvízy).
@@ -17,13 +17,13 @@ Appka je jen česky (žádný jazykový přepínač). Jména míst a postav drž
 
 ## Struktura projektu
 
-- `index.html` — **sestavená appka** (jeden soubor). Slouží GitHub Pages i pro lokální otevření. Dokud nejsou obrázky v `assets/`, je to jen kopie šablony bez vložených obrázků (postavy mají místo portrétu ikonku, mapa je prázdná) — po buildu s doplněnými obrázky se přepíše finální verzí.
+- `index.html` — **sestavená appka** (jeden soubor). Slouží GitHub Pages i pro lokální otevření. Dokud nejsou portréty/ilustrace v `assets/`, je to jen kopie šablony bez vložených obrázků (postavy mají místo portrétu ikonku) — po buildu s doplněnými obrázky se přepíše finální verzí.
 - `kamen-mudrcu.template.html` — **zdrojová šablona** (HTML/CSS/JS + veškerý text). Tady se edituje obsah.
-- `assets/` — obrázky vkládané při buildu (zatím prázdné složky, viz seznam níže):
-  - `map.jpg` — mapa Bradavic a okolí,
-  - `portraits/<id>.jpg` — portréty postav,
-  - `scenes/<n>.jpg` — ilustrace kapitol `1`–`17`.
-- `build.mjs` — build skript (Node), stejný princip jako u LOTR appky.
+- `assets/` — obrázky a audio (zatím prázdné/částečné složky, viz seznam níže):
+  - `portraits/<id>.jpg` — portréty postav (vkládají se do `index.html` při buildu),
+  - `scenes/<n>.jpg` — ilustrace kapitol `1`–`17` (vkládají se při buildu),
+  - `audio/<gi>.m4a` — namluvené kapitoly (**odkazované**, ne vkládané do HTML — jsou moc velké na base64). `1.m4a` už je nahraný.
+- `build.mjs` — build skript (Node), stejný princip jako u LOTR appky. Audio soubory nijak nezpracovává, jen očekává, že fyzicky existují na správné cestě.
 
 ## Build
 
@@ -39,11 +39,7 @@ Skript vezme `kamen-mudrcu.template.html`, nahradí tokeny obrázků z `assets/`
 
 ## Co přesně potřebuju od tebe (obrázky)
 
-Appka bez obrázků nezobrazí nic (u postav aspoň ikonku, u map/scén nic — build navíc bez nich rovnou selže). Potřebuju **49 souborů**, všechny `.jpg`:
-
-### 1 mapa
-
-`assets/map.jpg` — stylizovaná mapa Bradavic a okolí (ne doslovná, spíš jako ilustrovaná mapa škol/zámku — podobně jako LOTR appka měla mapu Středozemě). Měla by pokrýt: Zobí ulici (v rohu, mimo hlavní scénu), Příčnou ulici/Londýn, nádraží King's Cross s nástupištěm 9¾, a hlavně pozemky a hrad Bradavic (Velká síň, věže, hřiště na famfrpál, skleníky, Zakázaný les). Doporučená šířka aspoň 2000 px (appka ji zobrazuje širokou přes celou stránku a jde přibližovat).
+Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno — build navíc bez nich rovnou selže). Potřebuju **48 souborů**, všechny `.jpg`:
 
 ### 17 ilustrací kapitol
 
@@ -113,7 +109,7 @@ Appka bez obrázků nezobrazí nic (u postav aspoň ikonku, u map/scén nic — 
 
 LOTR appka používala malované ilustrace ve stylu Midjourney ("styl C", teplá kamenná paleta). Pro konzistentní vzhled doporučuju:
 
-- **Jednotný malovaný/ilustrovaný styl** napříč všemi 49 obrázky (ne fotky, ne mix stylů) — ideálně stejný seed/styl parametr v generátoru pro všechny.
+- **Jednotný malovaný/ilustrovaný styl** napříč všemi 48 obrázky (ne fotky, ne mix stylů) — ideálně stejný seed/styl parametr v generátoru pro všechny.
 - **Teplá, "svíčkami osvětlená" paleta** — appka má barevné schéma pergamen + zlatá + tmavě vínová (viz CSS proměnné `--gold`, `--ember` v šabloně), takže ilustrace v teplých tónech budou sedět nejlíp.
 - **Žádná oficiální loga/erby** — vyhni se přesné reprodukci skutečného erbu Bradavic nebo log filmové série (jsou to chráněné ochranné známky Warner Bros.). Já jsem proto pro appku nakreslil vlastní jednoduchou ikonku (hůlka + jiskra), ne oficiální erb.
 - **Žádná podobizna filmových herců** — bezpečnější je malovaná/stylizovaná podoba než realistická podobizna konkrétního herce.

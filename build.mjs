@@ -1,10 +1,13 @@
-// Sestaví kamen-mudrcu.html ze šablony: vloží obrázky z assets/ jako base64 data URI.
+// Sestaví index.html ze šablony: vloží obrázky z assets/ jako base64 data URI.
 // Spuštění:  node build.mjs
 //
 // Tokeny v šabloně kamen-mudrcu.template.html:
-//   __MAP_DATA_URI__   -> assets/map.jpg            (mapa Bradavic a okolí)
 //   __IMG_<id>__       -> assets/portraits/<id>.jpg  (portréty postav)
 //   __SCENE_<n>__      -> assets/scenes/<n>.jpg      (ilustrace kapitol 1..17)
+//
+// Audio (assets/audio/<gi>.m4a) se do šablony nevkládá jako data URI — je to
+// jen odkaz na soubor v repu (base64 by pro audio bylo příliš objemné pro
+// jeden HTML soubor). Stačí soubor mít fyzicky v assets/audio/.
 //
 // Seznam tokenů se čte přímo ze šablony, takže build zůstává v synchronu s ní.
 import fs from 'node:fs';
@@ -31,7 +34,6 @@ if (html.charCodeAt(0) === 0xFEFF) html = html.slice(1); // pro jistotu bez BOM 
 
 // Sestav mapu token -> data URI podle toho, co je v šabloně.
 const tokens = new Map();
-tokens.set('__MAP_DATA_URI__', dataUri(requireAsset(path.join(ASSETS, 'map.jpg'), 'mapa')));
 for (const m of html.matchAll(/__IMG_([a-z0-9-]+)__/g)) {
   const id = m[1];
   tokens.set(m[0], dataUri(requireAsset(path.join(ASSETS, 'portraits', `${id}.jpg`), `portrét ${id}`)));
