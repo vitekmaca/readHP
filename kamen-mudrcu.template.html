@@ -1074,10 +1074,12 @@
         '<div class="ch-t"><h3>'+esc(c.title)+'</h3><span class="en">'+esc(c.en)+'</span>'+
         '<div class="fear">'+flames(c.fear)+'</div></div>';
       var right=el('div',null,'');
-      var rd=el('button','ch-read'+(done?' done':''), (done?icon('check')+'Přečteno':'Přečteno?'));
-      rd.addEventListener('click',function(ev){ev.stopPropagation(); state.read[c.gi]=!state.read[c.gi]; save(); rerender();});
+      if(peek){
+        var rd=el('button','ch-read'+(done?' done':''), (done?icon('check')+'Přečteno':'Přečteno?'));
+        rd.addEventListener('click',function(ev){ev.stopPropagation(); state.read[c.gi]=!state.read[c.gi]; save(); rerender();});
+        right.appendChild(rd);
+      }
       var car=el('span','caret','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>');
-      right.appendChild(rd);
       head.appendChild(right); head.appendChild(car);
       card.appendChild(head);
       var body=el('div','ch-body');
