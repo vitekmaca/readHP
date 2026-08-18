@@ -441,12 +441,12 @@
     harry:'__IMG_harry__',ron:'__IMG_ron__',hermiona:'__IMG_hermiona__',hagrid:'__IMG_hagrid__',
     brumbal:'__IMG_brumbal__',mcgonagallova:'__IMG_mcgonagallova__',snape:'__IMG_snape__',draco:'__IMG_draco__',
     neville:'__IMG_neville__',nick:'__IMG_nick__',filch:'__IMG_filch__',voldemort:'__IMG_voldemort__',
-    quirrell:'__IMG_quirrell__',chloupek:'__IMG_chloupek__',norbert:'__IMG_norbert__',firenze:'__IMG_firenze__',
+    quirrell:'__IMG_quirrell__',chloupek:'__IMG_chloupek__',norbert:'__IMG_norbert__',
     ollivander:'__IMG_ollivander__',flamel:'__IMG_flamel__',
     vernon:'__IMG_vernon__',petunie:'__IMG_petunie__',dudley:'__IMG_dudley__',james:'__IMG_james__',lily:'__IMG_lily__',
-    protiva:'__IMG_protiva__',paninorrisova:'__IMG_paninorrisova__',fredgeorge:'__IMG_fredgeorge__',percy:'__IMG_percy__',
-    madamhoochova:'__IMG_madamhoochova__',madampomfreyova:'__IMG_madampomfreyova__',griphook:'__IMG_griphook__',
-    buclatadama:'__IMG_buclatadama__'
+    fredgeorge:'__IMG_fredgeorge__',percy:'__IMG_percy__',
+    madamhoochova:'__IMG_madamhoochova__',madampomfreyova:'__IMG_madampomfreyova__',
+    buclatadama:'__IMG_buclatadama__',klobouk:'__IMG_klobouk__'
   };
   function hasPortrait(id){var u=PORTRAITS[id];return !!(u&&u.slice(0,5)==='data:');}
   function imgPortrait(id,alt){return hasPortrait(id)?'<img src="'+PORTRAITS[id]+'" alt="'+esc(alt||'')+'" loading="lazy">':null;}
@@ -533,9 +533,6 @@
     {id:'norbert',gi:14,name:'Norbert',en:'Norbert',race:'zvire',rlab:'Drak',ic:'zvire',
       kid:'Malý černý dráček, kterého si Hagrid vysedí z vejce vyhraného v kartách. Roztomilý, dokud nezačne chrlit oheň a růst jako z vody.',
       dad:'Norský hřbetozubec, kterého Hagrid nezodpovědně chová ve své chatrči. Jeho existence přinese Harrymu a přátelům spoustu potíží.'},
-    {id:'firenze',gi:15,name:'Firenze',en:'Firenze',race:'kentaur',rlab:'Kentaur',ic:'kentaur',
-      kid:'Kentaur ze Zakázaného lesa se stříbrnou hřívou, který se nebojí porušit pravidla svého stáda, aby zachránil člověka v nebezpečí.',
-      dad:'Kentaur, který zachrání Harryho v Zakázaném lese před temnou postavou pijící jednorožčí krev.'},
     {id:'ollivander',gi:5,name:'Ollivander',en:'Mr Ollivander',race:'kouzelnik',rlab:'Hůlkař',ic:'kouzelnik',
       kid:'Tajemný stařík z obchodu s kouzelnickými hůlkami, který si pamatuje úplně každou hůlku, co kdy prodal. Harryho hůlka si ho prý sama vybrala.',
       dad:'Majitel starobylého obchodu s hůlkami v Příčné ulici. Jeho poznámka o Harryho hůlce naznačí důležité spojení s Voldemortem.'},
@@ -557,12 +554,6 @@
     {id:'lily',gi:1,name:'Lily Potterová',en:'Lily Potter',race:'kouzelnik',rlab:'Harryho máma',ic:'kouzelnik',
       kid:'Harryho máma. Její láska ho doslova zachránila před Voldemortem a chrání ho — jak se ukáže — dodnes.',
       dad:'Matka narozená mudlovským rodičům. Její oběť za Harryho je zdrojem staré magické ochrany, která hraje klíčovou roli na konci knihy.'},
-    {id:'protiva',gi:8,name:'Protiva',en:'Peeves',race:'duch',rlab:'Škodolibý duch',ic:'duch',
-      kid:'Rozpustilý přízrak, který žáky straší, shazuje věci ze schodů a dělá naschvály, kdykoli může. Na rozdíl od ostatních duchů nepatří k žádné fakultě.',
-      dad:'Poltergeist Bradavic — na rozdíl od domácích duchů nikomu neslouží a poslouchá jen ředitele.'},
-    {id:'paninorrisova',gi:8,name:'Paní Norrisová',en:'Mrs Norris',race:'zvire',rlab:'Filchova kočka',ic:'zvire',
-      kid:'Hubená šedá kočka školníka Filche, která jako by viděla úplně všechno. Kde je paní Norrisová, tam brzy bude i Filch.',
-      dad:'Filchova věrná společnice a jeho oči na chodbách. Žáci se jí děsí skoro stejně jako samotného školníka.'},
     {id:'fredgeorge',gi:6,name:'Fred a George Weasleyovi',en:'Fred and George Weasley',race:'kouzelnik',rlab:'Nebelvírští vtipálci',ic:'kouzelnik',
       kid:'Ronovi starší bratři, nerozluční dvojčata proslulá žertíky a legrací. Ve vlaku Harrymu poprvé pomůžou najít správné kupé.',
       dad:'Weasleyovic dvojčata, oblíbenci celé školy. V prvním díle jsou jen na okraji děje, ale humor mají už od začátku.'},
@@ -580,7 +571,10 @@
       dad:'Zaměstnanec Gringottovy banky. Skřeti kouzelnickým zlatem opatrují už po staletí a nikomu nedůvěřují bezdůvodně.'},
     {id:'buclatadama',gi:8,name:'Buclatá dáma',en:'The Fat Lady',race:'kouzelnik',rlab:'Mluvící portrét',ic:'star',
       kid:'Obraz veselé dámy v růžových šatech, který hlídá vchod do Nebelvírské věže. Dovnitř tě pustí jen se správným heslem!',
-      dad:'Mluvící portrét střežící vstup do nebelvírské společenské místnosti. Heslo se čas od času mění.'}
+      dad:'Mluvící portrét střežící vstup do nebelvírské společenské místnosti. Heslo se čas od času mění.'},
+    {id:'klobouk',gi:7,name:'Moudrý klobouk',en:'The Sorting Hat',race:'kouzelnik',rlab:'Kouzelný klobouk',ic:'star',
+      kid:'Starý, potrhaný klobouk, který se každému prvákovi podívá přímo do hlavy a rozhodne, do které fakulty patří. Umí dokonce i zpívat!',
+      dad:'Kouzelný artefakt, který už stovky let řadí nové žáky Bradavic do čtyř fakult podle toho, co v nich vidí.'}
   ];
   var CHARMAP={}; CHARS.forEach(function(c){CHARMAP[c.id]=c;});
   var SHORT={harry:'Harry',ron:'Ron',hermiona:'Hermiona',hagrid:'Hagrid',brumbal:'Brumbál',mcgonagallova:'McGonagallová',neville:'Neville',nick:'Nick'};
@@ -663,12 +657,6 @@
       [1,'Obětuje se za Harryho a nevědomky ho tím kouzelně ochrání.'],
       [17,'Její stará oběť je nakonec to, co Harryho zachrání před Quirrellem.']
     ]},
-    protiva:{ahead:'Proč asi Protiva dělá naschvály úplně všem, i hodným žákům?',beats:[
-      [8,'Straší nové žáky na chodbách a shazuje věci jen tak z legrace.']
-    ]},
-    paninorrisova:{ahead:'Proč si myslíš, že se jí žáci bojí skoro stejně jako Filche?',beats:[
-      [8,'Hlídá chodby po boku školníka Filche a hned tak něco jí neunikne.']
-    ]},
     fredgeorge:{ahead:'Jak se ti líbí, že si dvojčata z pravidel tolik dělají legraci?',beats:[
       [6,'Pomůžou Harrymu ve vlaku najít volné kupé.'],
       [7,'Sledují rozřazování a bujaře fandí novým Nebelvíranům.']
@@ -683,9 +671,6 @@
     madampomfreyova:{ahead:'Proč je důležité mít někoho, kdo se postará, i když je dobrodružství u konce?',beats:[
       [8,'Ošetří Nevillovi zlomené zápěstí po pádu z koštěte.'],
       [17,'Stará se o Harryho, když se probouzí po střetu s Voldemortem.']
-    ]},
-    griphook:{ahead:'Co myslíš, že bylo v tom prázdném trezoru, který ten den vyklidili?',beats:[
-      [5,'Veze Harryho a Hagrida vozíkem hluboko pod bankou k tajemnému trezoru.']
     ]},
     buclatadama:{ahead:'Jaké heslo by sis vymyslel, kdybys hlídal tajný vchod?',beats:[
       [8,'Hlídá vchod do Nebelvírské věže a pustí dovnitř jen se správným heslem.']
