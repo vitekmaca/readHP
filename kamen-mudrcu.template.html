@@ -99,7 +99,7 @@
     display:flex; align-items:center; gap:8px; transition:.15s}
   nav.tabs button svg{width:17px;height:17px}
   nav.tabs button:hover{border-color:var(--gold); color:var(--ink)}
-  nav.tabs button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:var(--paper-2); border-color:var(--ink)}
+  nav.tabs button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:#f2eee6; border-color:var(--ink)}
 
   .view{display:none; animation:fade .3s ease}
   .view.on{display:block}
@@ -121,8 +121,16 @@
     background:linear-gradient(180deg,#3a2418,#241a12); min-width:44px; height:44px; border-radius:10px;
     display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:.02em}
   :root[data-theme="dark"] .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
+  :root[data-theme="dark"] .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
+    :root:not([data-theme="light"]) .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+  }
   .ch-t{flex:1; min-width:0}
   .ch-t h3{margin:0; font-size:1.06rem; font-family:var(--serif); font-weight:700; text-wrap:balance}
+  .audio-badge{display:inline-flex; vertical-align:middle; color:var(--gold)}
+  .audio-badge svg{width:15px; height:15px}
+  .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
   .ch-t .en{font-family:var(--ui); font-size:.74rem; color:var(--ink-3); letter-spacing:.02em}
   .fear{display:flex; align-items:center; gap:3px; margin-top:4px}
   .fear .lab{font-family:var(--ui); font-size:.68rem; color:var(--ink-3); margin-right:4px; letter-spacing:.02em}
@@ -237,7 +245,7 @@
   .subseg{display:inline-flex; background:var(--panel-2); border:1px solid var(--line-2); border-radius:999px;
     padding:3px; margin-bottom:16px; font-family:var(--ui); font-size:.84rem}
   .subseg button{border:0; background:transparent; color:var(--ink-2); cursor:pointer; padding:7px 16px; border-radius:999px; font-weight:600}
-  .subseg button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:var(--paper-2)}
+  .subseg button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:#f2eee6}
 
   /* ===== World (lore) ===== */
   .lore-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px}
@@ -400,6 +408,7 @@
   "use strict";
   // ===== icons =====
   var IC = {
+    headphones:'<path d="M4 14v-1a8 8 0 0116 0v1"/><rect x="2" y="14" width="4.5" height="7" rx="2"/><rect x="17.5" y="14" width="4.5" height="7" rx="2"/>',
     town:'<path d="M4 20h16M6 20v-8l6-4 6 4v8M10 20v-4h4v4"/>',
     forest:'<path d="M12 3l5 8H7zM12 8l6 9H6zM12 17v3"/>',
     mountain:'<path d="M3 19l6-11 4 6 3-5 5 10z"/>',
@@ -1032,7 +1041,7 @@
     CH.forEach(function(c){
       var peek = state.mode==='rodic' || c.gi<=rg+1;
       var card=el('div','ch open');
-      card.innerHTML='<div class="ch-head"><span class="ch-num">'+c.gi+'</span>'+
+      card.innerHTML='<div class="ch-head"><span class="ch-num'+(AUDIO[c.gi]?' has-audio':'')+'">'+c.gi+'</span>'+
         '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
         '<div class="ch-body">'+
           (!peek ? '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli.</p>'
@@ -1056,7 +1065,7 @@
       card.setAttribute('data-gi',c.gi);
       var head=el('div','ch-head');
       head.innerHTML='<span class="ch-num">'+c.gi+'</span>'+
-        '<div class="ch-t"><h3>'+esc(c.title)+'</h3><span class="en">'+esc(c.en)+'</span>'+
+        '<div class="ch-t"><h3>'+esc(c.title)+(AUDIO[c.gi]?' <span class="audio-badge" title="Je k dispozici namluvená kapitola">'+icon('headphones')+'</span>':'')+'</h3><span class="en">'+esc(c.en)+'</span>'+
         '<div class="fear">'+flames(c.fear)+'</div></div>';
       var right=el('div',null,'');
       if(peek){
