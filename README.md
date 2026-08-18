@@ -6,9 +6,9 @@ Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem
 
 ## Aktuální stav
 
-- **Postavy:** 28 v appce, z toho **17 má reálný portrét** (viz tabulka níže, co ještě chybí).
-- **Ilustrace kapitol:** zatím žádná z 17 (řeší se — viz diskuze v konverzaci, možnosti: vinětky z knihy, AI, kombinace).
-- **Audio:** kapitoly 1–4 mají nahrávku (jedna společná, `assets/audio/1.m4a`), kapitoly 5–17 zatím nic.
+- **Postavy:** 28 v appce, z toho **23 má reálný portrét** (viz tabulka níže, co ještě chybí: Voldemort, James, Lily, Percy, Madame Hoochová).
+- **Ilustrace kapitol:** zatím žádná z 17 (řeší se — možnosti: vinětky z knihy, AI, kombinace).
+- **Audio:** kapitola 1 (`assets/audio/1.m4a`) a kapitola 2 (`assets/audio/2.m4a`) mají nahrávku, 3–17 zatím nic.
 
 ## Co appka umí
 
@@ -32,7 +32,7 @@ Portréty postav jsou naskenované/vyfocené stránky z **Jim Kayho Illustrated 
 - `assets/` — obrázky a audio (zatím prázdné/částečné složky, viz seznam níže):
   - `portraits/<id>.jpg` — portréty postav (vkládají se do `index.html` při buildu),
   - `scenes/<n>.jpg` — ilustrace kapitol `1`–`17` (vkládají se při buildu),
-  - `audio/<gi>.m4a` — namluvené kapitoly (**odkazované**, ne vkládané do HTML — jsou moc velké na base64). `1.m4a` už je nahraný.
+  - `audio/<gi>.m4a` — namluvené kapitoly (**odkazované**, ne vkládané do HTML — jsou moc velké na base64). `1.m4a` a `2.m4a` už jsou nahrané.
 - `build.mjs` — build skript (Node), stejný princip jako u LOTR appky. Audio soubory nijak nezpracovává, jen očekává, že fyzicky existují na správné cestě.
 
 ## Build
@@ -93,13 +93,13 @@ Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno
 | `draco.jpg` | Draco Malfoy | ✅ |
 | `neville.jpg` | Neville Longbottom | ✅ |
 | `nick.jpg` | Skoro bezhlavý Nick | ✅ |
-| `filch.jpg` | Argus Filch | |
+| `filch.jpg` | Argus Filch | ✅ |
 | `voldemort.jpg` | Voldemort | |
 | `quirrell.jpg` | Quirinus Quirrell | ✅ |
 | `chloupek.jpg` | Chloupek (třihlavý pes) | ✅ |
 | `norbert.jpg` | Norbert (dráček) | ✅ |
-| `ollivander.jpg` | Ollivander | |
-| `flamel.jpg` | Mikuláš Flamel | |
+| `ollivander.jpg` | Ollivander | ✅ |
+| `flamel.jpg` | Mikuláš Flamel | ✅ |
 | `vernon.jpg` | Strýc Vernon Dursley | ✅ |
 | `petunie.jpg` | Teta Petunie Dursleyová | ✅ |
 | `dudley.jpg` | Dudley Dursley | ✅ |
@@ -108,8 +108,8 @@ Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno
 | `fredgeorge.jpg` | Fred a George Weasleyovi (dvojčata) | ✅ |
 | `percy.jpg` | Percy Weasley | |
 | `madamhoochova.jpg` | Madame Hoochová | |
-| `madampomfreyova.jpg` | Madame Pomfreyová | |
-| `buclatadama.jpg` | Buclatá dáma (mluvící portrét) | |
+| `madampomfreyova.jpg` | Madame Pomfreyová | ✅ |
+| `buclatadama.jpg` | Buclatá dáma (mluvící portrét) | ✅ |
 | `klobouk.jpg` | Moudrý klobouk | ✅ |
 
 Odebráno z appky (na přání): Firenze, Protiva, Paní Norrisová, Griphook.
