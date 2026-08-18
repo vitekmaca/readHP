@@ -2,22 +2,32 @@
 
 Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem. Postavené stejně jako [readLOTR](https://github.com/brychtaj/readLOTR) — fanouškovský projekt, žádná oficiální appka.
 
-➡️ Živě na **https://vitekmaca.github.io/readHP/** (GitHub Pages, zatím bez portrétů/ilustrací — viz níže; audio ke kapitole 1 už tam je). Po doplnění obrázků (viz níže) jde appku spustit i lokálně: otevři **`index.html`** v prohlížeči.
+➡️ **Repo je soukromé a musí tak zůstat** — viz sekce Autorská práva níže. `index.html` se otevírá lokálně (dvojklik / v prohlížeči), GitHub Pages se nepoužívá.
+
+## Aktuální stav
+
+- **Postavy:** 28 v appce, z toho **17 má reálný portrét** (viz tabulka níže, co ještě chybí).
+- **Ilustrace kapitol:** zatím žádná z 17 (řeší se — viz diskuze v konverzaci, možnosti: vinětky z knihy, AI, kombinace).
+- **Audio:** kapitoly 1–4 mají nahrávku (jedna společná, `assets/audio/1.m4a`), kapitoly 5–17 zatím nic.
 
 ## Co appka umí
 
 - 🎧 **Namluvené kapitoly** — audiopřehrávač u každé kapitoly, doplňuje se postupně jak přibývají nahrávky (soubory v `assets/audio/`).
-- 🧙 **31 postav** s portréty a „příběhem zatím", který se dopisuje podle toho, co už bylo přečteno.
-- 🖼️ **Malovaná ilustrace** klíčového momentu ke každé ze 17 kapitol.
+- 🧙 **Postavy** s portréty a „příběhem zatím", který se dopisuje podle toho, co už bylo přečteno.
+- 🖼️ **Malovaná ilustrace** klíčového momentu ke každé ze 17 kapitol (zatím nevyřešeno, viz výše).
 - 📖 **Dva režimy**: *Rodiče* (shrnutí, na co se zaměřit, otázky pro děti, „metr strašidelnosti" ⚠️) a *Děti* (bez spoilerů — jen „co bylo minule" a kvízy).
-- 🌍 **Svět** — Kámen mudrců, Voldemort, Zrcadlo z Erisedu, Chloupek, národy kouzelnického světa (kouzelníci, mudlové, skřeti, kentauři…) a časová osa před začátkem příběhu.
+- 🌍 **Svět** — Kámen mudrců, Voldemort, Zrcadlo z Erisedu, Chloupek, národy kouzelnického světa (kouzelníci, mudlové, skřeti…) a časová osa před začátkem příběhu.
 - 🌗 Světlý/tmavý motiv v hlavičce.
 
 Appka je jen česky (žádný jazykový přepínač). Jména míst a postav drží oficiální překlad **Pavla Medka** (Bradavice, Nebelvír, Brumbál…) — u pár méně známých jmen (viz níže) to prosím ověř podle svého výtisku, nejsem si u nich stoprocentně jistý přesným zněním.
 
+## ⚠️ Autorská práva — proč musí repo zůstat soukromé
+
+Portréty postav jsou naskenované/vyfocené stránky z **Jim Kayho Illustrated Edition** (Bloomsbury/Scholastic) — komerční, chráněné dílo, ne volně šiřitelné. Použití je v pořádku jen jako **osobní, neveřejná appka pro rodinu**. Repo **nesmí** být veřejné a GitHub Pages **nesmí** být zapnuté, dokud tyhle obrázky v `assets/` jsou — jinak jde o veřejnou reprodukci cizího autorského díla. Pokud by appka měla být někdy veřejná, portréty by musely být nahrazené něčím jiným (originální/AI ilustrace).
+
 ## Struktura projektu
 
-- `index.html` — **sestavená appka** (jeden soubor). Slouží GitHub Pages i pro lokální otevření. Dokud nejsou portréty/ilustrace v `assets/`, je to jen kopie šablony bez vložených obrázků (postavy mají místo portrétu ikonku) — po buildu s doplněnými obrázky se přepíše finální verzí.
+- `index.html` — **sestavená appka** (jeden soubor), otevírá se lokálně. Dokud nejsou portréty/ilustrace v `assets/`, je to jen kopie šablony bez vložených obrázků (postavy mají místo portrétu ikonku) — po buildu s doplněnými obrázky se přepíše finální verzí.
 - `kamen-mudrcu.template.html` — **zdrojová šablona** (HTML/CSS/JS + veškerý text). Tady se edituje obsah.
 - `assets/` — obrázky a audio (zatím prázdné/částečné složky, viz seznam níže):
   - `portraits/<id>.jpg` — portréty postav (vkládají se do `index.html` při buildu),
@@ -33,13 +43,13 @@ Po doplnění obrázků do `assets/` spusť:
 node build.mjs
 ```
 
-Skript vezme `kamen-mudrcu.template.html`, nahradí tokeny obrázků z `assets/` (jako base64 data URI) a zapíše `index.html`. Pokud něco chybí, build to nahlásí a skončí chybou — takže se nedá omylem odeslat appka s rozbitým obrázkem. Po buildu stačí `index.html` commitnout a pushnout — GitHub Pages se sama aktualizuje.
+Skript vezme `kamen-mudrcu.template.html`, nahradí tokeny obrázků z `assets/` (jako base64 data URI) a zapíše `index.html`. Chybějící obrázky jen vypíše do konzole, build kvůli nim neselže.
 
 ---
 
 ## Co přesně potřebuju od tebe (obrázky)
 
-Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno — build navíc bez nich rovnou selže). Potřebuju **48 souborů**, všechny `.jpg`:
+Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno). Potřeba **45 souborů** celkem (17 scén + 28 portrétů), `build.mjs` ale běží i s částí chybějící — chybějící jen vypíše, nezastaví se.
 
 ### 17 ilustrací kapitol
 
@@ -67,58 +77,53 @@ Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno
 
 (Přesné anglické/české popisky jsou v šabloně — klidně mi je vytáhnu do samostatného souboru, kdyby se ti to hodilo pro zadávání do generátoru.)
 
-### 31 portrétů postav
+### 28 portrétů postav
 
-`assets/portraits/<id>.jpg` — orientace na výšku (poměr stran 3:4). Seznam id → jméno (přesně takhle se musí jmenovat soubor):
+`assets/portraits/<id>.jpg` — orientace na výšku (poměr stran 3:4). Seznam id → jméno (přesně takhle se musí jmenovat soubor). ✅ = portrét už je v repu.
 
-| soubor | postava |
-|---|---|
-| `harry.jpg` | Harry Potter |
-| `ron.jpg` | Ron Weasley |
-| `hermiona.jpg` | Hermiona Grangerová |
-| `hagrid.jpg` | Hagrid |
-| `brumbal.jpg` | Albus Brumbál |
-| `mcgonagallova.jpg` | Minerva McGonagallová |
-| `snape.jpg` | Severus Snape |
-| `draco.jpg` | Draco Malfoy |
-| `neville.jpg` | Neville Longbottom |
-| `nick.jpg` | Skoro bezhlavý Nick |
-| `filch.jpg` | Argus Filch |
-| `voldemort.jpg` | Voldemort |
-| `quirrell.jpg` | Quirinus Quirrell |
-| `chloupek.jpg` | Chloupek (třihlavý pes) |
-| `norbert.jpg` | Norbert (dráček) |
-| `firenze.jpg` | Firenze (kentaur) |
-| `ollivander.jpg` | Ollivander |
-| `flamel.jpg` | Mikuláš Flamel |
-| `vernon.jpg` | Strýc Vernon Dursley |
-| `petunie.jpg` | Teta Petunie Dursleyová |
-| `dudley.jpg` | Dudley Dursley |
-| `james.jpg` | James Potter |
-| `lily.jpg` | Lily Potterová |
-| `protiva.jpg` | Protiva (Peeves) |
-| `paninorrisova.jpg` | Paní Norrisová (kočka) |
-| `fredgeorge.jpg` | Fred a George Weasleyovi (dvojčata) |
-| `percy.jpg` | Percy Weasley |
-| `madamhoochova.jpg` | Madame Hoochová |
-| `madampomfreyova.jpg` | Madame Pomfreyová |
-| `griphook.jpg` | Griphook (bankovní skřet) |
-| `buclatadama.jpg` | Buclatá dáma (mluvící portrét) |
+| soubor | postava | |
+|---|---|---|
+| `harry.jpg` | Harry Potter | ✅ |
+| `ron.jpg` | Ron Weasley | ✅ |
+| `hermiona.jpg` | Hermiona Grangerová | ✅ |
+| `hagrid.jpg` | Hagrid | ✅ |
+| `brumbal.jpg` | Albus Brumbál | ✅ |
+| `mcgonagallova.jpg` | Minerva McGonagallová | ✅ |
+| `snape.jpg` | Severus Snape | ✅ |
+| `draco.jpg` | Draco Malfoy | ✅ |
+| `neville.jpg` | Neville Longbottom | ✅ |
+| `nick.jpg` | Skoro bezhlavý Nick | ✅ |
+| `filch.jpg` | Argus Filch | |
+| `voldemort.jpg` | Voldemort | |
+| `quirrell.jpg` | Quirinus Quirrell | ✅ |
+| `chloupek.jpg` | Chloupek (třihlavý pes) | ✅ |
+| `norbert.jpg` | Norbert (dráček) | ✅ |
+| `ollivander.jpg` | Ollivander | |
+| `flamel.jpg` | Mikuláš Flamel | |
+| `vernon.jpg` | Strýc Vernon Dursley | ✅ |
+| `petunie.jpg` | Teta Petunie Dursleyová | ✅ |
+| `dudley.jpg` | Dudley Dursley | ✅ |
+| `james.jpg` | James Potter | |
+| `lily.jpg` | Lily Potterová | |
+| `fredgeorge.jpg` | Fred a George Weasleyovi (dvojčata) | ✅ |
+| `percy.jpg` | Percy Weasley | |
+| `madamhoochova.jpg` | Madame Hoochová | |
+| `madampomfreyova.jpg` | Madame Pomfreyová | |
+| `buclatadama.jpg` | Buclatá dáma (mluvící portrét) | |
+| `klobouk.jpg` | Moudrý klobouk | ✅ |
+
+Odebráno z appky (na přání): Firenze, Protiva, Paní Norrisová, Griphook.
 
 ### Styl
 
-LOTR appka používala malované ilustrace ve stylu Midjourney ("styl C", teplá kamenná paleta). Pro konzistentní vzhled doporučuju:
+Portréty se zatím doplňují ze skenů/fotek z Illustrated Edition (viz Autorská práva výše) — poslední chybějící stačí pořídit stejně jako ty hotové. Chybějící sjednocení stylu tím pádem není potřeba řešit, jsou ze stejné knihy.
 
-- **Jednotný malovaný/ilustrovaný styl** napříč všemi 48 obrázky (ne fotky, ne mix stylů) — ideálně stejný seed/styl parametr v generátoru pro všechny.
-- **Teplá, "svíčkami osvětlená" paleta** — appka má barevné schéma pergamen + zlatá + tmavě vínová (viz CSS proměnné `--gold`, `--ember` v šabloně), takže ilustrace v teplých tónech budou sedět nejlíp.
-- **Žádná oficiální loga/erby** — vyhni se přesné reprodukci skutečného erbu Bradavic nebo log filmové série (jsou to chráněné ochranné známky Warner Bros.). Já jsem proto pro appku nakreslil vlastní jednoduchou ikonku (hůlka + jiskra), ne oficiální erb.
-- **Žádná podobizna filmových herců** — bezpečnější je malovaná/stylizovaná podoba než realistická podobizna konkrétního herce.
+Ilustrace kapitol (17, zatím žádná) jsou otevřená otázka — možnosti probírané v konverzaci: vinětky z knihy (pokud je má vydání u každé kapitoly), originální AI ilustrace podle popisků v `ILLUS` v šabloně, nebo kombinace. Až se rozhodne, doplnit sem.
 
 ### Jména k ověření
 
 U pár méně známých jmen jsem si nebyl stoprocentně jistý přesným zněním v Medkově překladu — než to pošleš dál, zkontroluj prosím v knize:
 - **Madame Hoochová** (Madam Hooch, učitelka létání)
 - **Madame Pomfreyová** (Madam Pomfrey, školní ošetřovatelka)
-- **Griphook** (možná má v knize počeštěné jméno, nechal jsem anglické jako bezpečnou variantu)
 
 Názvy kapitol v appce jsou moje vlastní parafráze (ne doslovný text knihy) — pokud chceš, aby přesně seděly s tvým výtiskem, klidně mi řekni a upravím.
