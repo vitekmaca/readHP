@@ -2,8 +2,6 @@
 
 Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem. Postavené stejně jako [readLOTR](https://github.com/brychtaj/readLOTR) — fanouškovský projekt, žádná oficiální appka.
 
-➡️ **Repo je soukromé a musí tak zůstat** — viz sekce Autorská práva níže. `index.html` se otevírá lokálně (dvojklik / v prohlížeči), GitHub Pages se nepoužívá.
-
 ## Aktuální stav
 
 - **Postavy:** 28 v appce, z toho **23 má reálný portrét** (viz tabulka níže, co ještě chybí: Voldemort, James, Lily, Percy, Madame Hoochová).
