@@ -128,7 +128,8 @@
   }
   .ch-t{flex:1; min-width:0}
   .ch-t h3{margin:0; font-size:1.06rem; font-family:var(--serif); font-weight:700; text-wrap:balance}
-  .audio-badge{display:inline-flex; vertical-align:middle; color:var(--gold)}
+  .audio-badge{display:inline-flex; vertical-align:middle; color:var(--gold); background:none; border:none; padding:2px; margin:0 0 0 2px; cursor:pointer; border-radius:6px}
+  .audio-badge:hover{color:var(--ink); background:var(--panel-2)}
   .audio-dur{font-family:var(--ui); font-size:.72rem; font-weight:600; color:var(--ink-3); vertical-align:middle}
   .audio-badge svg{width:15px; height:15px}
   .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
@@ -437,8 +438,8 @@
 
   // ===== state + drobní pomocníci (musí být definované dřív, než je kdokoli použije) =====
   var KEY='kamen_mudrcu_v1';
-  var state={mode:'rodic', theme:null, read:{}};
-  try{var s=JSON.parse(localStorage.getItem(KEY)); if(s){state.mode=s.mode||'rodic'; state.theme=s.theme||null; state.read=s.read||{};}}catch(e){}
+  var state={mode:'rodic', theme:null, read:{}, quiz:{}};
+  try{var s=JSON.parse(localStorage.getItem(KEY)); if(s){state.mode=s.mode||'rodic'; state.theme=s.theme||null; state.read=s.read||{}; state.quiz=s.quiz||{};}}catch(e){}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
   function reachedGi(){var m=0; for(var k in state.read){if(state.read[k]&&+k>m)m=+k;} return m;}
   function readCount(){var n=0; for(var k in state.read){if(state.read[k])n++;} return n;}
@@ -490,8 +491,6 @@
     return '<figure class="illus"><img src="'+SCENES[gi]+'" alt="Malovaná ilustrace ke kapitole" loading="lazy">'+capHtml+'</figure>';
   }
 
-  // ===== body pro Nebelvír — odemykají se podle přečtených kapitol =====
-  var POINTS=[[1,0],[4,10],[5,30],[6,40],[7,60],[8,90],[9,110],[11,150],[12,170],[15,250],[16,400]];
 
   // ===== data: audio nahrávky (gi -> cesta k souboru) =====
   var AUDIO={1:{file:'assets/audio/1.m4a',dur:'38:19'},2:{file:'assets/audio/2.m4a',dur:'25:23'}};
@@ -964,7 +963,9 @@
     var o=ev.target.closest('.opt'); if(!o||o.disabled)return;
     var wrap=o.closest('.qq'); var btns=wrap.querySelectorAll('.opt');
     btns.forEach(function(b){b.disabled=true; if(b.getAttribute('data-ok')==='1')b.classList.add('correct');});
-    if(o.getAttribute('data-ok')!=='1')o.classList.add('wrong');
+    if(o.getAttribute('data-ok')!=='1'){ o.classList.add('wrong'); return; }
+    var key=o.getAttribute('data-c')+'_'+o.getAttribute('data-qi');
+    if(!state.quiz[key]){ state.quiz[key]=true; save(); updateProgress(); }
   });
 
   // ===== render: postavy =====
@@ -1027,8 +1028,7 @@
     var rc=readCount();
     $('#chDone').textContent=rc;
     $('#roadFill').style.width=(rc/17*100)+'%';
-    var rg=reachedGi(), pts=0;
-    POINTS.forEach(function(p){ if(p[0]<=rg && p[1]>pts) pts=p[1]; });
+    var pts=Object.keys(state.quiz).length*10;
     $('#miles').textContent=pts;
   }
 
@@ -1039,6 +1039,7 @@
     CH.forEach(function(c){
       var peek = state.mode==='rodic' || c.gi<=rg+1;
       var card=el('div','ch open');
+      card.setAttribute('data-gi',c.gi);
       card.innerHTML='<div class="ch-head"><span class="ch-num'+(AUDIO[c.gi]?' has-audio':'')+'">'+c.gi+'</span>'+
         '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+(AUDIO[c.gi]?' <span class="audio-dur">'+esc(AUDIO[c.gi].dur)+'</span>':'')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
         '<div class="ch-body">'+
@@ -1063,8 +1064,15 @@
       card.setAttribute('data-gi',c.gi);
       var head=el('div','ch-head');
       head.innerHTML='<span class="ch-num">'+c.gi+'</span>'+
-        '<div class="ch-t"><h3>'+esc(c.title)+(AUDIO[c.gi]?' <span class="audio-badge" title="Je k dispozici namluvená kapitola">'+icon('headphones')+'</span>':'')+'</h3><span class="en">'+esc(c.en)+'</span>'+
+        '<div class="ch-t"><h3>'+esc(c.title)+(AUDIO[c.gi]?' <button type="button" class="audio-badge" data-gi="'+c.gi+'" title="Poslechnout namluvenou kapitolu">'+icon('headphones')+'</button>':'')+'</h3><span class="en">'+esc(c.en)+'</span>'+
         '<div class="fear">'+flames(c.fear)+'</div></div>';
+      var audioBtn=head.querySelector('.audio-badge');
+      if(audioBtn){ audioBtn.addEventListener('click',function(ev){
+        ev.stopPropagation();
+        goToTab('audio');
+        var target=$('#audioList .ch[data-gi="'+c.gi+'"]');
+        if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
+      }); }
       var right=el('div',null,'');
       if(peek){
         var rd=el('button','ch-read'+(done?' done':''), (done?icon('check')+'Přečteno':'Přečteno?'));
@@ -1149,10 +1157,13 @@
   function syncMode(){
     Array.prototype.forEach.call($('#modeswitch').children,function(b){b.classList.toggle('on',b.getAttribute('data-mode')===state.mode);});
   }
-  $('#tabs').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
-    var v=b.getAttribute('data-view');
+  function goToTab(v){
+    var b=$('#tabs button[data-view="'+v+'"]'); if(!b) return;
     Array.prototype.forEach.call($('#tabs').children,function(x){x.classList.toggle('on',x===b); x.setAttribute('aria-selected', x===b?'true':'false');});
     ['audio','kapitoly','postavy','svet'].forEach(function(id){$('#view-'+id).classList.toggle('on',id===v);});
+  }
+  $('#tabs').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    goToTab(b.getAttribute('data-view'));
   });
   $('#subseg').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
     var s=b.getAttribute('data-sub');
