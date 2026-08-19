@@ -129,6 +129,7 @@
   .ch-t{flex:1; min-width:0}
   .ch-t h3{margin:0; font-size:1.06rem; font-family:var(--serif); font-weight:700; text-wrap:balance}
   .audio-badge{display:inline-flex; vertical-align:middle; color:var(--gold)}
+  .audio-dur{font-family:var(--ui); font-size:.72rem; font-weight:600; color:var(--ink-3); vertical-align:middle}
   .audio-badge svg{width:15px; height:15px}
   .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
   .ch-t .en{font-family:var(--ui); font-size:.74rem; color:var(--ink-3); letter-spacing:.02em}
@@ -493,7 +494,7 @@
   var POINTS=[[1,0],[4,10],[5,30],[6,40],[7,60],[8,90],[9,110],[11,150],[12,170],[15,250],[16,400]];
 
   // ===== data: audio nahrávky (gi -> cesta k souboru) =====
-  var AUDIO={1:'assets/audio/1.m4a',2:'assets/audio/2.m4a'};
+  var AUDIO={1:{file:'assets/audio/1.m4a',dur:'38:19'},2:{file:'assets/audio/2.m4a',dur:'25:23'}};
 
   // ===== data: postavy =====
   var CHARS = [
@@ -1039,10 +1040,10 @@
       var peek = state.mode==='rodic' || c.gi<=rg+1;
       var card=el('div','ch open');
       card.innerHTML='<div class="ch-head"><span class="ch-num'+(AUDIO[c.gi]?' has-audio':'')+'">'+c.gi+'</span>'+
-        '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
+        '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+(AUDIO[c.gi]?' <span class="audio-dur">'+esc(AUDIO[c.gi].dur)+'</span>':'')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
         '<div class="ch-body">'+
           (!peek ? '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli.</p>'
-            : AUDIO[c.gi] ? '<audio controls preload="none" src="'+esc(AUDIO[c.gi])+'"></audio>'
+            : AUDIO[c.gi] ? '<audio controls preload="none" src="'+esc(AUDIO[c.gi].file)+'"></audio>'
             : '<p class="locknote">'+icon('scroll')+'Nahrávka téhle kapitoly zatím není k dispozici.</p>')+
         '</div>';
       box.appendChild(card);
