@@ -493,7 +493,7 @@
 
 
   // ===== data: audio nahrávky (gi -> cesta k souboru) =====
-  var AUDIO={1:{file:'assets/audio/1.m4a',dur:'38:19'},2:{file:'assets/audio/2.m4a',dur:'25:23'}};
+  var AUDIO={1:{file:'assets/audio/1.m4a',dur:'38:19'},2:{file:'assets/audio/2.m4a',dur:'25:23'},3:{file:'assets/audio/3.m4a',dur:'19:59'}};
 
   // ===== data: postavy =====
   var CHARS = [
@@ -927,6 +927,7 @@
       if(c.words)h+=blk('star','Slovíčka','<div class="words">'+c.words.map(function(w){return '<span class="word"><b>'+esc(w[0])+'</b> — <span>'+esc(w[1])+'</span></span>';}).join('')+'</div>');
       var fearlab = c.fear<=1?'v pohodě.':(c.fear<=3?'napínavé, nic hrozného.':'silnější scéna, připrav se.');
       h+='<div class="block"><div class="fearnote">'+(c.fearnote?esc(c.fearnote):'Strašidelnost '+c.fear+'/5 — '+esc(fearlab))+'</div></div>';
+      if(c.quiz){ h+=quizHtml(c); }
       return h;
     }
     // DĚTI
