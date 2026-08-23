@@ -4,7 +4,7 @@ Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem
 
 ## Aktuální stav
 
-- **Postavy:** 28 v appce, z toho **23 má reálný portrét** (viz tabulka níže, co ještě chybí: Voldemort, James, Lily, Percy, Madame Hoochová).
+- **Postavy:** 28 v appce, z toho **24 má reálný portrét** (viz tabulka níže, co ještě chybí: Voldemort, James, Lily, Madame Hoochová).
 - **Ilustrace kapitol:** zatím žádná z 17 (řeší se — možnosti: vinětky z knihy, AI, kombinace).
 - **Audio:** kapitola 1 (`assets/audio/1.m4a`) a kapitola 2 (`assets/audio/2.m4a`) mají nahrávku, 3–17 zatím nic.
 
@@ -104,7 +104,7 @@ Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno
 | `james.jpg` | James Potter | |
 | `lily.jpg` | Lily Potterová | |
 | `fredgeorge.jpg` | Fred a George Weasleyovi (dvojčata) | ✅ |
-| `percy.jpg` | Percy Weasley | |
+| `percy.jpg` | Percy Weasley | ✅ |
 | `madamhoochova.jpg` | Madame Hoochová | |
 | `madampomfreyova.jpg` | Madame Pomfreyová | ✅ |
 | `buclatadama.jpg` | Buclatá dáma (mluvící portrét) | ✅ |
