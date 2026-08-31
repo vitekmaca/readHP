@@ -4,7 +4,6 @@
 // Tokeny v šabloně kamen-mudrcu.template.html:
 //   __IMG_<id>__       -> assets/portraits/<id>.jpg  (portréty postav)
 //   __SCENE_<n>__      -> assets/scenes/<n>.jpg      (ilustrace kapitol 1..17)
-//   __FONT_HARRYPOTTER__ -> assets/fonts/HarryPotter.ttf (nadpisové písmo)
 //
 // Audio (assets/audio/<gi>.m4a) se do šablony nevkládá jako data URI — je to
 // jen odkaz na soubor v repu (base64 by pro audio bylo příliš objemné pro
@@ -21,7 +20,6 @@ const OUT = path.join(ROOT, 'index.html');
 const ASSETS = path.join(ROOT, 'assets');
 
 const dataUri = (file) => 'data:image/jpeg;base64,' + fs.readFileSync(file).toString('base64');
-const fontDataUri = (file) => 'data:font/ttf;base64,' + fs.readFileSync(file).toString('base64');
 
 // Nevyžaduje všechny obrázky najednou — appka umí chybějící portrét/scénu
 // zobrazit jako ikonku (viz hasPortrait()/hasScene() v šabloně), takže build
@@ -40,11 +38,6 @@ for (const m of html.matchAll(/__SCENE_(\d+)__/g)) {
   const n = m[1];
   const file = path.join(ASSETS, 'scenes', `${n}.jpg`);
   if (fs.existsSync(file)) tokens.set(m[0], dataUri(file)); else missing.push(`scéna ${n}`);
-}
-if (html.includes('__FONT_HARRYPOTTER__')) {
-  const file = path.join(ASSETS, 'fonts', 'HarryPotter.ttf');
-  if (fs.existsSync(file)) tokens.set('__FONT_HARRYPOTTER__', fontDataUri(file));
-  else missing.push('font HarryPotter.ttf');
 }
 
 let count = 0;

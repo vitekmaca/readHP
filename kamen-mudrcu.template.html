@@ -10,11 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
 <style>
-  @font-face{
-    font-family:"HarryPotterFont";
-    src:url(__FONT_HARRYPOTTER__) format('truetype');
-    font-display:swap;
-  }
   /* ===== Tokens: light "pergamen" and dark "svíčky v hradu" ===== */
   :root{
     --paper:#f3ead2; --paper-2:#faf3e0; --panel:#f7f0dc; --panel-2:#eee3c7;
@@ -72,8 +67,8 @@
     display:flex; align-items:center; gap:14px; flex-wrap:wrap}
   .brand{display:flex; align-items:center; gap:12px; margin-right:auto; min-width:0}
   .crest{width:42px; height:42px; flex:none; color:var(--gold)}
-  .series-title{font-family:"HarryPotterFont",var(--display); font-weight:400; letter-spacing:.02em;
-    font-size:clamp(1.3rem,3.6vw,2rem); margin:0 0 2px; line-height:1; color:var(--gold-2)}
+  .series-title{font-family:var(--display); font-weight:400; letter-spacing:.14em; text-transform:uppercase;
+    font-size:.72rem; margin:0 0 2px; color:var(--gold-2)}
   .brand h1{font-family:var(--display); font-weight:700; letter-spacing:.06em;
     font-size:clamp(1.05rem,2.4vw,1.5rem); margin:0; text-transform:uppercase; text-wrap:balance}
   .brand p{margin:0; font-size:.78rem; color:var(--ink-2); font-family:var(--ui); letter-spacing:.02em}
@@ -127,10 +122,9 @@
   .ch{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); margin-bottom:12px;
     overflow:hidden; box-shadow:0 4px 16px -14px var(--shadow)}
   .ch-head{display:flex; align-items:center; gap:14px; padding:14px 16px; cursor:pointer}
-  .ch-num{font-family:"HarryPotterFont","Cinzel Decorative",var(--display); font-weight:700; font-size:1.3rem; color:var(--paper);
+  .ch-num{font-family:"Cinzel Decorative",var(--display); font-weight:700; font-size:1.05rem; color:var(--paper);
     background:linear-gradient(180deg,#3a2418,#241a12); min-width:44px; height:44px; border-radius:10px;
-    display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:0; line-height:1; padding-top:6px}
-  .ch-num .d-hi{display:inline-block; transform:translateY(3px)}
+    display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:.02em}
   :root[data-theme="dark"] .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
   :root[data-theme="dark"] .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
   @media (prefers-color-scheme:dark){
@@ -458,9 +452,6 @@
   var $=function(s,r){return (r||document).querySelector(s);};
   function el(tag,cls,html){var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function chNumHtml(n){
-    return String(n).split('').map(function(d){return (d==='6'||d==='8')?'<span class="d-hi">'+d+'</span>':d;}).join('');
-  }
 
   // ===== painted portraits (dodáš vlastní ilustrace, viz README) =====
   var PORTRAITS={
@@ -1056,7 +1047,7 @@
       var peek = state.mode==='rodic' || c.gi<=rg+1;
       var card=el('div','ch open');
       card.setAttribute('data-gi',c.gi);
-      card.innerHTML='<div class="ch-head"><span class="ch-num'+(AUDIO[c.gi]?' has-audio':'')+'">'+chNumHtml(c.gi)+'</span>'+
+      card.innerHTML='<div class="ch-head"><span class="ch-num'+(AUDIO[c.gi]?' has-audio':'')+'">'+c.gi+'</span>'+
         '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+(AUDIO[c.gi]?' <span class="audio-dur">'+esc(AUDIO[c.gi].dur)+'</span>':'')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
         '<div class="ch-body">'+
           (!peek ? '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli.</p>'
@@ -1079,7 +1070,7 @@
       var card=el('div','ch'+(peek?'':' locked'));
       card.setAttribute('data-gi',c.gi);
       var head=el('div','ch-head');
-      head.innerHTML='<span class="ch-num">'+chNumHtml(c.gi)+'</span>'+
+      head.innerHTML='<span class="ch-num">'+c.gi+'</span>'+
         '<div class="ch-t"><h3>'+esc(c.title)+(AUDIO[c.gi]?' <button type="button" class="audio-badge" data-gi="'+c.gi+'" title="Poslechnout namluvenou kapitolu">'+icon('headphones')+'</button>':'')+'</h3><span class="en">'+esc(c.en)+'</span>'+
         '<div class="fear">'+flames(c.fear)+'</div></div>';
       var audioBtn=head.querySelector('.audio-badge');
