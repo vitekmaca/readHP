@@ -21,7 +21,7 @@ Appka je jen česky (žádný jazykový přepínač). Jména míst a postav drž
 
 ## ⚠️ Autorská práva — proč musí repo zůstat soukromé
 
-Portréty postav jsou naskenované/vyfocené stránky z **Jim Kayho Illustrated Edition** (Bloomsbury/Scholastic) — komerční, chráněné dílo, ne volně šiřitelné. Použití je v pořádku jen jako **osobní, neveřejná appka pro rodinu**. Repo **nesmí** být veřejné a GitHub Pages **nesmí** být zapnuté, dokud tyhle obrázky v `assets/` jsou — jinak jde o veřejnou reprodukci cizího autorského díla. Pokud by appka měla být někdy veřejná, portréty by musely být nahrazené něčím jiným (originální/AI ilustrace).
+Portréty postav jsou naskenované/vyfocené stránky z **Jim Kayho Illustrated Edition** (Bloomsbury/Scholastic) — komerční, chráněné dílo, ne volně šiřitelné. Portrét Jamese Pottera je fanouškovská kresba jiné konkrétní autorky (Michelle Winer), staženo z internetu, ne z knihy — jiný typ zdroje, stejné pravidlo použití. Písmo v nadpisu „Harry Potter" (`assets/fonts/HarryPotter.ttf`) je neoficiální fanouškovská replika filmového loga (autorka Jenny Barck, 2001, staženo z wfonts.com) — není to licencované písmo Warner Bros. Použití všeho výše je v pořádku jen jako **osobní, neveřejná appka pro rodinu**. Repo **nesmí** být veřejné a GitHub Pages **nesmí** být zapnuté, dokud tyhle soubory v `assets/` jsou — jinak jde o veřejnou reprodukci cizích chráněných děl. Pokud by appka měla být někdy veřejná, portréty a písmo by musely být nahrazené něčím jiným (originální/AI ilustrace, licencovaný font).
 
 ## Struktura projektu
 

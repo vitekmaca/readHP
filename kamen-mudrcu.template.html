@@ -6,7 +6,15 @@
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="Interaktivní průvodce Kamenem mudrců pro předčítání dětem — namluvené kapitoly, postavy, kvízy a svět prvního školního roku v Bradavicích.">
 <title>Kámen mudrců — průvodce pro předčítání</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
 <style>
+  @font-face{
+    font-family:"HarryPotterFont";
+    src:url(__FONT_HARRYPOTTER__) format('truetype');
+    font-display:swap;
+  }
   /* ===== Tokens: light "pergamen" and dark "svíčky v hradu" ===== */
   :root{
     --paper:#f3ead2; --paper-2:#faf3e0; --panel:#f7f0dc; --panel-2:#eee3c7;
@@ -16,7 +24,7 @@
     --elven:#1f5c3e; --shadow:rgba(36,26,18,.20);
     --radius:16px;
     --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Cambria,Georgia,serif;
-    --display:"Trajan Pro","Cinzel","Palatino Linotype","Book Antiqua",Cambria,Georgia,serif;
+    --display:"Cinzel","Trajan Pro","Palatino Linotype","Book Antiqua",Cambria,Georgia,serif;
     --ui:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
   }
   @media (prefers-color-scheme: dark){
@@ -64,6 +72,8 @@
     display:flex; align-items:center; gap:14px; flex-wrap:wrap}
   .brand{display:flex; align-items:center; gap:12px; margin-right:auto; min-width:0}
   .crest{width:42px; height:42px; flex:none; color:var(--gold)}
+  .series-title{font-family:"HarryPotterFont",var(--display); font-weight:400; letter-spacing:.02em;
+    font-size:clamp(1.3rem,3.6vw,2rem); margin:0 0 2px; line-height:1; color:var(--gold-2)}
   .brand h1{font-family:var(--display); font-weight:700; letter-spacing:.06em;
     font-size:clamp(1.05rem,2.4vw,1.5rem); margin:0; text-transform:uppercase; text-wrap:balance}
   .brand p{margin:0; font-size:.78rem; color:var(--ink-2); font-family:var(--ui); letter-spacing:.02em}
@@ -117,9 +127,9 @@
   .ch{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); margin-bottom:12px;
     overflow:hidden; box-shadow:0 4px 16px -14px var(--shadow)}
   .ch-head{display:flex; align-items:center; gap:14px; padding:14px 16px; cursor:pointer}
-  .ch-num{font-family:var(--display); font-weight:700; font-size:.95rem; color:var(--paper);
+  .ch-num{font-family:"HarryPotterFont","Cinzel Decorative",var(--display); font-weight:700; font-size:1.3rem; color:var(--paper);
     background:linear-gradient(180deg,#3a2418,#241a12); min-width:44px; height:44px; border-radius:10px;
-    display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:.02em}
+    display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:0; line-height:1}
   :root[data-theme="dark"] .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
   :root[data-theme="dark"] .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
   @media (prefers-color-scheme:dark){
@@ -337,6 +347,7 @@
       <div class="brand">
         <svg class="crest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M15 9l1.6-1.6M15 9l-1.6-1.6M15 9l1.6 1.6M15 9l-1.6 1.6"/><path d="M19.2 3.4l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z" fill="currentColor" stroke="none"/></svg>
         <div>
+          <p class="series-title">Harry Potter</p>
           <h1 data-i18n="brand_title">Kámen mudrců</h1>
           <p data-i18n="brand_sub">Průvodce prvním rokem v Bradavicích — pro předčítání</p>
         </div>
