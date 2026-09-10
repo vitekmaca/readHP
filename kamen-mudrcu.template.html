@@ -45,6 +45,14 @@
     --gold:#e0b95c; --gold-2:#f0d488; --ember:#c24b4b; --ember-2:#d66a5a;
     --elven:#4fae82; --shadow:rgba(0,0,0,.5);
   }
+  /* "Noční" — much lower-brightness deep-blue theme for reading on a phone at night */
+  :root[data-theme="night"]{
+    --paper:#070a13; --paper-2:#0a0e1b; --panel:#0d1324; --panel-2:#12192f;
+    --ink:#a7b1c6; --ink-2:#78829c; --ink-3:#525c74;
+    --line:rgba(167,177,198,.12); --line-2:rgba(167,177,198,.22);
+    --gold:#8d7d50; --gold-2:#b3a06a; --ember:#7a4444; --ember-2:#8f5252;
+    --elven:#3d7562; --shadow:rgba(0,0,0,.65);
+  }
 
   *{box-sizing:border-box}
   body{margin:0}
@@ -127,9 +135,11 @@
     display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:.02em}
   :root[data-theme="dark"] .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
   :root[data-theme="dark"] .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+  :root[data-theme="night"] .ch-num{background:linear-gradient(180deg,#1c2648,#0d1324); color:var(--gold-2)}
+  :root[data-theme="night"] .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#0a0e1b}
   @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]) .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
-    :root:not([data-theme="light"]) .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+    :root:not([data-theme="light"]):not([data-theme="night"]) .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
+    :root:not([data-theme="light"]):not([data-theme="night"]) .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
   }
   .ch-t{flex:1; min-width:0}
   .ch-t h3{margin:0; font-size:1.06rem; font-family:var(--serif); font-weight:700; text-wrap:balance}
@@ -351,7 +361,7 @@
         <button data-mode="rodic" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5 8l7-4 7 4M6 20h12" stroke-linecap="round"/></svg><span data-i18n="mode_parent">Rodiče</span></button>
         <button data-mode="deti" class="kids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.4"/><path d="M3.5 20c.4-3 2.8-5 5.5-5s5.1 2 5.5 5M14 20c.3-2.2 1.8-3.7 3.6-3.9" stroke-linecap="round"/></svg><span data-i18n="mode_kids">Děti</span></button>
       </div>
-      <button class="iconbtn" id="themeToggle" type="button" title="Světlý / tmavý motiv" aria-label="Přepnout motiv"></button>
+      <button class="iconbtn" id="themeToggle" type="button" title="Světlý / tmavý / noční motiv" aria-label="Přepnout motiv"></button>
     </div>
     <div class="road">
       <div class="road-in">
@@ -441,6 +451,14 @@
     check:'<path d="M4 12l5 5L20 6"/>'
   };
   function icon(name,cls){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"'+(cls?' class="'+cls+'"':'')+'>'+(IC[name]||IC.star)+'</svg>';}
+
+  // Full-color theme-toggle icons (independent of the currentColor line-icon set above)
+  var THEME_ICONS = {
+    sun:'<svg viewBox="0 0 24 24"><defs><radialGradient id="tiSun" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#fff6d6"/><stop offset="55%" stop-color="#ffcf4d"/><stop offset="100%" stop-color="#f2a63c"/></radialGradient></defs><g stroke="#f2a63c" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></g><circle cx="12" cy="12" r="5.2" fill="url(#tiSun)"/></svg>',
+    moon:'<svg viewBox="0 0 24 24"><defs><linearGradient id="tiMoon" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eaf1ff"/><stop offset="100%" stop-color="#9fb3d9"/></linearGradient></defs><path d="M20 14.5A8 8 0 019.5 4 7 7 0 1020 14.5z" fill="url(#tiMoon)"/><circle cx="10.3" cy="9.2" r="1" fill="#c9d6ef" opacity=".8"/><circle cx="14" cy="13.7" r="1.3" fill="#c9d6ef" opacity=".8"/></svg>',
+    night:'<svg viewBox="0 0 24 24"><defs><radialGradient id="tiNight" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#2a3a66"/><stop offset="100%" stop-color="#0b1024"/></radialGradient></defs><circle cx="12" cy="12" r="9" fill="url(#tiNight)"/><g fill="#f0d488"><path d="M7 8l.6 1.4L9 10l-1.4.6L7 12l-.6-1.4L5 10l1.4-.6z"/><path d="M15.5 13l.5 1.2 1.2.5-1.2.5-.5 1.2-.5-1.2-1.2-.5 1.2-.5z"/><circle cx="16" cy="7.3" r=".9"/></g></svg>'
+  };
+  function themeIcon(name){return THEME_ICONS[name]||THEME_ICONS.sun;}
 
   // ===== state + drobní pomocníci (musí být definované dřív, než je kdokoli použije) =====
   var KEY='kamen_mudrcu_v1';
@@ -1150,16 +1168,17 @@
     state.mode=b.getAttribute('data-mode'); save(); syncMode(); rerender();});
 
   function effectiveTheme(){ return state.theme || (window.matchMedia && matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'); }
+  function nextTheme(t){ return t==='light' ? 'dark' : (t==='dark' ? 'night' : 'light'); }
   function applyTheme(){
     var root=document.documentElement;
     if(state.theme) root.setAttribute('data-theme',state.theme); else root.removeAttribute('data-theme');
     var btn=$('#themeToggle'); if(!btn) return;
-    var eff=effectiveTheme();
-    btn.innerHTML=icon(eff==='dark'?'sun':'moon');
-    var lab = eff==='dark' ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv';
+    var nxt=nextTheme(effectiveTheme());
+    btn.innerHTML=themeIcon(nxt==='dark'?'moon':(nxt==='night'?'night':'sun'));
+    var lab = nxt==='dark' ? 'Přepnout na tmavý motiv' : (nxt==='night' ? 'Přepnout na noční režim' : 'Přepnout na světlý motiv');
     btn.setAttribute('aria-label', lab); btn.title = lab;
   }
-  $('#themeToggle').addEventListener('click',function(){ state.theme=effectiveTheme()==='dark'?'light':'dark'; save(); applyTheme(); });
+  $('#themeToggle').addEventListener('click',function(){ state.theme=nextTheme(effectiveTheme()); save(); applyTheme(); });
 
   function syncMode(){
     Array.prototype.forEach.call($('#modeswitch').children,function(b){b.classList.toggle('on',b.getAttribute('data-mode')===state.mode);});
