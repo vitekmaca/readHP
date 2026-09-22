@@ -6,7 +6,7 @@ Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem
 
 - **Postavy:** 28 v appce, **všech 28 má reálný portrét** ✅.
 - **Ilustrace kapitol:** zatím žádná z 17 (řeší se — možnosti: vinětky z knihy, AI, kombinace).
-- **Audio:** kapitoly 1–8 (`assets/audio/1.m4a`–`8.m4a`) mají nahrávku, 9–17 zatím nic.
+- **Audio:** kapitoly 1–10 (`assets/audio/1.m4a`–`10.m4a`) mají nahrávku, 11–17 zatím nic.
 
 ## Co appka umí
 
