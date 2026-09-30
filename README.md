@@ -6,7 +6,7 @@ Interaktivní průvodce prvním rokem v Bradavicích, pro předčítání dětem
 
 - **Postavy:** 28 v appce, **všech 28 má reálný portrét** ✅.
 - **Ilustrace kapitol:** zatím žádná z 17 (řeší se — možnosti: vinětky z knihy, AI, kombinace).
-- **Audio:** kapitoly 1–10 (`assets/audio/1.m4a`–`10.m4a`) mají nahrávku, 11–17 zatím nic.
+- **Audio:** kapitoly 1–12 (`assets/audio/1.m4a`–`12.m4a`) mají nahrávku, 13–17 zatím nic.
 
 ## Co appka umí
 
@@ -67,7 +67,7 @@ Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno
 | 10 | Troll v dívčí toaletě, Harry mu skáče na záda |
 | 11 | Harry visí na vzpurném koštěti nad famfrpálovým hřištěm |
 | 12 | Harry v Zrcadle z Erisedu vidí své rodiče |
-| 13 | Hermiona nachází jméno Mikuláš Flamel v knihovně |
+| 13 | Hermiona nachází jméno Nicolas Flamel v knihovně |
 | 14 | Hagrid pyšně chová dráčka Norberta |
 | 15 | Zahalená postava pije jednorožčí krev, přibíhá kentaur Firenze |
 | 16 | Ron se obětuje v obřích kouzelnických šachách |
@@ -97,7 +97,7 @@ Appka bez obrázků nezobrazí nic u postav a scén kapitol (jen ikonku/prázdno
 | `chloupek.jpg` | Chloupek (třihlavý pes) | ✅ |
 | `norbert.jpg` | Norbert (dráček) | ✅ |
 | `ollivander.jpg` | Ollivander | ✅ |
-| `flamel.jpg` | Mikuláš Flamel | ✅ |
+| `flamel.jpg` | Nicolas Flamel | ✅ |
 | `vernon.jpg` | Strýc Vernon Dursley | ✅ |
 | `petunie.jpg` | Teta Petunie Dursleyová | ✅ |
 | `dudley.jpg` | Dudley Dursley | ✅ |

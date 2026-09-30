@@ -481,7 +481,7 @@
     10:{cap:'V dívčí toaletě čelí Harry, Ron a Hermiona obrovskému trollovi s klackem — chvíle, po které se z nich stanou nerozluční přátelé.'},
     11:{cap:'Harry se zoufale drží vzpurného koštěte vysoko nad famfrpálovým hřištěm, zatímco dole v hledišti sleduje scénu napjatá Hermiona.'},
     12:{cap:'V prázdné učebně se Harry dívá do Zrcadla z Erisedu, kde místo svého odrazu vidí své rodiče, jak se na něj usmívají.'},
-    13:{cap:'V knihovně nad hromadou starých knih Hermiona konečně najde jméno Mikuláš Flamel — a s ním i odpověď, co se skrývá pod poklopem.'},
+    13:{cap:'V knihovně nad hromadou starých knih Hermiona konečně najde jméno Nicolas Flamel — a s ním i odpověď, co se skrývá pod poklopem.'},
     14:{cap:'Hagrid pyšně chová malého dráčka Norberta ve své chatrči, zatímco venku se stmívá nad Zakázaným lesem.'},
     15:{cap:'Na temné mýtině v Zakázaném lese se nad zraněným jednorožcem sklání kápí zahalená postava — a kentaur Firenze přispěchá Harrymu na pomoc.'},
     16:{cap:'Uprostřed obřích kouzelnických šachů se Ron obětuje jako figurka, aby Harry a Hermiona mohli postoupit dál k Kameni mudrců.'},
@@ -499,7 +499,7 @@
 
 
   // ===== data: audio nahrávky (gi -> cesta k souboru) =====
-  var AUDIO={1:{file:'assets/audio/1.m4a',dur:'38:19'},2:{file:'assets/audio/2.m4a',dur:'25:23'},3:{file:'assets/audio/3.m4a',dur:'19:59'},4:{file:'assets/audio/4.m4a',dur:'31:00'},5:{file:'assets/audio/5.m4a',dur:'55:55'},6:{file:'assets/audio/6.m4a',dur:'47:57'},7:{file:'assets/audio/7.m4a',dur:'35:13'},8:{file:'assets/audio/8.m4a',dur:'24:05'},9:{file:'assets/audio/9.m4a',dur:'37:54'},10:{file:'assets/audio/10.m4a',dur:'32:53'}};
+  var AUDIO={1:{file:'assets/audio/1.m4a',dur:'38:19'},2:{file:'assets/audio/2.m4a',dur:'25:23'},3:{file:'assets/audio/3.m4a',dur:'19:59'},4:{file:'assets/audio/4.m4a',dur:'31:00'},5:{file:'assets/audio/5.m4a',dur:'55:55'},6:{file:'assets/audio/6.m4a',dur:'47:57'},7:{file:'assets/audio/7.m4a',dur:'35:13'},8:{file:'assets/audio/8.m4a',dur:'24:05'},9:{file:'assets/audio/9.m4a',dur:'37:54'},10:{file:'assets/audio/10.m4a',dur:'32:53'},11:{file:'assets/audio/11.m4a',dur:'25:10'},12:{file:'assets/audio/12.m4a',dur:'43:49'}};
 
   // ===== data: postavy =====
   var CHARS = [
@@ -551,7 +551,7 @@
     {id:'ollivander',gi:5,name:'Ollivander',en:'Mr Ollivander',race:'kouzelnik',rlab:'Hůlkař',ic:'kouzelnik',
       kid:'Tajemný stařík z obchodu s kouzelnickými hůlkami, který si pamatuje úplně každou hůlku, co kdy prodal. Harryho hůlka si ho prý sama vybrala.',
       dad:'Majitel starobylého obchodu s hůlkami v Příčné ulici. Jeho poznámka o Harryho hůlce naznačí důležité spojení s Voldemortem.'},
-    {id:'flamel',gi:13,name:'Mikuláš Flamel',en:'Nicolas Flamel',race:'kouzelnik',rlab:'Alchymista',ic:'kouzelnik',
+    {id:'flamel',gi:13,name:'Nicolas Flamel',en:'Nicolas Flamel',race:'kouzelnik',rlab:'Alchymista',ic:'kouzelnik',
       kid:'Slavný alchymista, který podle staré knihy vyrobil jediný Kámen mudrců na světě — a je mu už 665 let!',
       dad:'Skutečný majitel Kamene mudrců, starý přítel Brumbála. Jeho jméno je klíč k rozluštění celého tajemství.'},
     {id:'vernon',gi:1,name:'Strýc Vernon Dursley',en:'Vernon Dursley',race:'mudla',rlab:'Mudla',ic:'mudla',
@@ -614,7 +614,7 @@
     hermiona:{ahead:'Myslíš, že je lepší dodržovat pravidla za každou cenu, nebo je někdy v pořádku je porušit?',beats:[
       [6,'Ve vlaku se s Harrym a Ronem seznámí — nejdřív jim ale spíš leze na nervy svou sečtělostí.'],
       [10,'O Halloweenu ji před trollem zachrání Harry s Ronem — od té chvíle jsou z nich praví přátelé.'],
-      [13,'Pomůže vypátrat, kdo je Mikuláš Flamel, a rozluští záhadu Kamene mudrců.'],
+      [13,'Pomůže vypátrat, kdo je Nicolas Flamel, a rozluští záhadu Kamene mudrců.'],
       [16,'Svými znalostmi kouzel provede kamarády nebezpečnými komnatami pod propadlištěm.']
     ]},
     hagrid:{ahead:'Proč asi Hagrid pořád nese takové tajemství, i když mu bylo přísně zakázáno o něm mluvit?',beats:[
@@ -706,7 +706,7 @@
     ['Teď','Cesta do Bradavic','Hagrid přinese poslední dopis osobně a odhalí Harrymu pravdu — a náš příběh začíná.']
   ];
   var LORE=[
-    {ic:'kamen',min:9,title:'Kámen mudrců',text:'Kouzelný kámen, který vyrobil alchymista Mikuláš Flamel. Umí proměnit kov ve zlato a vyrábí elixír života, který prodlužuje život donekonečna. Skrývá se v Bradavicích, hlídaný mnoha kouzly.'},
+    {ic:'kamen',min:9,title:'Kámen mudrců',text:'Kouzelný kámen, který vyrobil alchymista Nicolas Flamel. Umí proměnit kov ve zlato a vyrábí elixír života, který prodlužuje život donekonečna. Skrývá se v Bradavicích, hlídaný mnoha kouzly.'},
     {ic:'eye',min:2,title:'Voldemort',text:'Nejobávanější temný čaroděj, kterého se všichni bojí jmenovat nahlas. Kdysi zabil Harryho rodiče, ale při pokusu zabít i jeho samotného zeslábl a zmizel.'},
     {ic:'star',min:12,title:'Zrcadlo z Erisedu',text:'Kouzelné zrcadlo, které neukazuje tvůj odraz, ale tvou nejhlubší touhu srdce. Je krásné se do něj podívat — ale nebezpečné se v něm ztratit.'},
     {ic:'zvire',min:9,title:'Chloupek',text:'Obří třihlavý pes, kterého si Hagrid pořídil, aby hlídal tajný poklop v Bradavicích. Jediné, co ho spolehlivě uspí, je hudba.'}
@@ -805,13 +805,13 @@
       words:[['plášť neviditelnosti','kouzelný plášť, pod kterým je člověk neviditelný'],['Zrcadlo z Erisedu','kouzelné zrcadlo, co ukazuje nejhlubší touhu srdce']],
       teaser:'O Vánocích čeká Harryho dárek, jaký ještě nikdy nedostal — a v prázdné učebně objeví zrcadlo, které mu ukáže něco, po čem touží ze všeho nejvíc.',
       quiz:[['Co Harry dostane o Vánocích od neznámého dárce?',['Plášť neviditelnosti','Nové koště','Kouzelnou hůlku'],0],['Co Harry uvidí v Zrcadle z Erisedu?',['Své rodiče','Sám sebe jako dospělého','Nic'],0]]},
-    {gi:13,title:'Mikuláš Flamel',en:'Nicolas Flamel',fear:2,
-      sum:'O prázdninách trojice pátrá, kdo je Mikuláš Flamel — jméno, které Harry zahlédl u pana Ollivandera i na Chloupkově kartě. Hermiona ho nakonec najde v knize o alchymii: je to slavný výrobce jediného Kamene mudrců na světě, který dokáže vyrábět zlato a elixír věčného života.',
+    {gi:13,title:'Nicolas Flamel',en:'Nicolas Flamel',fear:2,
+      sum:'O prázdninách trojice pátrá, kdo je Nicolas Flamel — jméno, které Harry zahlédl u pana Ollivandera i na Chloupkově kartě. Hermiona ho nakonec najde v knize o alchymii: je to slavný výrobce jediného Kamene mudrců na světě, který dokáže vyrábět zlato a elixír věčného života.',
       focus:['Detektivní pátrání po záhadném jméně','Co je Kámen mudrců a k čemu slouží','Skládačka: proč by někdo chtěl Kámen ukrást'],
       q:['Proč by podle tebe někdo toužil po nesmrtelnosti? Je to vždycky dobrý nápad?','Co všechno už teď víme o tom, co Chloupek hlídá?'],
       words:[['alchymie','stará kouzelnická věda o proměně kovů a hledání nesmrtelnosti'],['elixír života','kouzelný nápoj, co prodlužuje život donekonečna']],
-      teaser:'Jedno jméno se objevuje pořád dokola — na kartičce od žabí čokolády i na Chloupkově obojku. Kdo je vlastně Mikuláš Flamel?',
-      quiz:[['Co Mikuláš Flamel podle staré knihy vyrobil?',['Kámen mudrců','Kouzelnou hůlku','Nový hrad'],0],['K čemu Kámen mudrců slouží?',['Vyrábí zlato a elixír věčného života','Létá','Mluví'],0]]},
+      teaser:'Jedno jméno se objevuje pořád dokola — na kartičce od žabí čokolády i na Chloupkově obojku. Kdo je vlastně Nicolas Flamel?',
+      quiz:[['Co Nicolas Flamel podle staré knihy vyrobil?',['Kámen mudrců','Kouzelnou hůlku','Nový hrad'],0],['K čemu Kámen mudrců slouží?',['Vyrábí zlato a elixír věčného života','Létá','Mluví'],0]]},
     {gi:14,title:'Norbert, norský hřbetozubec',en:'Norbert the Norwegian Ridgeback',fear:3,
       sum:'Hagrid v kartách vyhraje dračí vejce a navzdory zákazu si vychová malého dráčka Norberta. Když se z něj stane nezvladatelné a nebezpečné mládě, Harry, Ron a Hermiona pomůžou Hagridovi Norberta v noci propašovat pryč — a při té výpravě je chytí Filch, což jim vynese velký trest.',
       focus:['Hagridova neochota vzdát se nebezpečného mazlíčka','Noční pašování draka po hradě','Následky — trest v Zakázaném lese'],
@@ -873,8 +873,8 @@
         'Při prvním velkém zápase šlo zpočátku všechno skvěle, ale najednou se Harryho koště začalo samo vzpouzet a snažilo se ho shodit vysoko nad zemí! Hermiona si všimla, že se profesor Snape upřeně dívá na Harryho a bez mrknutí si šeptá kouzlo — a v panice mu podpálila okraj pláště. Koště se hned uklidnilo a Harry stihl Zlatonku chytit přímo ústy. Až později se ukáže, že to celé bylo úplně jinak, než si všichni mysleli.'],
     12:['O Vánocích zůstal Harry poprvé v Bradavicích a dostal víc dárků, než kdy v životě — nejzvláštnější z nich byl stříbřitý plášť neviditelnosti od neznámého dárce, se vzkazem, že patřil jeho otci. Harry se pod ním v noci proplížil po hradě a objevil prázdnou učebnu se starým zrcadlem s nápisem pozpátku.',
         'Když se do zrcadla podíval, uviděl v něm svou rodinu — mámu, tátu a spoustu příbuzných, které nikdy nepoznal. Vracel se tam noc co noc, dokud ho nenašel Brumbál a nevysvětlil mu, co zrcadlo doopravdy dělá: neukazuje budoucnost ani skutečnost, ale nejhlubší touhu srdce. A že se člověk ve snění o tom, po čem touží, může snadno ztratit a zapomenout žít.'],
-    13:['Harryho pořád nepustilo z hlavy jméno Mikuláš Flamel, které zahlédl u pana Ollivandera a které bylo napsané i na kartičce od Chloupkova pána. Celé prázdniny i po návratu do školy se ho snažili se svými kamarády vypátrat v knihách — marně, dokud Hermiona nenašla knihu, kterou si vzala jen tak pro zábavu na čtení před spaním.',
-        'V ní stálo: Mikuláš Flamel je slavný alchymista, jediný známý výrobce Kamene mudrců — kouzelného kamene, který umí měnit kov ve zlato a vyrábí elixír života, díky kterému je Flamelovi už 665 let! Najednou všem došlo, co asi Chloupek hlídá pod poklopem — a proč by o to mohl mít někdo v Bradavicích tak velký zájem.'],
+    13:['Harryho pořád nepustilo z hlavy jméno Nicolas Flamel, které zahlédl u pana Ollivandera a které bylo napsané i na kartičce od Chloupkova pána. Celé prázdniny i po návratu do školy se ho snažili se svými kamarády vypátrat v knihách — marně, dokud Hermiona nenašla knihu, kterou si vzala jen tak pro zábavu na čtení před spaním.',
+        'V ní stálo: Nicolas Flamel je slavný alchymista, jediný známý výrobce Kamene mudrců — kouzelného kamene, který umí měnit kov ve zlato a vyrábí elixír života, díky kterému je Flamelovi už 665 let! Najednou všem došlo, co asi Chloupek hlídá pod poklopem — a proč by o to mohl mít někdo v Bradavicích tak velký zájem.'],
     14:['Hagrid vyhrál v kartách s neznámým cizincem dračí vejce a navzdory tomu, že chov draků je přísně zakázaný, se rozhodl si dráčka vychovat. Když se z vejce vylíhl malý černý dráček jménem Norbert, byl Hagrid nadšený jako malé dítě — jenže Norbert rychle rostl, chrlil oheň a kousal, kam se dalo.',
         'Harry, Ron a Hermiona věděli, že to dlouho v tajnosti nevydrží, a domluvili s Ronovým bratrem, aby Norberta v noci propašovali pryč na věži k jeho kamarádům z dračí rezervace. Cestou zpátky do postele je ale chytil školník Filch spolu s profesorkou McGonagallovou — a čekal je pořádně tvrdý trest: noční výprava do Zakázaného lesa.'],
     15:['Za trest šli Harry, Hermiona, Neville a (překvapivě) i Draco s Hagridem v noci do Zakázaného lesa hledat zraněného jednorožce, jehož stříbrná krev se objevovala po celém lese. Les byl temný a plný zvuků, které nikdo nechtěl slyšet moc zblízka. Nakonec se skupina rozdělila a Harry šel s psem Tesákem sám na jednu stranu.',
@@ -912,8 +912,8 @@
     12:['Minule Harry přežil zápas s tajemně vzpurným koštětem a Hermiona podezřívala profesora Snapea, že za tím stojí.',
         'Blíží se Vánoce a Harry poprvé zůstává v Bradavicích, protože se domů k Dursleyovým vracet nechce. Jaký dárek na něj čeká — a co objeví v jedné opuštěné učebně?'],
     13:['Minule se Harry díval do Zrcadla z Erisedu na své rodiče, dokud ho Brumbál moudře nezastavil.',
-        'Teď se trojice pustí do detektivního pátrání po jednom záhadném jméně. Kdo je Mikuláš Flamel — a co má společného s obřím psem, co hlídá poklop?'],
-    14:['Minule trojice zjistila, kdo je Mikuláš Flamel a co znamená Kámen mudrců — a proč ho Chloupek pod poklopem tak pečlivě hlídá.',
+        'Teď se trojice pustí do detektivního pátrání po jednom záhadném jméně. Kdo je Nicolas Flamel — a co má společného s obřím psem, co hlídá poklop?'],
+    14:['Minule trojice zjistila, kdo je Nicolas Flamel a co znamená Kámen mudrců — a proč ho Chloupek pod poklopem tak pečlivě hlídá.',
         'Teď se do potíží namočí Hagrid — vyhraje totiž v kartách dračí vejce. Co se stane, když se z vejce vylíhne skutečný drak přímo v dřevěné chatrči?'],
     15:['Minule Harryho a kamarády chytili při pašování draka Norberta a čeká je trest — noční výprava do Zakázaného lesa.',
         'Tahle kapitola je ta nejnapínavější zatím — možná si ji budete chtít přečíst spolu, pomalu a s přestávkami. Co se skrývá hluboko v temném lese?'],
